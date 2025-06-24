@@ -1,4 +1,7 @@
 package kz.kbtu.security;
 
-public class JwtTokenProvider {
+import kz.kbtu.entity.User;
+
+public interface JwtTokenProvider {
+    String generateToken(User user);
 }
