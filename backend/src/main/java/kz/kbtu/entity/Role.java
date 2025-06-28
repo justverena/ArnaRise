@@ -15,7 +15,10 @@ public class Role {
 
     @Column(unique = true, nullable = false)
     private String name;
-
+    public Role(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
     public void setId(Integer id){
         this.id = id;
     }

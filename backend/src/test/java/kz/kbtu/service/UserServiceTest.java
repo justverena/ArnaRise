@@ -32,15 +32,16 @@ public class UserServiceTest {
     @Test
     void testRegister_Success(){
         RegisterRequest request = new RegisterRequest();
-        Role analystRole = new Role();
-        analystRole.setId(1);
-        analystRole.setName("analyst");
+//        Role analystRole = new Role();
+//        analystRole.setId(1);
+//        analystRole.setName("analyst");
         request.setName("User");
         request.setEmail("test@example.com");
         request.setPassword("test123");
+        request.setRole("analyst");
 
         when(userRepository.existsByEmail("test@example.com")).thenReturn(false);
-        when(roleRepository.findByName(request.getRole())).thenReturn(Optional.of(analystRole));
+        when(roleRepository.findByName("analyst")).thenReturn(Optional.of(new Role(1, "analyst")));
         when(passwordEncoder.encode("test123")).thenReturn("encoded-password");
 
         userService.registerUser(request);
@@ -49,12 +50,13 @@ public class UserServiceTest {
     @Test
     void testRegister_EmailExists(){
         RegisterRequest request = new RegisterRequest();
-        Role analystRole = new Role();
-        analystRole.setId(1);
-        analystRole.setName("analyst");
+//        Role analystRole = new Role();
+//        analystRole.setId(1);
+//        analystRole.setName("analyst");
         request.setName("User_1");
         request.setEmail("test1@example.com");
         request.setPassword("test1234");
+        request.setRole("analyst");
 
         when(userRepository.existsByEmail("test1@example.com")).thenReturn(true);
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
@@ -62,5 +64,57 @@ public class UserServiceTest {
         });
         assertEquals("Email already in use", exception.getMessage());
         verify(userRepository, never()).save(Mockito.any(User.class));
+    }
+
+    @Test
+    void testRegister_InvalidEmail(){
+        RegisterRequest request = new RegisterRequest();
+//        Role analystRole = new Role();
+//        analystRole.setId(1);
+//        analystRole.setName("analyst");
+        request.setName("User_2");
+        request.setEmail("invalid-email");
+        request.setPassword("test1234");
+        request.setRole("analyst");
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            userService.registerUser(request);});
+        assertEquals("Invalid email format", exception.getMessage());
+        verify(userRepository, never()).save(any(User.class));
+
+    }
+    @Test
+    void testRegister_EmptyFields(){
+        RegisterRequest request = new RegisterRequest();
+        request.setName("");
+        request.setEmail("");
+        request.setPassword("");
+        request.setRole("");
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            userService.registerUser(request);
+        });
+
+        assertEquals("All fields are required", exception.getMessage());
+        verify(userRepository, never()).save(Mockito.any(User.class));
+    }
+
+    @Test
+    void testRegister_InvalidRole() {
+        RegisterRequest request = new RegisterRequest();
+        request.setName("User_3");
+        request.setEmail("test3@example.com");
+        request.setPassword("test1234");
+        request.setRole("manager");
+
+        when(userRepository.existsByEmail("test3@example.com")).thenReturn(false);
+        when(roleRepository.findByName("manager")).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                userService.registerUser(request));
+
+        assertEquals("Role not found", exception.getMessage());
+
+        verify(userRepository, never()).save(any(User.class));
     }
 }

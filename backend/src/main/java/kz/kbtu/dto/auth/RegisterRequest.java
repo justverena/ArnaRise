@@ -6,7 +6,7 @@ public class RegisterRequest {
     private String name;
     private String email;
     private String password;
-    private Role role;
+    private String role;
 
     public String getEmail() {
         return email;
@@ -29,13 +29,14 @@ public class RegisterRequest {
         this.email = mail;
     }
 
-    public void setPassword(String test123) {
-        this.password = test123;
+    public void setRole(String role) {
+        this.role = role == null ? null : role.trim().toLowerCase();
     }
-    public Role getRole() {
-        return role;
+
+    public String getRole() {
+        return this.role;
     }
-    public void setRole(Role role) {
-        this.role = role;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
