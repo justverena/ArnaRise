@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Login from '@/views/Login.vue'
 import ChartPage from '@/views/ChartPage.vue'
 import Users from '@/views/Users.vue'
+import Profile from '@/views/Profile.vue'
 
 const routes = [
   {
@@ -29,6 +30,12 @@ const routes = [
     name: 'Users',
     component: Users,
     meta: { requiresAuth: true}
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    meta: { requiredAuth: true}
   }
 ]
 

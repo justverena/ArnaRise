@@ -3,6 +3,8 @@
     <h1>Chart Page</h1>
     <button @click="updateChart">Update</button>
     <MyChart :key="chartKey" :labels="labels" :values="values" />
+    <router-link to="">All Indicators</router-link>
+    <router-link to="">All Filters</router-link>
   </div>
 </template>
 

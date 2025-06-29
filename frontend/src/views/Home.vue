@@ -4,6 +4,7 @@
     <p>Добро пожаловать!</p>
     <router-link to="/chart">Graph</router-link>
     <router-link to="/users">Users table</router-link>
+    <router-link to="/profile">Profile</router-link>
   </div>
 </template>
 
