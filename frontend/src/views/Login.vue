@@ -14,12 +14,13 @@
 <script setup>
 import { ref } from 'vue'
 import api from '@/services/api.js'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const email = ref('')
 const password = ref('')
 const error = ref('')
 const router = useRouter()
+const route = useRoute()
 
 const handleLogin = async () => {
   error.value = ''
@@ -37,16 +38,17 @@ const handleLogin = async () => {
     }
 
     localStorage.setItem('token', token)
-    router.push('/')
 
-  }
-  catch (err) {
+    const redirectPath = route.query.redirect || '/'
+    router.push(redirectPath)
+
+  } catch (err) {
     console.log('error while logging in:', err)
     error.value = 'wrong email or password'
   }
 }
-
 </script>
+
 
 <style scoped>
 .login-page {

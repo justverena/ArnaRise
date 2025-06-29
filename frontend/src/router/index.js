@@ -21,12 +21,14 @@ const routes = [
   {
     path: '/chart',
     name: 'ChartPage',
-    component: ChartPage
+    component: ChartPage,
+    meta: { requiresAuth: true}
   },
   {
     path: '/users',
     name: 'Users',
-    component: Users
+    component: Users,
+    meta: { requiresAuth: true}
   }
 ]
 
@@ -42,7 +44,7 @@ router.beforeEach((to, from, next) => {
   const isProtected = to.meta.requiresAuth
 
 if (isProtected && !token) {
-  next('/login')
+  next({ path: '/login', query: { redirect: to.fullPath } })
 } else{
   next()
 }

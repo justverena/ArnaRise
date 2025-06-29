@@ -2,8 +2,6 @@
     <div class="users">
         <h1>Users List</h1>
 
-        <pre>{{ users }}</pre>
-
         <table border="1" cellpadding="10">
             <thead>
                 <tr>
