@@ -17,6 +17,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/users").permitAll() //временное разрешения для тестирования
                         .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf.disable()) // ✅ современный способ отключить CSRF

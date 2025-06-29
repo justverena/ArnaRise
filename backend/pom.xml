@@ -176,7 +176,7 @@
                 <configuration>
                     <url>jdbc:postgresql://localhost:5432/amanat</url>
                     <user>postgres</user> <!-- замени на своего пользователя -->
-                    <password>your_password</password> <!-- замени на свой пароль -->
+                    <password>amanat</password> <!-- замени на свой пароль -->
                 </configuration>
             </plugin>
         </plugins>
