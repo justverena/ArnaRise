@@ -2,12 +2,13 @@
   <div class="chart-page">
     <h1>Chart Page</h1>
     <button @click="updateChart">Update</button>
-    <MyChart :key="chartKey" :labels="labels" :values="values" />
-
     <div class="actions-wrapper">
       <router-link to="" class="action-card"><span>All Indicators</span></router-link>
       <router-link to="" class="action-card"><span>All Filters</span></router-link>
     </div>
+    <MyChart :key="chartKey" :labels="labels" :values="values" />
+
+    
   </div>
 </template>
 
