@@ -1,17 +1,17 @@
 <template>
-      <div class="login-page">
+  <div class="login-wrapper">
+    <div class="login-page">
       <h2>Выполните вход в систему</h2>
       <form @submit.prevent="handleLogin">
         <input v-model="email" placeholder="Email" type="email" required />
         <input v-model="password" placeholder="Password" type="password" required />
-
         <button type="submit">Войти</button>
       </form>
       <p v-if="error" style="color: red;">{{ error }}</p>
     </div>
- 
-  
+  </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'
@@ -53,6 +53,15 @@ const handleLogin = async () => {
 
 
 <style scoped>
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
 
 
 .login-page {

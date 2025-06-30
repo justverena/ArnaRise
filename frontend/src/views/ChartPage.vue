@@ -3,10 +3,14 @@
     <h1>Chart Page</h1>
     <button @click="updateChart">Update</button>
     <MyChart :key="chartKey" :labels="labels" :values="values" />
-    <router-link to="">All Indicators</router-link>
-    <router-link to="">All Filters</router-link>
+
+    <div class="actions-wrapper">
+      <router-link to="" class="action-card"><span>All Indicators</span></router-link>
+      <router-link to="" class="action-card"><span>All Filters</span></router-link>
+    </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'
@@ -17,21 +21,59 @@ const values = ref([100, 120, 90, 150, 130, 80, 70])
 const chartKey = ref(0)
 
 function updateChart() {
-  labels.value = labels.value.map(day => `${day} ${Math.floor(Math.random() * 10)}`)
-  values.value = Array.from({ length: 7 }, () => Math.floor(Math.random() * 200) + 10)
-  chartKey.value++
+  labels.value = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  // Обновим только значения
+  values.value = Array.from({ length: 7 }, () => Math.floor(Math.random() * 200) + 10);
+
+  // Обновим ключ, чтобы перерендерить график
+  chartKey.value++;
 }
 </script>
 
 <style scoped>
-/* ✅ добавим отступы и рамку для наглядности */
 .chart-page {
+  width: 90vw;
+  margin: 2rem auto ;
   padding: 2rem;
-  max-width: 700px;
-  margin: auto;
-  background: #fefefe;
-  border: 1px solid #ccc;
+  background: #fff;
   border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions-wrapper {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.action-card {
+  width: 200px;
+  height: 100px;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-card:hover {
+  background-color: #e8f5e9;
+  border-color: #42b983;
+  transform: scale(1.03);
 }
 
 button {

@@ -51,10 +51,14 @@ router.beforeEach((to, from, next) => {
   const isProtected = to.meta.requiresAuth
 
 if (isProtected && !token) {
-  next({ path: '/login', query: { redirect: to.fullPath } })
-} else{
-  next()
+  return next({ path: '/login', query: { redirect: to.fullPath } })
+} 
+
+if (to.path === '/login' && token) {
+  return next('/')
 }
+  next()
+
 })
 
 export default router

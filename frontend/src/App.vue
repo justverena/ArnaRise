@@ -11,7 +11,10 @@
     <Sidebar v-if="!isLoginPage && sidebarVisible" @close="sidebarVisible=false" />
 
     <main :class="{ 'with-sidebar': !isLoginPage, 'login-content': isLoginPage }">
-      <router-view />
+      <div class="page-container">
+        <router-view />
+      </div>
+      
     </main>
   </div>
 </template>
@@ -34,6 +37,14 @@ const toggleSidebar = () => {
 
 <style scoped>
 
+.page-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 ;
+  padding: 0;
+}
+
+
 main {
   padding: 1.5rem;
   margin-top: 0;
@@ -41,6 +52,8 @@ main {
 
 #app {
   display:flex;
+  flex-direction: column;
+  align-items: center;
 
 }
 
@@ -56,8 +69,10 @@ main {
 }
 
 .with-sidebar {
-  margin-left: 200px;
+  margin-left: 0px;
   padding: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
 .login-content {
