@@ -1,14 +1,16 @@
 <template>
-  <div class="login-page">
-    <h2>Добро пожаловать</h2>
-    <form @submit.prevent="handleLogin">
-      <input v-model="email" placeholder="Email" type="email" required />
-      <input v-model="password" placeholder="Password" type="password" required />
+      <div class="login-page">
+      <h2>Выполните вход в систему</h2>
+      <form @submit.prevent="handleLogin">
+        <input v-model="email" placeholder="Email" type="email" required />
+        <input v-model="password" placeholder="Password" type="password" required />
 
-      <button type="submit">Войти</button>
-    </form>
-    <p v-if="error" style="color: red;">{{ error }}</p>
-  </div>
+        <button type="submit">Войти</button>
+      </form>
+      <p v-if="error" style="color: red;">{{ error }}</p>
+    </div>
+ 
+  
 </template>
 
 <script setup>
@@ -51,49 +53,56 @@ const handleLogin = async () => {
 
 
 <style scoped>
+
+
 .login-page {
+  width: 100%;
   max-width: 400px;
-  margin: 100px auto;
   padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #f9f9f9;
-  color: #333; 
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 1rem;
-  color: #222; 
+  margin-bottom: 1.5rem;
+  color: #222;
 }
 
-.login-form {
+form {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  gap: 1rem;
 }
 
-.login-form label {
-  margin-top: 1rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.login-form input {
-  padding: 0.5rem;
-  margin-top: 0.3rem;
+form input {
+  padding: 0.75rem;
+  width: 100%;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  color: #222; 
-  background-color: #fff;
+  border-radius: 6px;
+  font-size: 1rem;
 }
 
-.login-form button {
-  margin-top: 1.5rem;
-  padding: 0.7rem;
+form button {
+  padding: 0.75rem;
+  width: 100%;
   background-color: #42b983;
   color: white;
+  font-weight: bold;
+  font-size: 1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+form button:hover {
+  background-color: #369b6d;
 }
 </style>

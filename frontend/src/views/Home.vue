@@ -1,17 +1,19 @@
 <template>
   <div class="home">
-    <h1>Home Page</h1>
-    <p>Добро пожаловать!</p>
-    <router-link to="/chart">Graph</router-link>
-    <router-link to="/users">Users table</router-link>
-    <router-link to="/profile">Profile</router-link>
+    
+
+    <div class="main-content">
+      <h1>Платформа партии Аманат</h1>
+      <p>Добро пожаловать!</p>
+
+    </div>
   </div>
 </template>
 
+<script setup>
+
+</script>
+
 <style scoped>
-.home {
-  color: #222; /* Тёмный текст */
-  padding: 2rem;
-  font-family: sans-serif;
-}
+
 </style>
