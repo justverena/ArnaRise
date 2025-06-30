@@ -6,8 +6,6 @@ import lombok.*;
 @Entity
 @Table(name = "role")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Role {
 
     @Id
@@ -15,9 +13,20 @@ public class Role {
 
     @Column(unique = true, nullable = false)
     private String name;
+
     public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+    public Role() {}
+    public String getName() {
+        return name;
+    }
+    public Role(String name) {
+        this.name = name;
+    }
+    public Integer getId() {
+        return id;
     }
     public void setId(Integer id){
         this.id = id;

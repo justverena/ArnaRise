@@ -11,18 +11,17 @@ CREATE TABLE users (
                        email VARCHAR(255) UNIQUE NOT NULL,
                        password VARCHAR(255) NOT NULL,
                        role_id INTEGER REFERENCES role(id),
-                       is_admin BOOLEAN DEFAULT FALSE,
                        created_at TIMESTAMP DEFAULT now(),
                        updated_at TIMESTAMP DEFAULT now()
 );
 
-INSERT INTO role (id, name) VALUES (1, 'analyst'), (2, 'partner');
+INSERT INTO role (id, name) VALUES (1, 'admin'), (2, 'analyst'), (3, 'partner');
 
-INSERT INTO users (id, name, email, password, is_admin)
+INSERT INTO users (id, name, email, password, role_id)
 VALUES (
            uuid_generate_v4(),
            'Admin',
            'admin@example.com',
-           '$2a$10$r/4R5IseWBv0dQrXhR3VHeYc/jZdxXG50lmU6LNHOdtTEKRxTiuYO', --password: admin123, AdminPasswordHashTest
-           true
+           '$2a$10$KX5jrXwHUH5D0tVsa8u/oepQ2AyoTpXmGezmZ2bBawC40IWMRk/Fu', --password: admin123, AdminPasswordHashTest
+           1
        );

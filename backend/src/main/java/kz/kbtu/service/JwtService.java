@@ -1,32 +1,64 @@
 package kz.kbtu.service;
+
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import kz.kbtu.entity.User;
 import kz.kbtu.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.security.Key;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+import jakarta.annotation.PostConstruct;
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-@Service
-    public class JwtService implements JwtTokenProvider {
+@Component
+public class JwtService implements JwtTokenProvider {
 
-        @Value("${jwt.secret}")
-        private String secretKey;
+    @Value("${jwt.secret}")
+    private String secretKey;
 
-        @Override
-        public String generateToken(User user) {
-            Key key = Keys.hmacShaKeyFor(secretKey.getBytes());
-            long now = System.currentTimeMillis();
-            long expiration = now + 3600000;
+    @Value("${jwt.expiration}")
+    private Long expirationMillis;
 
-            return Jwts.builder()
-                    .setSubject(user.getEmail())
-                    .setIssuedAt(new Date(now))
-                    .setExpiration(new Date(expiration))
-                    .signWith(key, SignatureAlgorithm.HS256)
-                    .compact();
+    private SecretKey key;
+
+    @PostConstruct
+    public void init() {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    }
+
+    @Override
+    public String generateToken(UserDetails userDetails) {
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + expirationMillis);
+
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(now)
+                .setExpiration(expiration)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    @Override
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
         }
     }
+
+    @Override
+    public String getUsernameFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+}

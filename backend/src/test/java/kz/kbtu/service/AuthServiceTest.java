@@ -52,10 +52,10 @@ public class AuthServiceTest {
         user.setEmail("test@example.com");
         user.setPassword("hashed-password");
 
-        LoginRequest request = new LoginRequest("test@example.com", "wrongpassword");
+        LoginRequest request = new LoginRequest("test@example.com", "wrong-password");
 
         Mockito.when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
-        Mockito.when(passwordEncoder.matches("wrongpassword", "hashed-password")).thenReturn(false);
+        Mockito.when(passwordEncoder.matches("wrong-password", "hashed-password")).thenReturn(false);
 
         assertThrows(RuntimeException.class, () -> authService.login(request));
 
