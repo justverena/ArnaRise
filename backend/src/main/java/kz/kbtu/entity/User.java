@@ -34,6 +34,10 @@ public class User implements UserDetails {
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+
+    public UUID getId() {
+        return id;
+    }
     public void setName(String name) {
         this.name = name;
     }
@@ -77,4 +81,7 @@ public class User implements UserDetails {
     @Override public boolean isCredentialsNonExpired() {return true;}
     @Override public boolean isEnabled() {return true;}
 
+    public void setId(UUID uuid) {
+        this.id = uuid;
+    }
 }

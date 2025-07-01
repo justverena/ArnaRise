@@ -172,11 +172,11 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>11.9.0</version> <!-- можно указать последнюю доступную -->
+                <version>11.9.0</version>
                 <configuration>
                     <url>jdbc:postgresql://localhost:5432/amanat</url>
-                    <user>postgres</user> <!-- замени на своего пользователя -->
-                    <password>your_password</password> <!-- замени на свой пароль -->
+                    <user>postgres</user>
+                    <password>amanat</password>
                 </configuration>
             </plugin>
             <plugin>
@@ -185,6 +185,17 @@
                 <configuration>
                     <source>9</source>
                     <target>9</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
