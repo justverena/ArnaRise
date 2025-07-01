@@ -17,12 +17,21 @@
 import { ref } from 'vue'
 import api from '@/services/api.js'
 import { useRouter, useRoute } from 'vue-router'
+import { jwtDecode } from 'jwt-decode'
 
 const email = ref('')
 const password = ref('')
 const error = ref('')
 const router = useRouter()
 const route = useRoute()
+
+function decodeToken(token) {
+  try {
+    return jwtDecode(token)
+  } catch {
+    return null
+  }
+}
 
 const handleLogin = async () => {
   error.value = ''
@@ -40,6 +49,13 @@ const handleLogin = async () => {
     }
 
     localStorage.setItem('token', token)
+
+    const decoded = decodeToken(token)
+    const role = decoded?.role || ''
+
+    localStorage.setItem('role', role)
+
+    router.push('/')
 
     const redirectPath = route.query.redirect || '/'
     router.push(redirectPath)

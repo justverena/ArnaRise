@@ -1,9 +1,21 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const isAdmin = ref(false)
+
+onMounted(() => {
+  const role = localStorage.getItem('role')
+  isAdmin.value = role === 'admin'
+})
+</script>
+
 <template>
   <aside class="sidebar">
     <router-link to="/">Home</router-link>
     <router-link to="/profile">Profile</router-link>
     <router-link to="/chart">Chart</router-link>
     <router-link to="/users">Users</router-link>
+    <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Register user</router-link>
     
   </aside>
 </template>
