@@ -11,11 +11,10 @@ onMounted(() => {
 
 <template>
   <aside class="sidebar">
-    <router-link to="/">Home</router-link>
-    <router-link to="/profile">Profile</router-link>
-    <router-link to="/chart">Chart</router-link>
-    <router-link to="/users">Users</router-link>
-    <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Register user</router-link>
+    <router-link to="/">Главная</router-link>
+    <router-link to="/profile">Личный кабинет</router-link>
+    <router-link to="/chart">Графики</router-link>
+    <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Регистрация пользователя</router-link>
     
   </aside>
 </template>

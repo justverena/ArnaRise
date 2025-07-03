@@ -6,9 +6,9 @@
       <input v-model="email" placeholder="Email" required />
       <input v-model="password" placeholder="Пароль" required />
       <select v-model="role" required>
-        <option value="admin">Admin</option>
-        <option value="analyst">Analyst</option>
-        <option value="partner">Partner</option>
+        <option value="admin">Админ</option>
+        <option value="analyst">Аналитик</option>
+        <option value="partner">Партнер</option>
       </select>
       <button type="submit">Зарегистрировать</button>
     </form>

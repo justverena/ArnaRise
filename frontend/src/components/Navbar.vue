@@ -12,11 +12,10 @@ onMounted(() => {
 <template>
   <nav class="navbar">
     <div class="nav-links">
-      <router-link to="/" class="nav-link">Home</router-link>
-      <router-link to="/chart" class="nav-link">Chart</router-link>
-      <router-link to="/users" class="nav-link">Users</router-link>
-      <router-link to="/profile" class="nav-link">Profile</router-link>
-      <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Register user</router-link>
+      <router-link to="/" class="nav-link">Главная</router-link>
+      <router-link to="/chart" class="nav-link">Графики</router-link>
+      <router-link to="/profile" class="nav-link">Личный кабинет</router-link>
+      <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Регистрация пользователя</router-link>
     </div>
   </nav>
 </template>

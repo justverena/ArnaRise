@@ -51,6 +51,7 @@ const handleLogin = async () => {
     localStorage.setItem('token', token)
 
     const decoded = decodeToken(token)
+    console.log(decoded)
     const role = decoded?.role || ''
 
     localStorage.setItem('role', role)

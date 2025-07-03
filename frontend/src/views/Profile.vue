@@ -3,22 +3,22 @@
     <div class="card-container">
       <router-link to="" class="action-card">
         <div class="icon-placeholder"></div>
-        <span>Check new Reports</span>
+        <span>Проверить новые отчеты</span>
       </router-link>
 
       <router-link to="" class="action-card">
         <div class="icon-placeholder"></div>
-        <span>Manage Indicators</span>
+        <span>Управление индикаторами</span>
       </router-link>
 
       <router-link to="" class="action-card">
         <div class="icon-placeholder"></div>
-        <span>Report Template</span>
+        <span>Шаблон Отчетов</span>
       </router-link>
     </div>
 
     <div class="logout-container">
-      <button @click="logout" class="logout-btn">Log out</button>
+      <button @click="logout" class="logout-btn">Выйти</button>
     </div>
   </div>
 </template>
