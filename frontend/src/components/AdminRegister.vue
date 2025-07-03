@@ -33,12 +33,14 @@ const registerUser = async () => {
   success.value = ''
   try {
     const token = localStorage.getItem('token')
-    const res = await api.post('/auth/admin/register',
+    console.log('Token used for registration:', token)
+    const res = await api.post('/admin/register',
       { name: name.value, email: email.value, password: password.value, role: role.value },
       { headers: { Authorization: `Bearer ${token}` } }
     )
     success.value = res.data.message
   } catch (err) {
+    console.log('Ошибка регистрации:', err.response)
     error.value = err.response?.data?.message || 'Ошибка регистрации'
   }
 }
