@@ -30,42 +30,27 @@ ChartJS.register(
 )
 
 const props = defineProps({
-  labels: {
-    type: Array,
-    required: true
-  },
-  values: {
-    type: Array,
-    required: true
-  }
+  labels: Array,
+  values: Array,
+  label: String
 })
 
 const chartData = computed(() => ({
   labels: props.labels,
-  datasets: [
-    {
-      label: 'Значения',
-      data: props.values,
-      fill: false,
-      borderColor: '#42A5F5',
-      tension: 0.4
-    }
-  ]
+  datasets: [{
+    label: props.label,
+    data: props.values,
+    borderColor: '#42a5f5',
+    fill: false,
+    tension: 0.4
+  }]
 }))
 
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: 'top'
-    }
-  },
-  scales: {
-    y: {
-      beginAtZero: true
-    }
-  }
+  plugins: { legend: { position: 'top' } },
+  scales: { y: { beginAtZero: true } }
 }
 </script>
 
