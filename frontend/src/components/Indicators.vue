@@ -4,8 +4,8 @@
 
     <select v-model="selectedIndicator" @change="emitIndicator">
       <option disabled value="">Выберите индикатор</option>
-      <option v-for="indicator in indicators" :key="indicator" :value="indicator">
-        {{ indicator }}
+      <option v-for="indicator in indicators" :key="indicator.value" :value="indicator.value">
+        {{ indicator.label }}
       </option>
     </select>
   </div>
@@ -17,10 +17,10 @@ import { ref, defineEmits } from 'vue'
 const emit = defineEmits(['indicator-selected'])
 
 const indicators = [
-  'Количество зарегистрированных браков',
-  'Количество разводов',
-  'Отношение разводов к бракам (%)',
-  'Средний возраст вступающих в брак'
+  { label: 'Количество зарегистрированных браков', value: 'marriage' },
+  { label: 'Количество разводов', value: 'divorce' },
+  { label: 'Отношение разводов к бракам (%)', value: 'divorceRatio' },
+  { label: 'Средний возраст вступающих в брак', value: 'avgAge' }
 ]
 
 const selectedIndicator = ref('')

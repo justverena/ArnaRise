@@ -19,32 +19,50 @@
       </div>
     </div>
 
-    <!-- График -->
+    <!-- Компонент графика -->
     <div class="chart-wrapper">
-      <MyChart :key="chartKey" :labels="labels" :values="values" />
+      <component
+        :is="currentChartComponent"
+        :filters="selectedFilters"
+        :key="chartKey"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import MyChart from '../components/MyChart.vue'
+import { ref, computed } from 'vue'
 import Filters from '../components/Filters.vue'
 import Indicators from '../components/Indicators.vue'
 
-const labels = ref(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
-const values = ref([100, 120, 90, 150, 130, 80, 70])
+// ИМПОРТИРУЕМ компоненты графиков
+import MarriageChart from '../components/indicators/MarriageIndicator.vue'
+import DivorceRatioChart from '../components/indicators/DivorceRatioIndicator.vue'
+import AvgAgeChart from '../components/indicators/AvgAgeIndicator.vue'
+import DivorceChart from '@/components/indicators/DivorceIndicator.vue'
+
 const chartKey = ref(0)
 
 const showFilters = ref(false)
 const showIndicators = ref(false)
 
 const selectedFilters = ref({})
-const selectedIndicator = ref('')
+const selectedIndicator = ref('marriage') // начальный индикатор
+
+const indicatorComponentMap = {
+  marriage: MarriageChart,
+  divorce: DivorceChart,
+  divorceRatio: DivorceRatioChart,
+  avgAge: AvgAgeChart
+  
+}
+
+const currentChartComponent = computed(() => {
+  return indicatorComponentMap[selectedIndicator.value] || MarriageChart
+})
 
 function updateChart() {
-  values.value = Array.from({ length: 7 }, () => Math.floor(Math.random() * 200) + 10)
-  chartKey.value++
+  chartKey.value++ // триггер перерендера
 }
 
 function onFiltersChanged(filters) {
@@ -117,6 +135,7 @@ button {
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+  min-height: 500px;
 }
 
 @keyframes fadeIn {

@@ -5,8 +5,7 @@ import ChartPage from '@/views/ChartPage.vue'
 import Users from '@/views/Users.vue'
 import Profile from '@/views/Profile.vue'
 import AdminRegister from '@/components/AdminRegister.vue'
-import Filters from '@/views/Filters.vue'
-import Indicators from '@/views/Indicators.vue'
+
 
 // 🔼 СНАЧАЛА объявляем guard
 const requireAdmin = (to, from, next) => {
@@ -53,18 +52,6 @@ const routes = [
     name: 'AdminRegister',
     component: AdminRegister,
     //beforeEnter: requireAdmin
-  },
-  {
-    path: '/filters',
-    name: 'Filters',
-    component: Filters,
-    meta: {requiresAuth: true}
-  },
-  {
-    path: '/indicators',
-    name: 'Indicators',
-    component: Indicators,
-    meta: {requiresAuth: true}
   }
 ]
 

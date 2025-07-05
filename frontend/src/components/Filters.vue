@@ -19,7 +19,6 @@
         <option disabled value="">Пол</option>
         <option value="мужской">Мужской</option>
         <option value="женский">Женский</option>
-        <option value="другое">Другое</option>
       </select>
 
       <input v-model="localFilters.age" type="number" min="0" placeholder="Возраст" />
