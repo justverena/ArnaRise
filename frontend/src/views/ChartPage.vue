@@ -1,6 +1,6 @@
 <template>
   <div class="chart-page">
-    <!-- Верхняя панель -->
+    <!-- upper panel -->
     <div class="top-bar">
       <button @click="updateChart">Обновить</button>
 
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <!-- Компонент графика -->
+    <!-- graph component -->
     <div class="chart-wrapper">
       <component
         :is="currentChartComponent"
@@ -35,7 +35,7 @@ import { ref, computed } from 'vue'
 import Filters from '../components/Filters.vue'
 import Indicators from '../components/Indicators.vue'
 
-// ИМПОРТИРУЕМ компоненты графиков
+//indicators
 import MarriageChart from '../components/indicators/MarriageIndicator.vue'
 import DivorceRatioChart from '../components/indicators/DivorceRatioIndicator.vue'
 import AvgAgeChart from '../components/indicators/AvgAgeIndicator.vue'
@@ -47,7 +47,7 @@ const showFilters = ref(false)
 const showIndicators = ref(false)
 
 const selectedFilters = ref({})
-const selectedIndicator = ref('marriage') // начальный индикатор
+const selectedIndicator = ref('marriage') 
 
 const indicatorComponentMap = {
   marriage: MarriageChart,
@@ -62,7 +62,7 @@ const currentChartComponent = computed(() => {
 })
 
 function updateChart() {
-  chartKey.value++ // триггер перерендера
+  chartKey.value++ // prerender trigger
 }
 
 function onFiltersChanged(filters) {

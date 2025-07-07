@@ -7,8 +7,6 @@ import Profile from '@/views/Profile.vue'
 import AdminRegister from '@/components/AdminRegister.vue'
 import ReportTemplates from '@/views/ReportTemplates.vue'
 
-
-// 🔼 СНАЧАЛА объявляем guard
 const requireAdmin = (to, from, next) => {
   const role = localStorage.getItem('role')
   if (role === 'admin') {
@@ -67,7 +65,7 @@ const router = createRouter({
   routes
 })
 
-// 🔐 Глобальный guard — для защиты всех requiresAuth страниц
+//для защиты всех requiresAuth страниц
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
   const isProtected = to.meta.requiresAuth

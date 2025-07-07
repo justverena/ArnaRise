@@ -12,7 +12,7 @@
       </li>
     </ul>
 
-    <!-- Модальные окна -->
+    <!-- add end edit components -->
     <AddTemplate v-if="showAddModal" @close="showAddModal = false" />
     <EditTemplate
       v-if="showEditModal"

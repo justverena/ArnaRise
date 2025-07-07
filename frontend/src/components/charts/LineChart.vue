@@ -14,18 +14,17 @@ import {
   Legend,
   LineElement,
   CategoryScale,
-  LinearScale,       // ✅ Добавляем!
+  LinearScale,
   PointElement
 } from 'chart.js'
 
-// ✅ Регистрируем масштаб и всё остальное
 ChartJS.register(
   Title,
   Tooltip,
   Legend,
   LineElement,
   CategoryScale,
-  LinearScale,        // ✅ Обязательно
+  LinearScale,
   PointElement
 )
 

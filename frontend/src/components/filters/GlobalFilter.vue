@@ -3,7 +3,7 @@ import { useGlobalStore } from '@/store'
 const store = useGlobalStore()
 
 const applyFilters = () => {
-  store.setFilters({ gender: 'женский', age: 25 }) // пример
+  store.setFilters({ gender: 'женский', age: 25 })
 }
 </script>
 

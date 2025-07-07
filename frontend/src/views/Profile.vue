@@ -42,7 +42,7 @@ function logout() {
   padding: 2rem;
 }
 
-/* Контейнер с кнопками */
+/* buttons container */
 .card-container {
   display: flex;
   gap: 2rem;
@@ -51,7 +51,7 @@ function logout() {
   margin-bottom: 2rem;
 }
 
-/* Стиль одного блока-кнопки */
+/* button block style */
 .action-card {
   display: flex;
   flex-direction: column;
@@ -83,7 +83,7 @@ function logout() {
   margin-bottom: 1rem;
 }
 
-/* Контейнер кнопки логаута выравнивается вправо */
+/* logout button container */
 .logout-container {
   width: 100%;
   display: flex;
@@ -91,7 +91,7 @@ function logout() {
   padding-right: 2rem;
 }
 
-/* Сама кнопка */
+/* logout button */
 .logout-btn {
   padding: 0.6rem 1.2rem;
   background-color: #999;
