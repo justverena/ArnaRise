@@ -11,7 +11,7 @@
         <span>Управление индикаторами</span>
       </router-link>
 
-      <router-link to="" class="action-card">
+      <router-link to="/reports" class="action-card">
         <div class="icon-placeholder"></div>
         <span>Шаблон Отчетов</span>
       </router-link>

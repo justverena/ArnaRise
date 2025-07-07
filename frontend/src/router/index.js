@@ -5,6 +5,7 @@ import ChartPage from '@/views/ChartPage.vue'
 import Users from '@/views/Users.vue'
 import Profile from '@/views/Profile.vue'
 import AdminRegister from '@/components/AdminRegister.vue'
+import ReportTemplates from '@/views/ReportTemplates.vue'
 
 
 // 🔼 СНАЧАЛА объявляем guard
@@ -52,6 +53,12 @@ const routes = [
     name: 'AdminRegister',
     component: AdminRegister,
     //beforeEnter: requireAdmin
+  },
+  {
+    path: '/reports',
+    name: ReportTemplates,
+    component: ReportTemplates,
+    meta: { requiresAuth: true}
   }
 ]
 
