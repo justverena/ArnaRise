@@ -3,13 +3,18 @@
     <h3>Выбор индикатора</h3>
 
     <select v-model="selectedIndicator" @change="emitIndicator">
-      <option disabled value="">Выберите индикатор</option>
-      <option v-for="indicator in indicators" :key="indicator.value" :value="indicator.value">
+      <option disabled value="" v-if="!selectedIndicator">Выберите индикатор</option>
+      <option
+        v-for="indicator in indicators"
+        :key="indicator.value"
+        :value="indicator.value"
+      >
         {{ indicator.label }}
       </option>
     </select>
   </div>
 </template>
+
 
 <script setup>
 import { ref, defineEmits } from 'vue'

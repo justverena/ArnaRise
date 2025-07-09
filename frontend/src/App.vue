@@ -2,13 +2,13 @@
 
   <div id="app">
 
-    <button v-if="!isLoginPage" class="hamburger-btn" @click="toggleSidebar">
+    <!--<button v-if="!isLoginPage" class="hamburger-btn" @click="toggleSidebar">
       ☰
-    </button>
+    </button>-->
     
     <Navbar v-if="!isLoginPage" />
 
-    <Sidebar v-if="!isLoginPage && sidebarVisible" @close="sidebarVisible=false" />
+    <!--<Sidebar v-if="!isLoginPage && sidebarVisible" @close="sidebarVisible=false" />-->
 
     <main :class="{ 'with-sidebar': !isLoginPage, 'login-content': isLoginPage }">
       <div class="page-container">
@@ -21,18 +21,20 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
-import Sidebar from '@/components/Sidebar.vue'
+//import Sidebar from '@/components/Sidebar.vue'
 import { ref, computed } from 'vue';
 import Navbar from './components/Navbar.vue';
 
 const route = useRoute()
 
 const isLoginPage = computed(() => route.path === '/login')
-const sidebarVisible = ref(false)
+//const sidebarVisible = ref(false)
 
+/*
 const toggleSidebar = () => {
   sidebarVisible.value = !sidebarVisible.value
 }
+  */
 </script>
 
 <style scoped>

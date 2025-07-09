@@ -2,10 +2,12 @@
 import { ref, onMounted } from 'vue'
 
 const isAdmin = ref(false)
+const isAnalyst = ref(false)
 
 onMounted(() => {
   const role = localStorage.getItem('role')
   isAdmin.value = role === 'admin'
+  isAnalyst.value = role === 'analyst'
 })
 </script>
 
@@ -13,7 +15,7 @@ onMounted(() => {
   <nav class="navbar">
     <div class="nav-links">
       <router-link to="/" class="nav-link">Главная</router-link>
-      <router-link to="/chart" class="nav-link">Графики</router-link>
+      <router-link v-if="isAnalyst" to="/chart" class="nav-link">Графики</router-link>
       <router-link to="/profile" class="nav-link">Личный кабинет</router-link>
       <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Регистрация пользователя</router-link>
     </div>
@@ -28,7 +30,7 @@ onMounted(() => {
   right: 0;
   width: 100%;
   height: 50px;
-  background-color: #42b983;
+  background-color: #4caf50;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,5 +52,6 @@ onMounted(() => {
 
 .nav-link:hover {
   text-decoration: underline;
+  background-color: #009b6700;
 }
 </style>

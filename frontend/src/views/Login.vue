@@ -121,7 +121,7 @@ form input {
 form button {
   padding: 0.75rem;
   width: 100%;
-  background-color: #42b983;
+  background-color: #4caf50;
   color: white;
   font-weight: bold;
   font-size: 1rem;
@@ -132,6 +132,6 @@ form button {
 }
 
 form button:hover {
-  background-color: #369b6d;
+  background-color: #009B67;
 }
 </style>

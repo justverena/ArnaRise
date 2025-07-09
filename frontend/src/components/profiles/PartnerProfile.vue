@@ -2,47 +2,40 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <router-link to="/admin/register" class="nav-button">Регистрация Пользователя</router-link>
-        <router-link to="/admin/users" class="nav-button">Список Пользователей</router-link>
-        <router-link to="/reports" class="nav-button">NONE</router-link>
-        <button @click="logout" class="nav-button logout">Выйти</button>
+        <router-link to="/newreport" class="nav-button">Создать Отчет</router-link>
+        <button class="green-btn" @click="showHistory = true">История отчётов</button>
+        <button class="green-btn" @click="showOrganizations = true">Организации</button>
+        <button @click="logout" class="logout">Выйти</button>
       </div>
     </header>
 
     <main class="main">
       <section class="content">
-        <p>Добро пожаловать в личный кабинет администратора. Здесь будут отображаться доступные вам функции.</p>
+        <ReportHistory v-if="showHistory" @close="showHistory = false" />
+        
+        <Organizations v-if="showOrganizations" @close="showOrganizations = false" />
       </section>
     </main>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import ReportHistory from '@/components/partner/ReportHistory.vue'
+import NewReport from '@/components/reports/ReportForm.vue'
+import Organizations from '@/components/partner/Organizations.vue'
 
 const router = useRouter()
+const showHistory = ref(true)
+//const showNewReport = ref(false)
+const showOrganizations = ref(false)
 
 function logout() {
   localStorage.removeItem('token')
   localStorage.removeItem('role')
   router.push('/login')
 }
-
-onMounted(() => {
-  const role = localStorage.getItem('role')
-  if (role === 'partner') {
-    router.replace('/partner/profile')
-  }
-  if (role === 'analyst') {
-    router.replace('/analyst/profile')
-  } 
-  if (role === 'admin') {
-    router.replace('')
-  } else if (!role) {
-    router.push('/login')
-  }
-})
 </script>
 
 <style scoped>
@@ -83,30 +76,26 @@ body {
   flex-wrap: wrap;
 }
 
-/* Универсальный стиль для кнопок */
-.nav-button {
-  display: inline-block;
-  background-color: #4caf50;
+button {
+  background-color: #999;
   color: white;
+  border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  text-decoration: none;
-  font-size: 0.95rem;
-  border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 0.95rem;
 }
 
-.nav-button:hover {
-  background-color: #43a047;
-}
-
-.logout {
-  background-color: #999;
+.green-btn {
+  background-color: #4caf50;
 }
 
 .logout:hover {
-  background-color: #e53935;
+  background-color: #E2383F;
+}
+
+.green-btn:hover {
+  background-color: #009B67;
 }
 
 .main {

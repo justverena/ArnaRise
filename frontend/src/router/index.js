@@ -6,6 +6,11 @@ import Users from '@/views/Users.vue'
 import Profile from '@/views/Profile.vue'
 import AdminRegister from '@/components/AdminRegister.vue'
 import ReportTemplates from '@/views/ReportTemplates.vue'
+import PartnerProfile from '@/components/profiles/PartnerProfile.vue'
+import AnalystProfile from '@/components/profiles/AnalystProfile.vue'
+import AdminUserList from '@/components/admin/AdminUserList.vue'
+import NewReport from '@/views/patner/NewReport.vue'
+
 
 const requireAdmin = (to, from, next) => {
   const role = localStorage.getItem('role')
@@ -15,6 +20,9 @@ const requireAdmin = (to, from, next) => {
     next('/login')
   }
 }
+
+
+
 
 const routes = [
   {
@@ -53,11 +61,35 @@ const routes = [
     //beforeEnter: requireAdmin
   },
   {
+    path: '/admin/users',
+    name: 'UsersList',
+    component: AdminUserList,
+    meta: { requiresAuth: true}
+  },
+  {
     path: '/reports',
     name: ReportTemplates,
     component: ReportTemplates,
     meta: { requiresAuth: true}
-  }
+  },
+  {
+    path: '/partner/profile',
+    name: PartnerProfile,
+    component: PartnerProfile,
+    meta: { requiresAuth: true}
+  },
+  {
+    path: '/analyst/profile',
+    name: AnalystProfile,
+    component: AnalystProfile,
+    meta: { requiresAuth: true}
+  },
+  {
+    path: '/newreport',
+    name: NewReport,
+    component: NewReport,
+    meta: { requiresAuth: true}
+  },
 ]
 
 const router = createRouter({
@@ -77,6 +109,7 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/login' && token) {
     return next('/')
   }
+  
 
   next()
 })

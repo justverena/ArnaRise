@@ -39,7 +39,7 @@ const chartData = computed(() => ({
   datasets: [{
     label: props.label,
     data: props.values,
-    borderColor: '#42a5f5',
+    borderColor: '#59C0D5',
     fill: false,
     tension: 0.4
   }]

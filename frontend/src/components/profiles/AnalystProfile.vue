@@ -2,16 +2,16 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <router-link to="/admin/register" class="nav-button">Регистрация Пользователя</router-link>
-        <router-link to="/admin/users" class="nav-button">Список Пользователей</router-link>
-        <router-link to="/reports" class="nav-button">NONE</router-link>
+        <router-link to="" class="nav-button">Проверить новые отчеты</router-link>
+        <router-link to="" class="nav-button">Управление индикаторами</router-link>
+        <router-link to="/reports" class="nav-button">Шаблон Отчетов</router-link>
         <button @click="logout" class="nav-button logout">Выйти</button>
       </div>
     </header>
 
     <main class="main">
       <section class="content">
-        <p>Добро пожаловать в личный кабинет администратора. Здесь будут отображаться доступные вам функции.</p>
+        <p>Добро пожаловать в личный кабинет аналитика. Здесь будут отображаться доступные вам функции.</p>
       </section>
     </main>
   </div>
@@ -29,20 +29,6 @@ function logout() {
   router.push('/login')
 }
 
-onMounted(() => {
-  const role = localStorage.getItem('role')
-  if (role === 'partner') {
-    router.replace('/partner/profile')
-  }
-  if (role === 'analyst') {
-    router.replace('/analyst/profile')
-  } 
-  if (role === 'admin') {
-    router.replace('')
-  } else if (!role) {
-    router.push('/login')
-  }
-})
 </script>
 
 <style scoped>

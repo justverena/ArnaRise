@@ -105,12 +105,16 @@ function toggleIndicators() {
 
 button {
   padding: 0.6rem 1rem;
-  background-color: #42a5f5;
+  background-color: #6CC069;
   color: white;
   font-weight: bold;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+button:hover {
+  background-color: #009B67;
 }
 
 .dropdown-container {
