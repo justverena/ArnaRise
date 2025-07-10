@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3c396db4-9548-4147-98e5-dd8c397c2b56" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/entity/report/BaseReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/AmanatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/AmanatApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/controller/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/controller/PartnerReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/dto/report/CreateReportRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/entity/Report.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/kz/kbtu/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/kz/kbtu/service/AuthServiceTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2zEGU9IJT9w2Kn4ZsbVOmgmg95m" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.GenderViolenceReportServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserIntegrationTest.deleteUser_shouldReturn200.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.testUsers_DeleteUserById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.testUsers_UserNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AmanatApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;backend&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/verena/Desktop/amanat_platform/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="kz.kbtu.service.report" />
+      <recent name="kz.kbtu.entity.report" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="PendingGenderViolenceReportServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="amanat_platform" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kz.kbtu.entity.report.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kz.kbtu.service" />
+      <option name="MAIN_CLASS_NAME" value="kz.kbtu.service.PendingGenderViolenceReportServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserIntegrationTest.deleteUser_shouldReturn200" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="amanat_platform" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kz.kbtu.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kz.kbtu.controller" />
+      <option name="MAIN_CLASS_NAME" value="kz.kbtu.controller.UserIntegrationTest" />
+      <option name="METHOD_NAME" value="deleteUser_shouldReturn200" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.testUsers_DeleteUserById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="amanat_platform" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kz.kbtu.entity.report.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kz.kbtu.service" />
+      <option name="MAIN_CLASS_NAME" value="kz.kbtu.service.UserServiceTest" />
+      <option name="METHOD_NAME" value="testUsers_DeleteUserById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.testUsers_UserNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="amanat_platform" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kz.kbtu.entity.report.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kz.kbtu.service" />
+      <option name="MAIN_CLASS_NAME" value="kz.kbtu.service.UserServiceTest" />
+      <option name="METHOD_NAME" value="testUsers_UserNotFound" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AmanatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="amanat_platform" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="kz.kbtu.AmanatApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.PendingGenderViolenceReportServiceTest" />
+        <item itemvalue="JUnit.UserIntegrationTest.deleteUser_shouldReturn200" />
+        <item itemvalue="JUnit.UserServiceTest.testUsers_DeleteUserById" />
+        <item itemvalue="JUnit.UserServiceTest.testUsers_UserNotFound" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3c396db4-9548-4147-98e5-dd8c397c2b56" name="Changes" comment="" />
+      <created>1751288831357</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1751288831357</updated>
+      <workItem from="1751288832405" duration="22000" />
+      <workItem from="1751288889739" duration="602000" />
+      <workItem from="1751289638576" duration="11000" />
+      <workItem from="1751290043862" duration="33000" />
+      <workItem from="1751355042794" duration="39000" />
+      <workItem from="1751357708855" duration="908000" />
+      <workItem from="1751358939169" duration="9718000" />
+      <workItem from="1751462823925" duration="8336000" />
+      <workItem from="1751792265429" duration="15474000" />
+      <workItem from="1751969390573" duration="24707000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

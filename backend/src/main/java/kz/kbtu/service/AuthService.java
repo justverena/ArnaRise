@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     public LoginResponse login(LoginRequest request) {
@@ -29,7 +29,7 @@ public class AuthService {
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())){
             throw new RuntimeException("Wrong password");
         }
-        String token = jwtService.generateToken(user);
+        String token = jwtTokenProvider.generateToken(user);
         System.out.println("Trying login for: " + request.getEmail());
         return new LoginResponse(token);
 
