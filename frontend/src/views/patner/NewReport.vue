@@ -13,29 +13,35 @@
           <div class="template-card">
             <h3>Браки и разводы</h3>
             <p>Статистика по регистрации браков и разводов.</p>
-            <button class="template-button">Открыть шаблон</button>
+            <button class="template-button" @click="selected = 'marriage'">Открыть шаблон</button>
           </div>
 
           <div class="template-card">
             <h3>Гендерное насилие</h3>
             <p>Отчет по случаям домашнего и гендерного насилия.</p>
-            <button class="template-button">Открыть шаблон</button>
+            <button class="template-button" @click="selected = 'violence'">Открыть шаблон</button>
           </div>
         </div>
       </div>
     </main>
+
+    <ReportMarriageForm v-if="selected === 'marriage'" @close="selected = ''" />
+    <ReportViolenceForm v-if="selected === 'violence'" @close="selected = ''" />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import ReportForm from '@/components/reports/ReportForm.vue'
+import ReportMarriageForm from '@/components/reports/ReportMarriageForm.vue'
+import ReportViolenceForm from '@/components/reports/ReportViolenceForm.vue'
 
 const router = useRouter()
-const goBack = () => {
-  router.back()
-}
+const goBack = () => router.back()
+const selected = ref('')
 </script>
+
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');

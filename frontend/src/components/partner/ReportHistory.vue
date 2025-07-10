@@ -3,20 +3,20 @@
     <h2>История отправленных отчётов</h2>
     <div class="report-grid">
       <button class="report-card" @click="viewReport('Quarterly Financial Report')">
-        <h3>Quarterly Financial Report</h3>
-        <p>Due: Dec 15, 2023</p>
+        <h3>Браки и Разводы</h3>
+        <p>12.15.2023</p>
       </button>
       <button class="report-card" @click="viewReport('Annual Performance Review')">
-        <h3>Annual Performance Review</h3>
-        <p>Due: Jan 20, 2024</p>
+        <h3>Домашнее Насилие</h3>
+        <p>01.20.2024</p>
       </button>
       <button class="report-card" @click="viewReport('Project Milestone Report')">
-        <h3>Project Milestone Report</h3>
-        <p>Due: Feb 5, 2024</p>
+        <h3>Домашнее Насилие</h3>
+        <p>02.05.2024</p>
       </button>
       <button class="report-card" @click="viewReport('Monthly Sales Analysis')">
-        <h3>Monthly Sales Analysis</h3>
-        <p>Due: Feb 28, 2024</p>
+        <h3>Браки и Разводы</h3>
+        <p>02.28.2024</p>
       </button>
     </div>
   </section>

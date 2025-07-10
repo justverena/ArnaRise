@@ -1,42 +1,17 @@
 <template>
   <div class="modal-overlay">
     <div class="modal-content">
-      <h2>Создание нового отчёта</h2>
-      <form @submit.prevent="submitForm" class="form-box">
-        <label>
-          Описание
-          <input type="text" v-model="form.description" placeholder="Введите описание" />
-        </label>
-
-        <label>
-          Данные
-          <input type="number" v-model="form.dataEntry" placeholder="Введите данные" />
-        </label>
-
-        <label>
-          Категория
-          <select v-model="form.category">
-            <option disabled value="">Выберите категорию</option>
-            <option>Финансы</option>
-            <option>Кадры</option>
-            <option>Операции</option>
-            <option>Маркетинг</option>
-          </select>
-        </label>
-
-        <label>
-          Дата
-          <input type="date" v-model="form.date" />
-        </label>
-
-        <label>
-          Загрузить файл
-          <input type="file" @change="handleFileUpload" />
-        </label>
+      <h2>Отчет: Гендерное насилие</h2>
+      <form @submit.prevent="submit">
+        <label>Регион <input v-model="form.region" type="text" /></label>
+        <label>Количество обращений <input v-model="form.reports" type="number" /></label>
+        <label>Количество пострадавших женщин <input v-model="form.femaleVictims" type="number" /></label>
+        <label>Количество пострадавших мужчин <input v-model="form.maleVictims" type="number" /></label>
+        <label>Дата отчета <input v-model="form.date" type="date" /></label>
 
         <div class="form-actions">
-          <button type="submit" class="submit-btn">Отправить</button>
-          <button type="button" @click="$emit('close')" class="cancel-btn">Закрыть</button>
+          <button class="submit-btn" type="submit">Отправить</button>
+          <button class="cancel-btn" type="button" @click="$emit('close')">Закрыть</button>
         </div>
       </form>
     </div>
@@ -47,20 +22,16 @@
 import { reactive } from 'vue'
 
 const form = reactive({
-  description: '',
-  dataEntry: '',
-  category: '',
-  date: '',
-  file: null
+  region: '',
+  reports: 0,
+  femaleVictims: 0,
+  maleVictims: 0,
+  date: ''
 })
 
-function handleFileUpload(event) {
-  form.file = event.target.files[0]
-}
-
-function submitForm() {
-  console.log('Форма отправлена:', form)
-  alert('Отчёт отправлен!')
+const submit = () => {
+  console.log('Violence Report:', form)
+  alert('Отчет по гендерному насилию отправлен!')
 }
 </script>
 
