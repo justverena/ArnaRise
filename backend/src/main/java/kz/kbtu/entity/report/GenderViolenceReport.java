@@ -72,6 +72,10 @@ public class GenderViolenceReport extends BaseReport {
         this.authority = authority;
     }
 
+    public Object getCaseDescription() {
+        return caseDescription;
+    }
+
 //    public static GenderViolenceReport createFromRequest(GenderViolenceReportRequest req, User user) {
 //        GenderViolenceReport report = new GenderViolenceReport();
 //        report.setDate(req.getDate());

@@ -48,7 +48,7 @@ public class PendingGenderViolenceReport extends BaseReport {
     @Column(name = "rejection_reason")
     private String rejectionReason;
 
-    @ElementCollection(targetClass = ActionTaken.class, fetch = FetchType.EAGER)
+    @ElementCollection( fetch = FetchType.EAGER)
     @CollectionTable(
             name = "pending_gender_violence_report_actions",
             joinColumns = @JoinColumn(name = "report_id")

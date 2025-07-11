@@ -1,5 +1,5 @@
 package kz.kbtu.enums;
 
 public enum LocationType {
-    HOME, APARTMENT, WORKPLACE, PUBLIC_PLACE
+    HOME, APARTMENT, WORKPLACE, PUBLIC_PLACE, UNKNOWN, OTHER
 }

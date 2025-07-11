@@ -85,5 +85,7 @@ public class BaseReport {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-    public void setCreatedAt(LocalDateTime createdAt) {}
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

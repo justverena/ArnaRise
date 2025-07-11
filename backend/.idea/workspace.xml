@@ -5,24 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c396db4-9548-4147-98e5-dd8c397c2b56" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/entity/report/BaseReport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/AmanatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/AmanatApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/controller/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/controller/PartnerReportController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/dto/report/CreateReportRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/entity/Report.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kz/kbtu/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kz/kbtu/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/kz/kbtu/service/AuthServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/kz/kbtu/service/AuthServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +25,8 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -68,7 +56,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.AmanatApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;backend&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/verena/Desktop/amanat_platform/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -76,6 +64,9 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -86,7 +77,7 @@
       <recent name="kz.kbtu.entity.report" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.UserServiceTest.testUsers_UserNotFound">
     <configuration name="PendingGenderViolenceReportServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="amanat_platform" />
       <extension name="coverage">
@@ -135,13 +126,14 @@
       </method>
     </configuration>
     <configuration name="UserServiceTest.testUsers_UserNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="amanat_platform" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="kz.kbtu.entity.report.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="corretto-21" />
       <option name="PACKAGE_NAME" value="kz.kbtu.service" />
       <option name="MAIN_CLASS_NAME" value="kz.kbtu.service.UserServiceTest" />
       <option name="METHOD_NAME" value="testUsers_UserNotFound" />
@@ -192,7 +184,19 @@
       <workItem from="1751358939169" duration="9718000" />
       <workItem from="1751462823925" duration="8336000" />
       <workItem from="1751792265429" duration="15474000" />
-      <workItem from="1751969390573" duration="24707000" />
+      <workItem from="1751969390573" duration="25162000" />
+      <workItem from="1752221520690" duration="120000" />
+      <workItem from="1752221737435" duration="549000" />
+      <workItem from="1752222307454" duration="152000" />
+      <workItem from="1752222554562" duration="13000" />
+      <workItem from="1752222867008" duration="408000" />
+      <workItem from="1752223413097" duration="170000" />
+      <workItem from="1752223597565" duration="302000" />
+      <workItem from="1752223939278" duration="393000" />
+      <workItem from="1752224353014" duration="25000" />
+      <workItem from="1752224561602" duration="29000" />
+      <workItem from="1752242892868" duration="10000" />
+      <workItem from="1752242942286" duration="33000" />
     </task>
     <servers />
   </component>
