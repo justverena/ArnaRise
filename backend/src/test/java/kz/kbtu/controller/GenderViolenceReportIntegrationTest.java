@@ -93,7 +93,7 @@ public class GenderViolenceReportIntegrationTest {
     @Test
     @Order(2)
     void approveReport_shouldReturn200() throws Exception{
-        mockMvc.perform(post("/api/analyst/reports/" + pendingReportId + "/approve")
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + pendingReportId + "/approve")
                 .header("Authorization", "Bearer " + analystToken))
                 .andExpect(status().isOk());
 
@@ -140,7 +140,7 @@ public class GenderViolenceReportIntegrationTest {
                 }}
         );
 
-        mockMvc.perform(post("/api/analyst/reports/" + toRejectId + "/reject")
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + toRejectId + "/reject")
                         .header("Authorization", "Bearer " + analystToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(rejectionJson))
@@ -217,7 +217,7 @@ public class GenderViolenceReportIntegrationTest {
                 }}
         );
 
-        mockMvc.perform(post("/api/analyst/reports/" + reportId + "/reject")
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + reportId + "/reject")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(rejectionJson))
                 .andExpect(status().isForbidden());
@@ -255,7 +255,7 @@ public class GenderViolenceReportIntegrationTest {
                 .orElseThrow()
                 .getId();
 
-        mockMvc.perform(post("/api/analyst/reports/" + reportId + "/approve")
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + reportId + "/approve")
                         .header("Authorization", "Bearer " + partnerToken))
                 .andExpect(status().isForbidden());
     }

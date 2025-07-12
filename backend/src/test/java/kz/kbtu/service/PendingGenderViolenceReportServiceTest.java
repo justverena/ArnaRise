@@ -30,7 +30,6 @@ public class PendingGenderViolenceReportServiceTest {
 
     @Test
     void createReport_shouldSaveSuccessfully() {
-//        PendingGenderViolenceReportRequest request = new PendingGenderViolenceReportRequest(Gender.FEMALE, LocalDate.now(), District.ALATAU, 30, ViolenceType.PHYSICAL, LocationType.HOME, TimeOfDay.EVENING, SocialStatus.EMPLOYED, AggressorRelation.EX_SPOUSE, "some description of the case", Authority.POLICE, List.of(ActionTaken.POLICE, ActionTaken.OTHER));
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
                 .date(LocalDate.now())

@@ -45,6 +45,5 @@ public class PendingGenderViolenceReportService {
         report.setActions(request.getActions());
         report.setSubmittedBy(user);
         pendingReportRepository.save(report);
-//        pendingReportRepository.save(report);
     }
 }

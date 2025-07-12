@@ -1,20 +1,13 @@
 package kz.kbtu.service.report;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import kz.kbtu.dto.report.GenderViolenceReportRequest;
-import kz.kbtu.entity.User;
 import kz.kbtu.entity.report.GenderViolenceReport;
 import kz.kbtu.entity.report.PendingGenderViolenceReport;
 import kz.kbtu.enums.ReportStatus;
 import kz.kbtu.repository.GenderViolenceReportRepository;
 import kz.kbtu.repository.PendingGenderViolenceReportRepository;
-import kz.kbtu.repository.UserRepository;
-import kz.kbtu.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -15,7 +15,7 @@ CREATE TABLE gender_violence_reports (
                                          measures_taken_by VARCHAR(30), -- enum
 
                                          submitted_by UUID REFERENCES users(id),
-
+                                         status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
                                          created_at TIMESTAMP DEFAULT now(),
                                          updated_at TIMESTAMP DEFAULT now()
 );
