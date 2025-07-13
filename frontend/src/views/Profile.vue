@@ -4,7 +4,7 @@
       <div class="header-buttons">
         <router-link to="/admin/register" class="nav-button">Регистрация Пользователя</router-link>
         <router-link to="/admin/users" class="nav-button">Список Пользователей</router-link>
-        <router-link to="/reports" class="nav-button">NONE</router-link>
+        
         <button @click="logout" class="nav-button logout">Выйти</button>
       </div>
     </header>

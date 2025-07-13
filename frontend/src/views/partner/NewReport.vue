@@ -7,19 +7,18 @@
 
     <main class="template-wrapper">
       <div class="template-box">
-        <h2>Шаблоны Отчетов</h2>
 
         <div class="template-grid">
           <div class="template-card">
             <h3>Браки и разводы</h3>
             <p>Статистика по регистрации браков и разводов.</p>
-            <button class="template-button" @click="selected = 'marriage'">Открыть шаблон</button>
+            <button class="template-button" @click="selected = 'marriage'">Создать Отчет</button>
           </div>
 
           <div class="template-card">
             <h3>Гендерное насилие</h3>
             <p>Отчет по случаям домашнего и гендерного насилия.</p>
-            <button class="template-button" @click="selected = 'violence'">Открыть шаблон</button>
+            <button class="template-button" @click="selected = 'violence'">Создать Отчет</button>
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ import ReportTemplates from '@/views/ReportTemplates.vue'
 import PartnerProfile from '@/components/profiles/PartnerProfile.vue'
 import AnalystProfile from '@/components/profiles/AnalystProfile.vue'
 import AdminUserList from '@/components/admin/AdminUserList.vue'
-import NewReport from '@/views/patner/NewReport.vue'
+import NewReport from '@/views/partner/NewReport.vue'
 
 
 const requireAdmin = (to, from, next) => {

@@ -3,11 +3,45 @@
     <div class="modal-content">
       <h2>Отчет: Браки и разводы</h2>
       <form @submit.prevent="submit">
-        <label>Регион <input v-model="form.region" type="text" /></label>
-        <label>Количество браков <input v-model="form.marriages" type="number" /></label>
-        <label>Количество разводов <input v-model="form.divorces" type="number" /></label>
-        <label>Дата отчета <input v-model="form.date" type="date" /></label>
-        <label>Загрузить файл <input type="file" @change="handleFile" /></label>
+
+        <label>Отчетный год:
+          <select v-model="form.reportYear" required>
+            <option disabled value="">Выберите</option>
+            <option v-for="year in reportYears" :key="year" :value="year">
+              {{ year }}
+            </option>
+          </select>
+        </label>
+
+        <label>Район:
+          <select v-model="form.district" required>
+            <option disabled value="">Выберите</option>
+            <option v-for="d in districts" :key="d" :value="d">{{ districtMap[d] }}</option>
+          </select>
+        </label>
+
+        <label>Количество зарегистрированных браков:
+          <input v-model.number="form.marriageCount" type="number" min="1" @input="calculateRate" required />
+        </label>
+
+        <label>Количество разводов:
+          <input v-model.number="form.divorceCount" type="number" min="0" @input="calculateRate" required />
+        </label>
+
+        <label>Отношение разводов к бракам (%):
+          <input :value="form.ratioDivorcesToMarriagePercent.toFixed(2)" type="number" disabled />
+        </label>
+
+        <label>Средний возраст вступающих в брак:
+          <input v-model.number="form.averageAge" type="number" step="0.1" min="0" required />
+        </label>
+
+        <label>Источник:
+          <select v-model="form.source" required>
+            <option disabled value="">Выберите</option>
+            <option v-for="s in sources" :key="s" :value="s">{{ sourceMap[s] }}</option>
+          </select>
+        </label>
 
         <div class="form-actions">
           <button class="submit-btn" type="submit">Отправить</button>
@@ -20,22 +54,84 @@
 
 <script setup>
 import { reactive } from 'vue'
+import api from '@/services/api'
 
-const form = reactive({
-  region: '',
-  marriages: 0,
-  divorces: 0,
-  date: '',
-  file: null
-})
+const reportYears = [
+  'Y2015', 'Y2016', 'Y2017', 'Y2018', 'Y2019',
+  'Y2020', 'Y2021', 'Y2022', 'Y2023', 'Y2024', 'Y2025'
+]
 
-const handleFile = (e) => {
-  form.file = e.target.files[0]
+const districts = [
+  'ALATAU', 'ALMALY', 'AUEZOV', 'BOSTANDYK',
+  'ZHETISU', 'MEDEU', 'NAURYZBAY', 'TURKSIB'
+]
+
+const sources = [
+  'NATIONAL_STATISTICS',
+  'LOCAL_ADMINISTRATION',
+  'MINISTRY_OF_JUSTICE',
+  'CIVIL_REGISTRY',
+  'OTHER'
+]
+
+const districtMap = {
+  ALATAU: 'Алатау',
+  ALMALY: 'Алмалы',
+  AUEZOV: 'Ауэзов',
+  BOSTANDYK: 'Бостандык',
+  ZHETISU: 'Жетысу',
+  MEDEU: 'Медеу',
+  NAURYZBAY: 'Наурызбай',
+  TURKSIB: 'Турксиб'
 }
 
-const submit = () => {
-  console.log('Marriage Report:', form)
-  alert('Отчет по бракам и разводам отправлен!')
+const sourceMap = {
+  NATIONAL_STATISTICS: 'Нац. статистика',
+  LOCAL_ADMINISTRATION: 'Акимат',
+  MINISTRY_OF_JUSTICE: 'Минюст',
+  CIVIL_REGISTRY: 'ЗАГС',
+  OTHER: 'Другое'
+}
+
+const form = reactive({
+  reportYear: '',
+  district: '',
+  marriageCount: null,
+  divorceCount: null,
+  ratioDivorcesToMarriagePercent: 0,
+  averageAge: null,
+  source: ''
+})
+
+const calculateRate = () => {
+  const m = form.marriageCount
+  const d = form.divorceCount
+
+  if (m && d && m > 0) {
+    form.ratioDivorcesToMarriagePercent = (d / m) * 100
+  } else {
+    form.ratioDivorcesToMarriagePercent = 0
+  }
+}
+
+const submit = async () => {
+  try {
+    const payload = {
+      reportYear: form.reportYear,
+      district: form.district,
+      marriageCount: form.marriageCount,
+      divorceCount: form.divorceCount,
+      ratioDivorcesToMarriagePercent: parseFloat(form.ratioDivorcesToMarriagePercent.toFixed(2)),
+      averageAge: form.averageAge,
+      source: form.source
+    }
+
+    await api.post('/partner/reports/marriage-divorce', payload)
+    alert('Отчет по бракам и разводам успешно отправлен!')
+  } catch (error) {
+    console.error('Ошибка при отправке отчета:', error)
+    alert('Не удалось отправить отчет. Проверьте консоль.')
+  }
 }
 </script>
 
