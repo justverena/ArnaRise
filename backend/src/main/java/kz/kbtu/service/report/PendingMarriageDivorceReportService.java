@@ -3,6 +3,7 @@ package kz.kbtu.service.report;
 import kz.kbtu.dto.report.PendingMarriageDivorceReportRequest;
 import kz.kbtu.entity.User;
 import kz.kbtu.entity.report.PendingMarriageDivorceReport;
+import kz.kbtu.enums.ReportStatus;
 import kz.kbtu.repository.PendingMarriageDivorceReportRepository;
 import kz.kbtu.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 @Service
 public class PendingMarriageDivorceReportService {

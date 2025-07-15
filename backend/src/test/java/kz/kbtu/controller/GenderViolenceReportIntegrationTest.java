@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @Tag("integration")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -92,6 +93,14 @@ public class GenderViolenceReportIntegrationTest {
 
     @Test
     @Order(2)
+    void analystCanSeePendingGenderViolenceReports() throws Exception {
+        mockMvc.perform(get("/api/analyst/reports/gender-violence")
+                        .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(1)));
+    }
+    @Test
+    @Order(3)
     void approveReport_shouldReturn200() throws Exception{
         mockMvc.perform(post("/api/analyst/reports/gender-violence/" + pendingReportId + "/approve")
                 .header("Authorization", "Bearer " + analystToken))
@@ -104,7 +113,7 @@ public class GenderViolenceReportIntegrationTest {
         assertFalse(pendingRepository.findById(pendingReportId).isPresent());
     }
     @Test
-    @Order(3)
+    @Order(4)
     void rejectReport_shouldReturn200() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -154,7 +163,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     void submitReport_shouldReturn403_whenUnauthorized() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -180,7 +189,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void rejectReport_shouldReturn403_whenUnauthorized() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.MALE)
@@ -224,7 +233,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void approveReport_shouldReturn403_whenPartnerTriesToApprove() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -261,7 +270,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void submitReport_shouldReturn403_whenAnalystTriesToSubmit() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.MALE)

@@ -21,9 +21,10 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @Tag("integration")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
@@ -86,9 +87,17 @@ public class MarriageDivorceReportIntegrationTest {
                     .orElseThrow(() -> new RuntimeException("Pending report not found"))
                     .getId();
         }
-
         @Test
         @Order(2)
+        void analystCanSeePendingMarriageDivorceReports() throws Exception {
+            mockMvc.perform(get("/api/analyst/reports/marriage-divorce")
+                            .header("Authorization", "Bearer " + analystToken))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(1)));
+        }
+
+        @Test
+        @Order(3)
         void approveReport_shouldReturn200() throws Exception{
             mockMvc.perform(post("/api/analyst/reports/marriage-divorce/" + pendingReportId + "/approve")
                             .header("Authorization", "Bearer " + analystToken))
@@ -101,7 +110,7 @@ public class MarriageDivorceReportIntegrationTest {
             assertFalse(pendingRepository.findById(pendingReportId).isPresent());
         }
         @Test
-        @Order(3)
+        @Order(4)
         void rejectReport_shouldReturn200() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -145,7 +154,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(4)
+        @Order(5)
         void submitReport_shouldReturn403_whenUnauthorized() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -165,7 +174,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(5)
+        @Order(6)
         void rejectReport_shouldReturn403_whenUnauthorized() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -203,7 +212,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(6)
+        @Order(7)
         void approveReport_shouldReturn403_whenPartnerTriesToApprove() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -233,7 +242,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(7)
+        @Order(8)
         void submitReport_shouldReturn403_whenAnalystTriesToSubmit() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)

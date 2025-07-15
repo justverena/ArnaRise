@@ -5,12 +5,15 @@ import kz.kbtu.dto.report.PendingGenderViolenceReportRequest;
 import kz.kbtu.entity.User;
 import kz.kbtu.entity.report.GenderViolenceReport;
 import kz.kbtu.entity.report.PendingGenderViolenceReport;
+import kz.kbtu.enums.ReportStatus;
 import kz.kbtu.repository.GenderViolenceReportRepository;
 import kz.kbtu.repository.PendingGenderViolenceReportRepository;
 import kz.kbtu.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PendingGenderViolenceReportService {
@@ -46,4 +49,5 @@ public class PendingGenderViolenceReportService {
         report.setSubmittedBy(user);
         pendingReportRepository.save(report);
     }
+
 }

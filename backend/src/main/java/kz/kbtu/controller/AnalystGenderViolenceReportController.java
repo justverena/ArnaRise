@@ -1,12 +1,15 @@
 package kz.kbtu.controller;
 
 import kz.kbtu.dto.report.RejectionRequest;
+import kz.kbtu.dto.report.PendingGenderViolenceReportResponse;
 import kz.kbtu.service.report.GenderViolenceReportService;
+import kz.kbtu.service.report.PendingGenderViolenceReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -16,7 +19,7 @@ import java.util.UUID;
 public class AnalystGenderViolenceReportController {
 
     private final GenderViolenceReportService genderViolenceReportService;
-
+    private final PendingGenderViolenceReportService pendingGenderViolenceReportService;
     @PostMapping("/{id}/approve")
     public ResponseEntity<String> approveReport(@PathVariable UUID id){
         genderViolenceReportService.approveReport(id);
@@ -28,6 +31,11 @@ public class AnalystGenderViolenceReportController {
     public ResponseEntity<String> rejectReport(@PathVariable UUID id, @RequestBody RejectionRequest request) {
         genderViolenceReportService.rejectReport(id, request.getRejectionReason());
         return ResponseEntity.ok("Report rejected and returned to partner with reason.");
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<PendingGenderViolenceReportResponse>> getPendingGenderViolenceReports() {
+        return ResponseEntity.ok(genderViolenceReportService.getAllPendingReports());
     }
 
 }

@@ -32,6 +32,14 @@ public class GenderViolenceReportServiceTest {
         service = new GenderViolenceReportService(pendingRepository, reportRepository);
 
     }
+
+    public List<PendingGenderViolenceReport> getAllPendingReports() {
+        return pendingRepository.findAll()
+                .stream()
+                .filter(report -> report.getStatus() == ReportStatus.PENDING)
+                .toList();
+    }
+
     @Test
     void approveReport_shouldReturn200(){
         UUID id = UUID.randomUUID();
