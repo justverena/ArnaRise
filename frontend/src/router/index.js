@@ -10,6 +10,7 @@ import PartnerProfile from '@/components/profiles/PartnerProfile.vue'
 import AnalystProfile from '@/components/profiles/AnalystProfile.vue'
 import AdminUserList from '@/components/admin/AdminUserList.vue'
 import NewReport from '@/views/partner/NewReport.vue'
+import AnalystReports from '@/views/AnalystReports.vue'
 
 
 const requireAdmin = (to, from, next) => {
@@ -43,10 +44,10 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/users',
+    path: '/admin/users',
     name: 'Users',
     component: Users,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true , role: 'admin'}
   },
   {
     path: '/profile',
@@ -88,6 +89,12 @@ const routes = [
     path: '/newreport',
     name: NewReport,
     component: NewReport,
+    meta: { requiresAuth: true}
+  },
+  {
+    path: '/analyst/reports',
+    name: AnalystReports,
+    component: AnalystReports,
     meta: { requiresAuth: true}
   },
 ]

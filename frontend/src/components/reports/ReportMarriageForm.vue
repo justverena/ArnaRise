@@ -6,11 +6,12 @@
 
         <label>Отчетный год:
           <select v-model="form.reportYear" required>
-            <option disabled value="">Выберите</option>
-            <option v-for="year in reportYears" :key="year" :value="year">
-              {{ year }}
-            </option>
-          </select>
+  <option disabled value="">Выберите год</option>
+  <option v-for="year in reportYears" :key="year" :value="year">
+    {{ year.replace('Y', '') }}
+  </option>
+</select>
+
         </label>
 
         <label>Район:
@@ -55,6 +56,8 @@
 <script setup>
 import { reactive } from 'vue'
 import api from '@/services/api'
+
+const emit = defineEmits(['reportSubmitted', 'close'])
 
 const reportYears = [
   'Y2015', 'Y2016', 'Y2017', 'Y2018', 'Y2019',
@@ -127,13 +130,16 @@ const submit = async () => {
     }
 
     await api.post('/partner/reports/marriage-divorce', payload)
-    alert('Отчет по бракам и разводам успешно отправлен!')
+    alert('Отчет успешно отправлен!')
+    emit('reportSubmitted')
+    emit('close')
   } catch (error) {
     console.error('Ошибка при отправке отчета:', error)
     alert('Не удалось отправить отчет. Проверьте консоль.')
   }
 }
 </script>
+
 
 <style scoped>
 .modal-overlay {

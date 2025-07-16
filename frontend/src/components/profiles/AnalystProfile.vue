@@ -2,7 +2,7 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <router-link to="" class="nav-button">Проверить новые отчеты</router-link>
+        <router-link to="/analyst/reports" class="nav-button">Проверить новые отчеты</router-link>
         <router-link to="" class="nav-button">Управление индикаторами</router-link>
         <router-link to="/reports" class="nav-button">Шаблон Отчетов</router-link>
         <button @click="logout" class="nav-button logout">Выйти</button>

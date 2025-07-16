@@ -7,11 +7,11 @@
         <p>12.15.2023</p>
       </button>
       <button class="report-card" @click="viewReport('Annual Performance Review')">
-        <h3>Домашнее Насилие</h3>
+        <h3>Гендерное Насилие</h3>
         <p>01.20.2024</p>
       </button>
       <button class="report-card" @click="viewReport('Project Milestone Report')">
-        <h3>Домашнее Насилие</h3>
+        <h3>Гендерное Насилие</h3>
         <p>02.05.2024</p>
       </button>
       <button class="report-card" @click="viewReport('Monthly Sales Analysis')">

@@ -16,21 +16,14 @@ api.interceptors.request.use(config => {
   return Promise.reject(error);
 });
 
-// ========== АУТЕНТИФИКАЦИЯ ==========
 export const login = (data) => api.post("/auth/login", data);
 
-// ========== ОТЧЕТЫ ПАРТНЕРА ==========
-/**
- * Отправить отчет о гендерном насилии как партнер.
- * Backend route: POST /api/partner/reports/gender-violence
- */
 export const submitPartnerGenderViolenceReport = (data) =>
   api.post("/partner/reports/gender-violence", data);
 
 export const submitMarriageDivorceReport = (data) =>
   api.post("/partner/reports/marriage-divorce", data);
 
-// ========== (ПРИМЕРЫ ДЛЯ ДРУГИХ КОНТРОЛЛЕРОВ, ЕСЛИ ПОЯВЯТСЯ) ==========
 // export const getUsers = () => api.get("/users");
 // export const getAuditLogs = () => api.get("/audit");
 // export const getIndicators = () => api.get("/indicator");

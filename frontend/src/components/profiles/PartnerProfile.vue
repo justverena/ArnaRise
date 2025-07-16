@@ -3,7 +3,7 @@
     <header class="header">
       <div class="header-buttons">
         <router-link to="/newreport" class="green-btn">Создать Отчет</router-link>
-        <button class="green-btn" @click="showHistory = true">История отчётов</button>
+        <!--<button class="green-btn" @click="showHistory = true">История отчётов</button> -->
         <button class="green-btn" @click="showOrganizations = true">Организации</button>
         <button @click="logout" class="logout">Выйти</button>
       </div>

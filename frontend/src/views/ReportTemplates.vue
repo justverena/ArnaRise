@@ -1,62 +1,84 @@
-<!-- views/ReportTemplate.vue -->
 <template>
-  <div class="report-template">
-    <h1>Шаблоны отчётов</h1>
+  <EditMarriageDivorceReport v-if="showMarriageEdit" @close="showMarriageEdit = false" />
+  <EditGenderViolenceReport v-if="showViolenceEdit" @close="showViolenceEdit = false" />
 
-    <button @click="showAddModal = true">Добавить шаблон</button>
-
-    <ul class="template-list">
-      <li v-for="(template, index) in templates" :key="index">
-        {{ template.name }}
-        <button @click="editTemplate(template)">Редактировать</button>
-      </li>
-    </ul>
-
-    <!-- add end edit components -->
-    <AddTemplate v-if="showAddModal" @close="showAddModal = false" />
-    <EditTemplate
-      v-if="showEditModal"
-      :template="templateToEdit"
-      @close="showEditModal = false"
-    />
-  </div>
+  <button @click="showMarriageEdit = true">Редактировать брак/развод</button>
+  <button @click="showViolenceEdit = true">Редактировать насилие</button>
 </template>
 
 <script setup>
+import EditGenderViolenceReport from '@/components/templates/EditGenderViolence.vue'
+import EditMarriageDivorceReport from '@/components/templates/EditMarriageDivorceReport.vue'
 import { ref } from 'vue'
-import AddTemplate from '@/components/templates/AddTemplate.vue'
-import EditTemplate from '@/components/templates/EditTemplate.vue'
 
-const showAddModal = ref(false)
-const showEditModal = ref(false)
-const templateToEdit = ref(null)
-
-const templates = ref([
-  { name: 'Отчёт по бракам' },
-  { name: 'Разводы и возраст' }
-])
-
-function editTemplate(template) {
-  templateToEdit.value = template
-  showEditModal.value = true
-}
+const showMarriageEdit = ref(false)
+const showViolenceEdit = ref(false)
 </script>
+
 
 <style scoped>
 .report-template {
   padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  font-family: 'Inter', sans-serif;
+  max-width: 900px;
+  margin: 30px auto;
 }
 
-.template-list {
-  margin-top: 1rem;
-  list-style: none;
-  padding: 0;
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
-.template-list li {
-  margin-bottom: 0.5rem;
-  background: #f3f3f3;
-  padding: 1rem;
+.actions {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-btn {
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
   border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #1565c0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  background-color: #f3f4f6;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #43a047;
 }
 </style>
