@@ -125,6 +125,7 @@ onMounted(fetchReports)
   border-radius: 1rem;
   max-width: 900px;
   width: 100%;
+  height: 100%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   font-family: 'Inter', sans-serif;
   overflow-x: auto;

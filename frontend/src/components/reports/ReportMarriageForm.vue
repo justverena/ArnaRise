@@ -6,18 +6,24 @@
 
         <label>Отчетный год:
           <select v-model="form.reportYear" required>
-  <option disabled value="">Выберите год</option>
-  <option v-for="year in reportYears" :key="year" :value="year">
-    {{ year.replace('Y', '') }}
-  </option>
-</select>
+            <option disabled value="">Выберите год</option>
+            <option v-for="reportYear in ReportYears"
+            :key="reportYear"
+            :value="reportYear">
+          {{ $t(`enums.ReportYear.${reportYear}`) }}</option>
+          </select>
 
         </label>
 
         <label>Район:
           <select v-model="form.district" required>
             <option disabled value="">Выберите</option>
-            <option v-for="d in districts" :key="d" :value="d">{{ districtMap[d] }}</option>
+            <option 
+              v-for="district in Districts" 
+              :key="district" 
+              :value="district">
+              {{ $t(`enums.District.${district}`) }}
+            </option>
           </select>
         </label>
 
@@ -40,7 +46,10 @@
         <label>Источник:
           <select v-model="form.source" required>
             <option disabled value="">Выберите</option>
-            <option v-for="s in sources" :key="s" :value="s">{{ sourceMap[s] }}</option>
+            <option v-for="source in Sources"
+            :key="source"
+            :value="source">
+          {{ $t(`enums.Source.${source}`) }}</option>
           </select>
         </label>
 
@@ -54,47 +63,15 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import api from '@/services/api'
+import { ReportYears, Districts, Sources } from '@/constants/enums'
+import { useI18n } from 'vue-i18n'
+import { submitMarriageDivorceReport } from '@/services/api'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
 
-const reportYears = [
-  'Y2015', 'Y2016', 'Y2017', 'Y2018', 'Y2019',
-  'Y2020', 'Y2021', 'Y2022', 'Y2023', 'Y2024', 'Y2025'
-]
-
-const districts = [
-  'ALATAU', 'ALMALY', 'AUEZOV', 'BOSTANDYK',
-  'ZHETISU', 'MEDEU', 'NAURYZBAY', 'TURKSIB'
-]
-
-const sources = [
-  'NATIONAL_STATISTICS',
-  'LOCAL_ADMINISTRATION',
-  'MINISTRY_OF_JUSTICE',
-  'CIVIL_REGISTRY',
-  'OTHER'
-]
-
-const districtMap = {
-  ALATAU: 'Алатау',
-  ALMALY: 'Алмалы',
-  AUEZOV: 'Ауэзов',
-  BOSTANDYK: 'Бостандык',
-  ZHETISU: 'Жетысу',
-  MEDEU: 'Медеу',
-  NAURYZBAY: 'Наурызбай',
-  TURKSIB: 'Турксиб'
-}
-
-const sourceMap = {
-  NATIONAL_STATISTICS: 'Нац. статистика',
-  LOCAL_ADMINISTRATION: 'Акимат',
-  MINISTRY_OF_JUSTICE: 'Минюст',
-  CIVIL_REGISTRY: 'ЗАГС',
-  OTHER: 'Другое'
-}
+const { t } = useI18n
 
 const form = reactive({
   reportYear: '',
@@ -105,6 +82,10 @@ const form = reactive({
   averageAge: null,
   source: ''
 })
+
+const reportYears = computed(() => Object.keys(t('enums.ReportYear')))
+const district = computed(() => Object.keys(t('enums.District')))
+const source = computed(() => Object.keys(t('enums.Source')))
 
 const calculateRate = () => {
   const m = form.marriageCount
@@ -119,22 +100,16 @@ const calculateRate = () => {
 
 const submit = async () => {
   try {
-    const payload = {
-      reportYear: form.reportYear,
-      district: form.district,
-      marriageCount: form.marriageCount,
-      divorceCount: form.divorceCount,
-      ratioDivorcesToMarriagePercent: parseFloat(form.ratioDivorcesToMarriagePercent.toFixed(2)),
-      averageAge: form.averageAge,
-      source: form.source
-    }
-
-    await api.post('/partner/reports/marriage-divorce', payload)
+    await submitMarriageDivorceReport({
+      ...form,
+      rejectionReason: '',
+      status: 'PENDING'
+    })
     alert('Отчет успешно отправлен!')
     emit('reportSubmitted')
     emit('close')
   } catch (error) {
-    console.error('Ошибка при отправке отчета:', error)
+    console.error('Ошибка отправки:', error)
     alert('Не удалось отправить отчет. Проверьте консоль.')
   }
 }

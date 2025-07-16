@@ -1,13 +1,15 @@
-// src/i18n.js
 import { createI18n } from 'vue-i18n'
+import enumsRu from './i18n/enums/ru'
 
 const messages = {
   ru: {
+    enums: enumsRu,
     message: {
       hello: 'Привет мир'
     }
   },
   en: {
+    enums: {}, // Можно добавить позже
     message: {
       hello: 'Hello world'
     }

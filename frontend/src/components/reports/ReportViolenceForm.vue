@@ -7,14 +7,12 @@
         <label>Район:
           <select v-model="form.district" required>
             <option disabled value="">Выберите</option>
-            <option value="ALATAU">Алатау</option>
-            <option value="ALMALY">Алмалы</option>
-            <option value="AUEZOV">Ауэзов</option>
-            <option value="BOSTANDYK">Бостандык</option>
-            <option value="ZHETISU">Жетысу</option>
-            <option value="MEDEU">Медеу</option>
-            <option value="NAURYZBAY">Наурызбай</option>
-            <option value="TURKSIB">Турксиб</option>
+            <option 
+              v-for="district in Districts" 
+              :key="district" 
+              :value="district">
+              {{ $t(`enums.District.${district}`) }}
+            </option>
           </select>
         </label>
 
@@ -27,8 +25,12 @@
         <label>Пол:
           <select v-model="form.gender" required>
             <option disabled value="">Выберите</option>
-            <option value="MALE">Мужской</option>
-            <option value="FEMALE">Женский</option>
+            <option 
+              v-for="gender in Genders" 
+              :key="gender" 
+              :value="gender">
+              {{ $t(`enums.Gender.${gender}`) }}
+            </option>
           </select>
         </label>
 
@@ -41,25 +43,25 @@
         <label>Тип насилия:
           <select v-model="form.violenceType" required>
             <option disabled value="">Выберите</option>
-            <option value="PHYSICAL">Физическое</option>
-            <option value="PSYCHOLOGICAL">Психологическое</option>
-            <option value="SEXUAL">Сексуальное</option>
-            <option value="ECONOMIC">Экономическое</option>
-            <option value="STALKING">Преследование</option>
-            <option value="OTHER">Другое</option>
+            <option 
+              v-for="type in ViolenceTypes" 
+              :key="type" 
+              :value="type">
+              {{ $t(`enums.ViolenceType.${type}`) }}
+            </option>
           </select>
         </label>
 
-        <!-- Место -->
+        <!-- Место происшествия -->
         <label>Место происшествия:
           <select v-model="form.location" required>
             <option disabled value="">Выберите</option>
-            <option value="HOME">Дом</option>
-            <option value="APARTMENT">Квартира</option>
-            <option value="WORKPLACE">Работа</option>
-            <option value="PUBLIC_PLACE">Публичное место</option>
-            <option value="UNKNOWN">Неизвестно</option>
-            <option value="OTHER">Другое</option>
+            <option 
+              v-for="loc in LocationTypes" 
+              :key="loc" 
+              :value="loc">
+              {{ $t(`enums.LocationType.${loc}`) }}
+            </option>
           </select>
         </label>
 
@@ -67,10 +69,12 @@
         <label>Время суток:
           <select v-model="form.timeOfDay" required>
             <option disabled value="">Выберите</option>
-            <option value="MORNING">Утро</option>
-            <option value="AFTERNOON">День</option>
-            <option value="EVENING">Вечер</option>
-            <option value="NIGHT">Ночь</option>
+            <option 
+              v-for="time in TimeOfDay" 
+              :key="time" 
+              :value="time">
+              {{ $t(`enums.TimeOfDay.${time}`) }}
+            </option>
           </select>
         </label>
 
@@ -78,38 +82,25 @@
         <label>Социальный статус:
           <select v-model="form.socialStatus" required>
             <option disabled value="">Выберите</option>
-            <option value="EMPLOYED">Трудоустроен</option>
-            <option value="UNEMPLOYED">Безработный</option>
-            <option value="STUDENT">Студент</option>
-            <option value="RETIRED">Пенсионер</option>
-            <option value="HOUSEWIFE">Домохозяйка</option>
-            <option value="MINOR">Несовершеннолетний</option>
-            <option value="DISABLED">Инвалид</option>
-            <option value="IMMIGRANT">Иммигрант</option>
-            <option value="HOMELESS">Бездомный</option>
-            <option value="UNKNOWN">Неизвестно</option>
+            <option 
+              v-for="status in SocialStatuses" 
+              :key="status" 
+              :value="status">
+              {{ $t(`enums.SocialStatus.${status}`) }}
+            </option>
           </select>
         </label>
 
-        <!-- Отношения -->
+        <!-- Отношения с агрессором -->
         <label>Отношения с агрессором:
           <select v-model="form.aggressorRelation" required>
             <option disabled value="">Выберите</option>
-            <option value="SPOUSE">Супруг/а</option>
-            <option value="EX_SPOUSE">Бывший супруг/а</option>
-            <option value="PARTNER">Партнер</option>
-            <option value="EX_PARTNER">Бывший партнер</option>
-            <option value="PARENT">Родитель</option>
-            <option value="SIBLING">Брат/Сестра</option>
-            <option value="CHILD">Ребенок</option>
-            <option value="FRIEND">Друг</option>
-            <option value="STRANGER">Незнакомец</option>
-            <option value="NEIGHBOR">Сосед</option>
-            <option value="EMPLOYER">Работодатель</option>
-            <option value="TEACHER">Учитель</option>
-            <option value="LAW_ENFORCEMENT">Правоохранитель</option>
-            <option value="OTHER">Другое</option>
-            <option value="UNKNOWN">Неизвестно</option>
+            <option 
+              v-for="relation in AggressorRelations" 
+              :key="relation" 
+              :value="relation">
+              {{ $t(`enums.AggressorRelation.${relation}`) }}
+            </option>
           </select>
         </label>
 
@@ -122,17 +113,12 @@
         <label>Орган, принявший меры:
           <select v-model="form.authority">
             <option disabled value="">Выберите</option>
-            <option value="POLICE">Полиция</option>
-            <option value="MEDICAL">Медицина</option>
-            <option value="SOCIAL_SERVICES">Соц. службы</option>
-            <option value="NGO">НПО</option>
-            <option value="COURT">Суд</option>
-            <option value="HOTLINE">Горячая линия</option>
-            <option value="SCHOOL_ADMIN">Школьная администрация</option>
-            <option value="LOCAL_GOVERNMENT">Акимат</option>
-            <option value="HUMAN_RIGHTS_ORG">Правозащитники</option>
-            <option value="NONE">Нет</option>
-            <option value="OTHER">Другое</option>
+            <option 
+              v-for="auth in Authorities" 
+              :key="auth" 
+              :value="auth">
+              {{ $t(`enums.Authority.${auth}`) }}
+            </option>
           </select>
         </label>
 
@@ -140,18 +126,12 @@
         <label>Принятые меры:
           <select v-model="form.action" required>
             <option disabled value="">Выберите</option>
-            <option value="POLICE">Полиция</option>
-            <option value="SHELTER">Укрытие</option>
-            <option value="MEDICAL_ASSISTANCE">Медицинская помощь</option>
-            <option value="FOLLOW_UP_SCHEDULED">Назначен контрольный визит</option>
-            <option value="CASE_OPENED">Открыто дело</option>
-            <option value="LEGAL_SUPPORT">Юридическая помощь</option>
-            <option value="PSYCHOLOGIST">Психолог</option>
-            <option value="SHELTER_PROVIDED">Предоставлено укрытие</option>
-            <option value="PSYCHOLOGICAL_SUPPORT">Психологическая поддержка</option>
-            <option value="RELOCATION">Перемещение</option>
-            <option value="RESTRAINING_ORDER">Запретительный ордер</option>
-            <option value="OTHER">Другое</option>
+            <option 
+              v-for="act in ActionTaken" 
+              :key="act" 
+              :value="act">
+              {{ $t(`enums.ActionTaken.${act}`) }}
+            </option>
           </select>
         </label>
 
@@ -165,10 +145,15 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-import { submitPartnerGenderViolenceReport } from '@/services/api.js'
+import { reactive, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { submitPartnerGenderViolenceReport } from '@/services/api'
+import { Genders, ViolenceTypes, LocationTypes, Districts, TimeOfDay, SocialStatuses, AggressorRelations, Authorities, ActionTaken } from '@/constants/enums'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
+
+// 🎯 Получаем функцию $t
+const { t } = useI18n()
 
 const form = reactive({
   gender: '',
@@ -184,6 +169,18 @@ const form = reactive({
   authority: '',
   action: ''
 })
+
+// Опции enum'ов из i18n
+const districtOptions = computed(() => Object.keys(t('enums.District')))
+const genderOptions = computed(() => Object.keys(t('enums.Gender')))
+const violenceTypeOptions = computed(() => Object.keys(t('enums.ViolenceType')))
+const locationOptions = computed(() => Object.keys(t('enums.LocationType')))
+const timeOfDayOptions = computed(() => Object.keys(t('enums.TimeOfDay')))
+const socialStatusOptions = computed(() => Object.keys(t('enums.SocialStatus')))
+const aggressorRelationOptions = computed(() => Object.keys(t('enums.AggressorRelation')))
+const authorityOptions = computed(() => Object.keys(t('enums.Authority')))
+const actionOptions = computed(() => Object.keys(t('enums.ActionTaken')))
+
 
 const submit = async () => {
   try {
@@ -201,6 +198,7 @@ const submit = async () => {
   }
 }
 </script>
+
 
 <style scoped>
 .modal-overlay {
