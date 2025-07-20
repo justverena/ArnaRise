@@ -7,5 +7,5 @@
 </template>
 
 <script setup>
-import LineChart from '../charts/LineChart.vue'
+import LineChart from '@/components/charts/LineChart.vue';
 </script>

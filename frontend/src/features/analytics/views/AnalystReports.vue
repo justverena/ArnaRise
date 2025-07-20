@@ -32,8 +32,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import ReportViolenceTable from '@/components/reports/ReportViolenceTable.vue'
-import ReportMarriageTable from '@/components/reports/ReportMarriageTable.vue'
+import ReportViolenceTable from '@/features/reports/components/ReportViolenceTable.vue'
+import ReportMarriageTable from '@/features/reports/components/ReportMarriageTable.vue'
 
 const router = useRouter()
 const goBack = () => router.back()

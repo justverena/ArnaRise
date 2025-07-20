@@ -23,7 +23,7 @@
 import { useRoute } from 'vue-router';
 //import Sidebar from '@/components/Sidebar.vue'
 import { ref, computed } from 'vue';
-import Navbar from './components/Navbar.vue';
+import Navbar from './components/layout/Navbar.vue';
 
 const route = useRoute()
 

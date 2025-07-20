@@ -8,5 +8,5 @@
 </template>
 
 <script setup>
-import BarChart from '../charts/BarChart.vue'
+import BarChart from '@/components/charts/BarChart.vue';
 </script>

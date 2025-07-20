@@ -32,8 +32,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import ReportMarriageForm from '@/components/reports/ReportMarriageForm.vue'
-import ReportViolenceForm from '@/components/reports/ReportViolenceForm.vue'
+import ReportMarriageForm from '@/features/reports/components/ReportMarriageForm.vue'
+import ReportViolenceForm from '@/features/reports/components/ReportViolenceForm.vue'
 
 const router = useRouter()
 const goBack = () => router.back()

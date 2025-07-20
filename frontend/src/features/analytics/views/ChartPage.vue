@@ -32,14 +32,14 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import Filters from '../components/Filters.vue'
-import Indicators from '../components/Indicators.vue'
-
+import Filters from '@/features/filters/Filters.vue'
+import Indicators from '@/features/analytics/components/Indicators.vue'
 //indicators
-import MarriageChart from '../components/indicators/MarriageIndicator.vue'
-import DivorceRatioChart from '../components/indicators/DivorceRatioIndicator.vue'
-import AvgAgeChart from '../components/indicators/AvgAgeIndicator.vue'
-import DivorceChart from '@/components/indicators/DivorceIndicator.vue'
+
+import MarriageChart from '@/features/analytics/components/MarriageIndicator.vue'
+import DivorceRatioChart from '@/features/analytics/components/DivorceRatioIndicator.vue'
+import AvgAgeChart from '@/features/analytics/components/AvgAgeIndicator.vue'
+import DivorceChart from '@/features/analytics/components/DivorceIndicator.vue'
 
 const chartKey = ref(0)
 

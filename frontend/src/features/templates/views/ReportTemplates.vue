@@ -7,8 +7,8 @@
 </template>
 
 <script setup>
-import EditGenderViolenceReport from '@/components/templates/EditGenderViolence.vue'
-import EditMarriageDivorceReport from '@/components/templates/EditMarriageDivorceReport.vue'
+import EditGenderViolenceReport from '@/features/templates/components/EditGenderViolence.vue'
+import EditMarriageDivorceReport from '@/features/templates/components/EditMarriageDivorceReport.vue'
 import { ref } from 'vue'
 
 const showMarriageEdit = ref(false)

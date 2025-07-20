@@ -2,40 +2,33 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <router-link to="/newreport" class="green-btn">Создать Отчет</router-link>
-        <!--<button class="green-btn" @click="showHistory = true">История отчётов</button> -->
-        <button class="green-btn" @click="showOrganizations = true">Организации</button>
-        <button @click="logout" class="logout">Выйти</button>
+        <router-link to="/analyst/reports" class="nav-button">Проверить новые отчеты</router-link>
+        <router-link to="/analyst/templates" class="nav-button">Управление индикаторами</router-link>
+        <router-link to="/analyst/chart" class="nav-button">Графики</router-link>
+        <button @click="logout" class="nav-button logout">Выйти</button>
       </div>
     </header>
 
     <main class="main">
       <section class="content">
-        <ReportHistory v-if="showHistory" @close="showHistory = false" />
-        
-        <Organizations v-if="showOrganizations" @close="showOrganizations = false" />
+        <p>Добро пожаловать в личный кабинет аналитика. Здесь будут отображаться доступные вам функции.</p>
       </section>
     </main>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import ReportHistory from '@/components/partner/ReportHistory.vue'
-import NewReport from '@/components/reports/ReportForm.vue'
-import Organizations from '@/components/partner/Organizations.vue'
 
 const router = useRouter()
-const showHistory = ref(true)
-//const showNewReport = ref(false)
-const showOrganizations = ref(false)
 
 function logout() {
   localStorage.removeItem('token')
   localStorage.removeItem('role')
   router.push('/login')
 }
+
 </script>
 
 <style scoped>
@@ -76,48 +69,31 @@ body {
   flex-wrap: wrap;
 }
 
-button {
-  background-color: #999;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.95rem;
-}
-
-.green-btn {
-  background-color: #4caf50;
-}
-
-.logout:hover {
-  background-color: #E2383F;
-}
-
-router-link.green-btn,
-a.green-btn {
+/* Универсальный стиль для кнопок */
+.nav-button {
   display: inline-block;
   background-color: #4caf50;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  font-size: 0.95rem;
   text-decoration: none;
-  cursor: pointer;
-  text-align: center;
+  font-size: 0.95rem;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-router-link.green-btn:hover,
-a.green-btn:hover {
-  background-color: #009B67;
+.nav-button:hover {
+  background-color: #43a047;
 }
 
-
-.green-btn:hover {
-  background-color: #009B67;
+.logout {
+  background-color: #999;
 }
 
+.logout:hover {
+  background-color: #e53935;
+}
 
 .main {
   display: flex;
