@@ -8,6 +8,10 @@ import java.util.List;
 
 
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class GenderViolenceReportRequest {
 
     private Gender gender;
@@ -25,54 +29,54 @@ public class GenderViolenceReportRequest {
     private ReportStatus status;
 
     private List<ActionTaken> actions;
-    public Gender getGender() {
-        return gender;
-    }
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public Authority getAuthority() {
-
-        return authority;
-    }
-    public TimeOfDay getTimeOfDay() {
-        return timeOfDay;
-
-    }
-    public SocialStatus getSocialStatus() {
-        return socialStatus;
-    }
-    public AggressorRelation getAggressorRelation() {
-
-        return aggressorRelation;
-    }
-    public String getCaseDescription() {
-        return caseDescription;
-    }
-
-    public LocationType getLocation() {
-        return location;
-    }
-    public List<ActionTaken> getActions() {
-        return actions;
-    }
-
-
-    public ViolenceType getViolenceType() {
-        return violenceType;
-    }
-    public ReportStatus getStatus() {
-        return status;
-    }
+//    public Gender getGender() {
+//        return gender;
+//    }
+//    public LocalDate getDate() {
+//        return date;
+//    }
+//
+//    public District getDistrict() {
+//        return district;
+//    }
+//
+//
+//    public Integer getAge() {
+//        return age;
+//    }
+//
+//    public Authority getAuthority() {
+//
+//        return authority;
+//    }
+//    public TimeOfDay getTimeOfDay() {
+//        return timeOfDay;
+//
+//    }
+//    public SocialStatus getSocialStatus() {
+//        return socialStatus;
+//    }
+//    public AggressorRelation getAggressorRelation() {
+//
+//        return aggressorRelation;
+//    }
+//    public String getCaseDescription() {
+//        return caseDescription;
+//    }
+//
+//    public LocationType getLocation() {
+//        return location;
+//    }
+//    public List<ActionTaken> getActions() {
+//        return actions;
+//    }
+//
+//
+//    public ViolenceType getViolenceType() {
+//        return violenceType;
+//    }
+//    public ReportStatus getStatus() {
+//        return status;
+//    }
 }
 

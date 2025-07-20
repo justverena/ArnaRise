@@ -32,73 +32,57 @@ public class PendingGenderViolenceReportRequest {
 
     private List<ActionTaken> actions;
 
-//    public <E> PendingGenderViolenceReportRequest(Gender gender, LocalDate now, District district, int i, ViolenceType violenceType, LocationType locationType, TimeOfDay timeOfDay, SocialStatus socialStatus, AggressorRelation aggressorRelation, String someDescriptionOfTheCase, Authority authority, List<E> police) {
-//        this.gender = gender;
-//        this.date = now;
-//        this.district = district;
-//        this.age = i;
-//        this.violenceType = violenceType;
-//        this.location = locationType;
-//        this.timeOfDay = timeOfDay;
-//        this.socialStatus = socialStatus;
-//        this.aggressorRelation = aggressorRelation;
-//        this.caseDescription = someDescriptionOfTheCase;
-//        this.authority = authority;
-//        this.rejectionReason = "";
-//        this.status = ReportStatus.PENDING;
+//
+//    public Gender getGender() {
+//        return gender;
+//    }
+//    public LocalDate getDate() {
+//        return date;
+//    }
+//
+//    public District getDistrict() {
+//        return district;
+//    }
+//
+//
+//    public Integer getAge() {
+//        return age;
+//    }
+//
+//    public Authority getAuthority() {
+//
+//        return authority;
+//    }
+//    public TimeOfDay getTimeOfDay() {
+//        return timeOfDay;
 //
 //    }
-
-    public Gender getGender() {
-        return gender;
-    }
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public Authority getAuthority() {
-
-        return authority;
-    }
-    public TimeOfDay getTimeOfDay() {
-        return timeOfDay;
-
-    }
-    public SocialStatus getSocialStatus() {
-        return socialStatus;
-    }
-    public AggressorRelation getAggressorRelation() {
-
-        return aggressorRelation;
-    }
-    public String getCaseDescription() {
-        return caseDescription;
-    }
-
-    public LocationType getLocation() {
-        return location;
-    }
-    public List<ActionTaken> getActions() {
-        return actions;
-    }
-
-
-    public ViolenceType getViolenceType() {
-        return violenceType;
-    }
-    public ReportStatus getStatus() {
-        return status;
-    }
-    public String getRejectionReason() {
-        return rejectionReason;
-    }
+//    public SocialStatus getSocialStatus() {
+//        return socialStatus;
+//    }
+//    public AggressorRelation getAggressorRelation() {
+//
+//        return aggressorRelation;
+//    }
+//    public String getCaseDescription() {
+//        return caseDescription;
+//    }
+//
+//    public LocationType getLocation() {
+//        return location;
+//    }
+//    public List<ActionTaken> getActions() {
+//        return actions;
+//    }
+//
+//
+//    public ViolenceType getViolenceType() {
+//        return violenceType;
+//    }
+//    public ReportStatus getStatus() {
+//        return status;
+//    }
+//    public String getRejectionReason() {
+//        return rejectionReason;
+//    }
 }

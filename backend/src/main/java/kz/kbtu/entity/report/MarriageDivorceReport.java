@@ -2,14 +2,8 @@ package kz.kbtu.entity.report;
 
 import jakarta.persistence.*;
 import kz.kbtu.entity.User;
-import kz.kbtu.enums.District;
-import kz.kbtu.enums.ReportStatus;
-import kz.kbtu.enums.ReportYear;
-import kz.kbtu.enums.Source;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import kz.kbtu.enums.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

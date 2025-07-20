@@ -2,8 +2,6 @@ package kz.kbtu.entity.report;
 
 
 import jakarta.persistence.*;
-import kz.kbtu.dto.report.GenderViolenceReportRequest;
-import kz.kbtu.entity.User;
 import kz.kbtu.enums.*;
 import lombok.*;
 
@@ -76,24 +74,4 @@ public class GenderViolenceReport extends BaseReport {
         return caseDescription;
     }
 
-//    public static GenderViolenceReport createFromRequest(GenderViolenceReportRequest req, User user) {
-//        GenderViolenceReport report = new GenderViolenceReport();
-//        report.setDate(req.getDate());
-//        report.setGender(req.getGender());
-//        report.setDistrict(req.getDistrict());
-//        report.setAge(req.getAge());
-//
-//        report.setViolenceType(req.getViolenceType());
-//        report.setLocation(req.getLocation());
-//        report.setTimeOfDay(req.getTimeOfDay());
-//        report.setSocialStatus(req.getSocialStatus());
-//        report.setAggressorRelation(req.getAggressorRelation());
-//        report.setCaseDescription(req.getCaseDescription());
-//        report.setAuthority(req.getAuthority());
-//        report.setActions(req.getActions());
-//
-//        report.setSubmittedBy(user);
-//
-//        return report;
-//    }
 }

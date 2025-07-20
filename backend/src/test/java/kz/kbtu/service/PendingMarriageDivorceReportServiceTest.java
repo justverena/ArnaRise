@@ -16,9 +16,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
@@ -58,5 +60,73 @@ public class PendingMarriageDivorceReportServiceTest {
         PendingMarriageDivorceReport saved = captor.getValue();
         assertEquals(Source.CIVIL_REGISTRY, saved.getSource());
         assertEquals(District.ALATAU, saved.getDistrict());
+    }
+    @Test
+    void getRejectedMarriageDivorceReports_shouldReturnListOfReports() {
+        UUID userId = UUID.randomUUID();
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(userId.toString(), "", List.of());
+
+        User user = new User();
+        user.setId(userId);
+
+        PendingMarriageDivorceReport report = new PendingMarriageDivorceReport();
+        report.setId(UUID.randomUUID());
+        report.setSubmittedBy(user);
+        report.setStatus(ReportStatus.REJECTED);
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(reportRepository.findBySubmittedByAndStatus(user, ReportStatus.REJECTED))
+                .thenReturn(List.of(report));
+
+        List<PendingMarriageDivorceReport> result = service.getRejectedMarriageDivorceReports(userDetails);
+
+        assertEquals(1, result.size());
+        assertEquals(ReportStatus.REJECTED, result.get(0).getStatus());
+    }
+    @Test
+    void updateRejectedMarriageDivorceReport_shouldUpdateSuccessfully() {
+        UUID reportId = UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
+
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(userId.toString(), "", List.of());
+
+        User user = new User();
+        user.setId(userId);
+
+        PendingMarriageDivorceReport report = new PendingMarriageDivorceReport();
+        report.setId(reportId);
+        report.setSubmittedBy(user);
+        report.setStatus(ReportStatus.REJECTED);
+
+        when(reportRepository.findById(reportId)).thenReturn(Optional.of(report));
+
+        PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
+                .reportYear(ReportYear.Y2020)
+                .district(District.TURKSIB)
+                .marriageCount(100)
+                .divorceCount(30)
+                .averageAge(BigDecimal.valueOf(28.2))
+                .source(Source.CIVIL_REGISTRY)
+                .build();
+
+        service.updateRejectedMarriageDivorceReport(reportId, request, userDetails);
+
+        verify(reportRepository).save(report);
+        assertEquals(ReportStatus.PENDING, report.getStatus());
+        assertNull(report.getRejectionReason());
+        assertEquals(ReportYear.Y2020, report.getReportYear());
+        assertEquals(District.TURKSIB, report.getDistrict());
+    }
+    @Test
+    void updateRejectedMarriageDivorceReport_shouldThrowIfNotFound() {
+        UUID reportId = UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
+
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(userId.toString(), "", List.of());
+
+        when(reportRepository.findById(reportId)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () ->
+                service.updateRejectedMarriageDivorceReport(reportId, new PendingMarriageDivorceReportRequest(), userDetails));
     }
 }
