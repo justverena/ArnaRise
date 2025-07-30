@@ -69,13 +69,13 @@ public class PendingGenderViolenceReportServiceTest {
     @Test
     void getRejectedReports_shouldReturnListOfResponses() {
         UUID userId = UUID.randomUUID();
-
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                userId.toString(), "", List.of()
-        );
-
         User user = new User();
         user.setId(userId);
+
+        UserDetails userDetails = mock(UserDetails.class);
+        when(userDetails.getUsername()).thenReturn("partner@example.com");
+        when(userRepository.findByEmail("partner@example.com")).thenReturn(Optional.of(user));
+
 
         PendingGenderViolenceReport report = new PendingGenderViolenceReport();
         report.setId(UUID.randomUUID());
@@ -95,7 +95,7 @@ public class PendingGenderViolenceReportServiceTest {
         report.setSubmittedBy(user);
         report.setStatus(ReportStatus.REJECTED);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+//        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(reportRepository.findBySubmittedByAndStatus(user, ReportStatus.REJECTED))
                 .thenReturn(List.of(report));
 
@@ -107,14 +107,14 @@ public class PendingGenderViolenceReportServiceTest {
     @Test
     void updateRejectedReport_shouldUpdateSuccessfully() {
         UUID reportId = UUID.randomUUID();
-        UUID userId = UUID.randomUUID();
-
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                userId.toString(), "", List.of()
-        );
+        UserDetails userDetails = mock(UserDetails.class);
+        when(userDetails.getUsername()).thenReturn("partner@example.com");
 
         User user = new User();
-        user.setId(userId);
+        user.setEmail("partner@example.com");
+        user.setId(UUID.randomUUID());
+        when(userRepository.findByEmail("partner@example.com")).thenReturn(Optional.of(user));
+
 
         PendingGenderViolenceReport report = new PendingGenderViolenceReport();
         report.setId(reportId);
@@ -148,11 +148,13 @@ public class PendingGenderViolenceReportServiceTest {
     @Test
     void updateRejectedReport_shouldThrowIfNotFound() {
         UUID reportId = UUID.randomUUID();
-        UUID userId = UUID.randomUUID();
+        UserDetails userDetails = mock(UserDetails.class);
+        when(userDetails.getUsername()).thenReturn("partner@example.com");
 
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                userId.toString(), "", List.of()
-        );
+        User user = new User();
+        user.setEmail("partner@example.com");
+        user.setId(UUID.randomUUID());
+        when(userRepository.findByEmail("partner@example.com")).thenReturn(Optional.of(user));
 
         when(reportRepository.findById(reportId)).thenReturn(Optional.empty());
 

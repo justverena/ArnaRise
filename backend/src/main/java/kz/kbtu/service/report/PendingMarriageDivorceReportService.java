@@ -6,6 +6,7 @@ import kz.kbtu.entity.report.PendingMarriageDivorceReport;
 import kz.kbtu.enums.ReportStatus;
 import kz.kbtu.repository.PendingMarriageDivorceReportRepository;
 import kz.kbtu.repository.UserRepository;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -47,20 +48,21 @@ public class PendingMarriageDivorceReportService {
         pendingMarriageDivorceReportRepository.save(report);
     }
     public List<PendingMarriageDivorceReport> getRejectedMarriageDivorceReports(UserDetails userDetails) {
-        UUID userId = UUID.fromString(userDetails.getUsername());
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userDetails.getUsername()));
 
         return pendingMarriageDivorceReportRepository.findBySubmittedByAndStatus(user, ReportStatus.REJECTED);
     }
 
     public void updateRejectedMarriageDivorceReport(UUID reportId, PendingMarriageDivorceReportRequest request, UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userDetails.getUsername()));
+
         PendingMarriageDivorceReport report = pendingMarriageDivorceReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Report not found"));
 
-        UUID userId = UUID.fromString(userDetails.getUsername());
-        if (!report.getSubmittedBy().getId().equals(userId)) {
-            throw new RuntimeException("User not authorized to update this report");
+        if (!report.getSubmittedBy().getId().equals(user.getId())) {
+            throw new AccessDeniedException("User not authorized to update this report");
         }
 
         report.setReportYear(request.getReportYear());

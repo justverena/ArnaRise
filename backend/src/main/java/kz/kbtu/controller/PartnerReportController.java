@@ -52,7 +52,7 @@ public class PartnerReportController {
     @PatchMapping("/gender-violence/{id}")
     public ResponseEntity<String> updateRejectedGenderViolenceReport(@PathVariable UUID id, @RequestBody PendingGenderViolenceReportRequest request, @AuthenticationPrincipal UserDetails userDetails){
         pendingGenderViolenceReportService.updateRejectedGenderViolenceReport(id, request, userDetails);
-        return ResponseEntity.ok("Report updated and resubmitted.");
+        return ResponseEntity.ok("Report updated and resubmitted");
     }
     @GetMapping("/marriage-divorce/rejected")
     public ResponseEntity<List<PendingMarriageDivorceReport>> getRejectedMarriageDivorceReports(@AuthenticationPrincipal UserDetails userDetails) {
@@ -66,7 +66,7 @@ public class PartnerReportController {
                                                                       @AuthenticationPrincipal UserDetails userDetails) {
 
         pendingMarriageDivorceReportService.updateRejectedMarriageDivorceReport(id, request, userDetails);
-        return ResponseEntity.ok("Report updated and resubmitted.");
+        return ResponseEntity.ok("Report updated and resubmitted");
     }
 
 }

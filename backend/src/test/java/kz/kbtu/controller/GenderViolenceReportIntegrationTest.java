@@ -295,5 +295,243 @@ public class GenderViolenceReportIntegrationTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isForbidden());
     }
+    @Test
+    @Order(9)
+    void partnerCanGetRejectedReports() throws Exception {
+        PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
+                .gender(Gender.FEMALE)
+                .date(LocalDate.now())
+                .district(District.MEDEU)
+                .age(41)
+                .violenceType(ViolenceType.SEXUAL)
+                .location(LocationType.HOME)
+                .timeOfDay(TimeOfDay.MORNING)
+                .socialStatus(SocialStatus.UNEMPLOYED)
+                .aggressorRelation(AggressorRelation.SPOUSE)
+                .caseDescription("Updated rejected case")
+                .authority(Authority.POLICE)
+                .actions(List.of(ActionTaken.OTHER))
+                .status(ReportStatus.PENDING)
+                .rejectionReason("")
+                .build();
 
+        mockMvc.perform(post("/api/partner/reports/gender-violence")
+                        .header("Authorization", "Bearer " + partnerToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk());
+
+        UUID reportId = pendingRepository.findAll().stream()
+                .filter(r -> r.getSocialStatus() == SocialStatus.UNEMPLOYED)
+                .findFirst()
+                .orElseThrow()
+                .getId();
+
+        RejectionRequest rejection = new RejectionRequest();
+        rejection.setRejectionReason("Missing required data");
+
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + reportId + "/reject")
+                        .header("Authorization", "Bearer " + analystToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(rejection)))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/partner/reports/gender-violence/rejected")
+                        .header("Authorization", "Bearer " + partnerToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].status").value("REJECTED"))
+                .andExpect(jsonPath("$[0].rejectionReason").value("Missing required data"));
+    }
+
+    @Test
+    @Order(10)
+    void partnerCanUpdateRejectedReports() throws Exception {
+        PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
+                .gender(Gender.FEMALE)
+                .date(LocalDate.now())
+                .district(District.ALMALY)
+                .age(43)
+                .violenceType(ViolenceType.SEXUAL)
+                .location(LocationType.HOME)
+                .timeOfDay(TimeOfDay.EVENING)
+                .socialStatus(SocialStatus.STUDENT)
+                .aggressorRelation(AggressorRelation.SPOUSE)
+                .caseDescription("Old case")
+                .authority(Authority.POLICE)
+                .actions(List.of(ActionTaken.POLICE))
+                .status(ReportStatus.PENDING)
+                .rejectionReason("")
+                .build();
+        mockMvc.perform(post("/api/partner/reports/gender-violence")
+                        .header("Authorization", "Bearer " + partnerToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk());
+
+        UUID reportId = pendingRepository.findAll().stream()
+                .filter(r -> r.getCaseDescription().equals("Old case"))
+                .findFirst()
+                .orElseThrow()
+                .getId();
+
+        RejectionRequest rejection = new RejectionRequest();
+        rejection.setRejectionReason("Invalid data");
+
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + reportId + "/reject")
+                        .header("Authorization", "Bearer " + analystToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(rejection)))
+                .andExpect(status().isOk());
+
+        PendingGenderViolenceReportRequest updatedRequest = PendingGenderViolenceReportRequest.builder()
+                .gender(Gender.FEMALE)
+                .date(LocalDate.now())
+                .district(District.ALMALY)
+                .age(45)
+                .violenceType(ViolenceType.SEXUAL)
+                .location(LocationType.HOME)
+                .timeOfDay(TimeOfDay.EVENING)
+                .socialStatus(SocialStatus.STUDENT)
+                .aggressorRelation(AggressorRelation.SPOUSE)
+                .caseDescription("Updated rejected case")
+                .authority(Authority.POLICE)
+                .actions(List.of(ActionTaken.POLICE))
+                .status(ReportStatus.PENDING)
+                .rejectionReason("")
+                .build();
+
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch("/api/partner/reports/gender-violence/" + reportId)
+                        .header("Authorization", "Bearer " + partnerToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedRequest)))
+                .andExpect(status().isOk());
+
+        PendingGenderViolenceReport updated = pendingRepository.findById(reportId).orElseThrow();
+        assertEquals("Updated rejected case", updated.getCaseDescription());
+        assertEquals(ReportStatus.PENDING, updated.getStatus());
+        assertNull(updated.getRejectionReason());
+    }
+
+    @Test
+    @Order(11)
+    void partnerShouldNotSeeOthersRejectedReports() throws Exception {
+        LoginRequest partner2 = new LoginRequest("partner2@example.com", "partner123");
+        String partner2Token = objectMapper.readTree(mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(partner2)))
+                .andReturn().getResponse().getContentAsString()).get("token").asText();
+
+        PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
+                .gender(Gender.MALE)
+                .date(LocalDate.now())
+                .district(District.TURKSIB)
+                .age(50)
+                .violenceType(ViolenceType.ECONOMIC)
+                .location(LocationType.HOME)
+                .timeOfDay(TimeOfDay.MORNING)
+                .socialStatus(SocialStatus.STUDENT)
+                .aggressorRelation(AggressorRelation.OTHER)
+                .caseDescription("Malicious attempt")
+                .authority(Authority.POLICE)
+                .actions(List.of(ActionTaken.POLICE))
+                .status(ReportStatus.PENDING)
+                .rejectionReason("")
+                .build();
+
+        mockMvc.perform(post("/api/partner/reports/gender-violence")
+                        .header("Authorization", "Bearer " + partner2Token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk());
+
+        UUID reportId = pendingRepository.findAll().stream()
+                .filter(r -> r.getCaseDescription().equals("Malicious attempt"))
+                .findFirst()
+                .orElseThrow()
+                .getId();
+
+        RejectionRequest rejection = new RejectionRequest();
+        rejection.setRejectionReason("Wrong data");
+
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + reportId + "/reject")
+                        .header("Authorization", "Bearer " + analystToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(rejection)))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/partner/reports/gender-violence/rejected")
+                        .header("Authorization", "Bearer " + partnerToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.id == '" + reportId + "')]").doesNotExist());
+    }
+    @Test
+    @Order(12)
+    void partnerShouldNotUpdateOthersRejectedReports() throws Exception {
+        LoginRequest partner2 = new LoginRequest("partner2@example.com", "partner123");
+        String partner2Token = objectMapper.readTree(mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(partner2)))
+                .andReturn().getResponse().getContentAsString()).get("token").asText();
+
+        PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
+                .gender(Gender.FEMALE)
+                .date(LocalDate.now())
+                .district(District.ALATAU)
+                .age(30)
+                .violenceType(ViolenceType.PHYSICAL)
+                .location(LocationType.HOME)
+                .timeOfDay(TimeOfDay.EVENING)
+                .socialStatus(SocialStatus.EMPLOYED)
+                .aggressorRelation(AggressorRelation.EX_SPOUSE)
+                .caseDescription("Other partner update")
+                .authority(Authority.POLICE)
+                .actions(List.of(ActionTaken.POLICE, ActionTaken.OTHER))
+                .status(ReportStatus.PENDING)
+                .rejectionReason("")
+                .build();
+
+        mockMvc.perform(post("/api/partner/reports/gender-violence")
+                        .header("Authorization", "Bearer " + partner2Token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk());
+
+        UUID reportId = pendingRepository.findAll().stream()
+                .filter(r -> r.getCaseDescription().equals("Other partner update"))
+                .findFirst()
+                .orElseThrow()
+                .getId();
+
+        RejectionRequest rejection = new RejectionRequest();
+        rejection.setRejectionReason("Unauthorized modification");
+
+        mockMvc.perform(post("/api/analyst/reports/gender-violence/" + reportId + "/reject")
+                        .header("Authorization", "Bearer " + analystToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(rejection)))
+                .andExpect(status().isOk());
+
+        PendingGenderViolenceReportRequest updatedRequest = PendingGenderViolenceReportRequest.builder()
+                .gender(Gender.FEMALE)
+                .date(LocalDate.now())
+                .district(District.ALATAU)
+                .age(30)
+                .violenceType(ViolenceType.PHYSICAL)
+                .location(LocationType.HOME)
+                .timeOfDay(TimeOfDay.EVENING)
+                .socialStatus(SocialStatus.EMPLOYED)
+                .aggressorRelation(AggressorRelation.EX_SPOUSE)
+                .caseDescription("New description")
+                .authority(Authority.POLICE)
+                .actions(List.of(ActionTaken.POLICE, ActionTaken.OTHER))
+                .status(ReportStatus.PENDING)
+                .rejectionReason("")
+                .build();
+
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch("/api/partner/reports/gender-violence/" + reportId)
+                        .header("Authorization", "Bearer " + partnerToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedRequest)))
+                .andExpect(status().isForbidden());
+    }
 }

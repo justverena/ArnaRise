@@ -8,6 +8,7 @@ import kz.kbtu.enums.ReportStatus;
 import kz.kbtu.repository.PendingGenderViolenceReportRepository;
 import kz.kbtu.repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -56,9 +57,8 @@ public class PendingGenderViolenceReportService {
     }
 
     public List<PendingGenderViolenceReportResponse> getRejectedGenderViolenceReports(UserDetails userDetails) {
-        UUID userId = UUID.fromString(userDetails.getUsername());
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userDetails.getUsername()));
 
         List<PendingGenderViolenceReport> rejectedReports = pendingGenderViolenceReportRepository.findBySubmittedByAndStatus(user, ReportStatus.REJECTED);
         return rejectedReports.stream()
@@ -90,13 +90,18 @@ public class PendingGenderViolenceReportService {
     }
 
     public void updateRejectedGenderViolenceReport(UUID id, PendingGenderViolenceReportRequest request, UserDetails userDetails) {
-        UUID partnerId = UUID.fromString(userDetails.getUsername());
+
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userDetails.getUsername()));
+
+
         PendingGenderViolenceReport report = pendingGenderViolenceReportRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Report not found"));
 
-            if (!report.getSubmittedBy().getId().equals(partnerId)) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this report");
-            }
+
+        if (!report.getSubmittedBy().getId().equals(user.getId())) {
+            throw new AccessDeniedException("User not authorized to update this report");
+        }
 
             if (report.getStatus() != ReportStatus.REJECTED) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only rejected reports can be updated");

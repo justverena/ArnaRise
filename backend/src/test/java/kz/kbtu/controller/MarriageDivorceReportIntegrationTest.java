@@ -262,4 +262,211 @@ public class MarriageDivorceReportIntegrationTest {
                     .andExpect(status().isForbidden());
         }
 
+        @Test
+        @Order(9)
+        void partnerCanGetRejectedReports() throws Exception {
+            PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
+                    .reportYear(ReportYear.Y2018)
+                    .district(District.MEDEU)
+                    .marriageCount(20)
+                    .divorceCount(15)
+                    .averageAge(BigDecimal.valueOf(30.0))
+                    .source(Source.NATIONAL_STATISTICS)
+                    .status(ReportStatus.PENDING)
+                    .rejectionReason("")
+                    .build();
+
+            mockMvc.perform(post("/api/partner/reports/marriage-divorce")
+                            .header("Authorization", "Bearer " + partnerToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk());
+
+            UUID reportId = pendingRepository.findAll().stream().filter(r -> r.getSource() == Source.NATIONAL_STATISTICS)
+                    .findFirst()
+                    .orElseThrow()
+                    .getId();
+            RejectionRequest rejection = new RejectionRequest();
+            rejection.setRejectionReason("Missing required data");
+
+            mockMvc.perform(post("/api/analyst/reports/marriage-divorce/" + reportId + "/reject")
+            .header("Authorization", "Bearer " + analystToken)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(rejection)))
+                    .andExpect(status().isOk());
+
+            mockMvc.perform((get("/api/partner/reports/marriage-divorce/rejected")
+                    .header("Authorization", "Bearer " + partnerToken)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$[0].status").value("REJECTED"))
+                    .andExpect(jsonPath("$[0].rejectionReason").value("Missing required data"));
+        }
+
+        @Test
+        @Order(10)
+        void partnerCanUpdateRejectedReports() throws Exception {
+
+            PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
+                    .reportYear(ReportYear.Y2015)
+                    .district(District.ALATAU)
+                    .marriageCount(12)
+                    .divorceCount(40)
+                    .averageAge(BigDecimal.valueOf(24.8))
+                    .source(Source.LOCAL_ADMINISTRATION)
+                    .status(ReportStatus.PENDING)
+                    .rejectionReason("")
+                    .build();
+
+            mockMvc.perform(post("/api/partner/reports/marriage-divorce")
+                            .header("Authorization", "Bearer " + partnerToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk());
+
+            UUID reportId = pendingRepository.findAll().stream().filter(r -> r.getSource() == Source.LOCAL_ADMINISTRATION)
+                    .findFirst()
+                    .orElseThrow()
+                    .getId();
+            RejectionRequest rejection = new RejectionRequest();
+            rejection.setRejectionReason("Invalid data");
+
+            mockMvc.perform(post("/api/analyst/reports/marriage-divorce/" + reportId + "/reject")
+                            .header("Authorization", "Bearer " + analystToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(rejection)))
+                    .andExpect(status().isOk());
+
+            PendingMarriageDivorceReportRequest updatedRequest = PendingMarriageDivorceReportRequest.builder()
+                    .reportYear(ReportYear.Y2015)
+                    .district(District.ALATAU)
+                    .marriageCount(12)
+                    .divorceCount(25)
+                    .averageAge(BigDecimal.valueOf(24.8))
+                    .source(Source.LOCAL_ADMINISTRATION)
+                    .status(ReportStatus.PENDING)
+                    .rejectionReason("")
+                    .build();
+            mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch("/api/partner/reports/marriage-divorce/" + reportId)
+                    .header("Authorization", "Bearer " + partnerToken)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(updatedRequest)))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string("Report updated and resubmitted"));
+            var updatedReport = pendingRepository.findById(reportId).orElse(null);
+            assertNotNull(updatedReport);
+            assertEquals(12, updatedReport.getMarriageCount());
+            assertEquals(ReportStatus.PENDING, updatedReport.getStatus());
+            assertNull(updatedReport.getRejectionReason());
+
+        }
+
+        @Test
+        @Order(11)
+        void partnerShouldNotSeeOthersRejectedReports() throws Exception {
+            LoginRequest partner2Request = new LoginRequest("partner2@example.com", "partner123");
+            String partner2Response = mockMvc.perform(post("/api/auth/login")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(partner2Request)))
+                    .andExpect(status().isOk())
+                    .andReturn().getResponse().getContentAsString();
+            String partner2Token = objectMapper.readTree(partner2Response).get("token").asText();
+
+            PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
+                    .reportYear(ReportYear.Y2020)
+                    .district(District.NAURYZBAY)
+                    .marriageCount(10)
+                    .divorceCount(5)
+                    .averageAge(BigDecimal.valueOf(31.0))
+                    .source(Source.MINISTRY_OF_JUSTICE)
+                    .status(ReportStatus.PENDING)
+                    .rejectionReason("")
+                    .build();
+
+            mockMvc.perform(post("/api/partner/reports/marriage-divorce")
+            .header("Authorization", "Bearer " + partner2Token)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk());
+
+            UUID reportId = pendingRepository.findAll().stream().filter(r -> r.getSource() == Source.MINISTRY_OF_JUSTICE)
+                    .findFirst()
+                    .orElseThrow()
+                    .getId();
+            RejectionRequest rejection = new RejectionRequest();
+            rejection.setRejectionReason("Invalid structure");
+
+            mockMvc.perform(post("/api/analyst/reports/marriage-divorce/" + reportId + "/reject")
+            .header("Authorization", "Bearer " + analystToken)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(rejection)))
+                    .andExpect(status().isOk());
+
+            mockMvc.perform(get("/api/partner/reports/marriage-divorce/rejected")
+                    .header("Authorization", "Bearer " + partnerToken))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$[?(@.id == '" + reportId + "')]").doesNotExist());
+
+        }
+
+        @Test
+        @Order(12)
+        void partnerShouldNotUpdateOthersRejectedReports() throws Exception {
+
+            LoginRequest partner2Request = new LoginRequest("partner2@example.com", "partner123");
+            String partner2Response = mockMvc.perform(post("/api/auth/login")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(partner2Request)))
+                    .andExpect(status().isOk())
+                    .andReturn().getResponse().getContentAsString();
+            String partner2Token = objectMapper.readTree(partner2Response).get("token").asText();
+
+            PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
+                    .reportYear(ReportYear.Y2020)
+                    .district(District.NAURYZBAY)
+                    .marriageCount(10)
+                    .divorceCount(5)
+                    .averageAge(BigDecimal.valueOf(31.0))
+                    .source(Source.MINISTRY_OF_JUSTICE)
+                    .status(ReportStatus.PENDING)
+                    .rejectionReason("")
+                    .build();
+
+            mockMvc.perform(post("/api/partner/reports/marriage-divorce")
+                            .header("Authorization", "Bearer " + partner2Token)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(request)))
+                    .andExpect(status().isOk());
+
+
+            UUID reportId = pendingRepository.findAll().stream().filter(r -> r.getSource() == Source.MINISTRY_OF_JUSTICE)
+                    .findFirst()
+                    .orElseThrow()
+                    .getId();
+            RejectionRequest rejection = new RejectionRequest();
+            rejection.setRejectionReason("Invalid info");
+
+            mockMvc.perform(post("/api/analyst/reports/marriage-divorce/" + reportId + "/reject")
+                            .header("Authorization", "Bearer " + analystToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(rejection)))
+                    .andExpect(status().isOk());
+
+            PendingMarriageDivorceReportRequest updatedRequest = PendingMarriageDivorceReportRequest.builder()
+                    .reportYear(ReportYear.Y2020)
+                    .district(District.NAURYZBAY)
+                    .marriageCount(99)
+                    .divorceCount(88)
+                    .averageAge(BigDecimal.valueOf(31.0))
+                    .source(Source.MINISTRY_OF_JUSTICE)
+                    .status(ReportStatus.PENDING)
+                    .rejectionReason("")
+                    .build();
+
+            mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch("/api/partner/reports/marriage-divorce/" + reportId)
+            .header("Authorization", "Bearer " + partnerToken)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(updatedRequest)))
+                    .andExpect(status().isForbidden());
+        }
+
 }
