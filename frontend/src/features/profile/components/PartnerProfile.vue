@@ -11,7 +11,7 @@
 
     <main class="main">
       <section class="content">
-        <ReportHistory v-if="showHistory" @close="showHistory = false" />
+        <ReportHistoryView v-if="showHistory" @close="showHistory = false" />
         
         <Organizations v-if="showOrganizations" @close="showOrganizations = false" />
       </section>
@@ -22,8 +22,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import ReportHistory from '@/features/reports/views/ReportHistory.vue'
-import NewReport from '@/features/reports/views/NewReport.vue'
+import ReportHistoryView from '@/features/reports/views/ReportHistoryView.vue'
+import NewReport from '@/features/reports/views/NewReportView.vue'
 import Organizations from '@/features/organizations/Organizations.vue'
 
 

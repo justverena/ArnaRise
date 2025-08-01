@@ -1,54 +1,73 @@
 <template>
-  <div class="base-textarea">
-    <label v-if="label" :for="id">{{ label }}</label>
+  <label class="base-label">
+    <span v-if="label" class="base-label-text">{{ label }}</span>
+
     <textarea
-      :id="id"
-      :placeholder="placeholder"
-      v-model="innerValue"
-      :rows="rows"
-      :disabled="disabled"
-      @input="$emit('update:modelValue', innerValue)"
+      v-bind="$attrs"
+      class="base-textarea"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
-  </div>
+
+    <div v-if="showCounter" class="counter">
+      {{ (modelValue || '').length }}<span v-if="maxlength">/{{ maxlength }}</span>
+    </div>
+
+    <FormError v-if="error" :message="error" />
+  </label>
 </template>
 
-<script>
-export default {
-  name: 'BaseTextarea',
-  props: {
-    modelValue: String,
-    label: String,
-    placeholder: String,
-    id: String,
-    rows: {
-      type: Number,
-      default: 4,
-    },
-    disabled: Boolean,
+<script setup>
+import FormError from './FormError.vue'
+
+defineProps({
+  modelValue: {
+    type: String,
+    default: ''
   },
-  computed: {
-    innerValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(val) {
-        this.$emit('update:modelValue', val);
-      },
-    },
+  label: String,
+  maxlength: Number,
+  showCounter: {
+    type: Boolean,
+    default: false
   },
-};
+  error: String
+})
+defineEmits(['update:modelValue'])
 </script>
 
 <style scoped>
-.base-textarea {
-  display: flex;
-  flex-direction: column;
+.base-label {
+  display: block;
   margin-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  color: #333;
 }
-textarea {
-  padding: 0.5rem;
-  border: 1px solid #cbd5e0;
-  border-radius: 0.375rem;
+
+.base-label-text {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.base-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.3rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  font-family: inherit;
   resize: vertical;
+  outline: none;
+}
+
+.counter {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  color: #6b7280;
 }
 </style>

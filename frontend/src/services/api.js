@@ -24,6 +24,15 @@ export const submitPartnerGenderViolenceReport = (data) =>
 export const submitMarriageDivorceReport = (data) =>
   api.post("/partner/reports/marriage-divorce", data);
 
+export const getPartnerGenderViolenceReports = () =>
+  api.get("/partner/reports/gender-violence");
+
+export const getRejectedGenderViolenceReports = () =>
+  api.get("/partner/reports/gender-violence/rejected");
+
+export const getRejectedMarriageDivorceReports = () =>
+  api.get("/partner/reports/marriage-divorce/rejected")
+
 // export const getUsers = () => api.get("/users");
 // export const getAuditLogs = () => api.get("/audit");
 // export const getIndicators = () => api.get("/indicator");

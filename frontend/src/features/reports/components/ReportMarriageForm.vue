@@ -8,11 +8,12 @@
           <select v-model="form.reportYear" required>
             <option disabled value="">Выберите год</option>
             <option v-for="reportYear in ReportYears"
-            :key="reportYear"
-            :value="reportYear">
-          {{ $t(`enums.ReportYear.${reportYear}`) }}</option>
+                    :key="reportYear"
+                    :value="reportYear">
+              <!-- {{ $t(`enums.ReportYear.${reportYear}`) }} -->
+              {{ reportYear }}
+            </option>
           </select>
-
         </label>
 
         <label>Район:
@@ -22,7 +23,8 @@
               v-for="district in Districts" 
               :key="district" 
               :value="district">
-              {{ $t(`enums.District.${district}`) }}
+              <!-- {{ $t(`enums.District.${district}`) }} -->
+              {{ district }}
             </option>
           </select>
         </label>
@@ -47,9 +49,11 @@
           <select v-model="form.source" required>
             <option disabled value="">Выберите</option>
             <option v-for="source in Sources"
-            :key="source"
-            :value="source">
-          {{ $t(`enums.Source.${source}`) }}</option>
+                    :key="source"
+                    :value="source">
+              <!-- {{ $t(`enums.Source.${source}`) }} -->
+              {{ source }}
+            </option>
           </select>
         </label>
 
@@ -63,15 +67,15 @@
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue'
+import { reactive } from 'vue'
 import api from '@/services/api'
 import { ReportYears, Districts, Sources } from '@/constants/enums'
-import { useI18n } from 'vue-i18n'
+// import { useI18n } from 'vue-i18n'
 import { submitMarriageDivorceReport } from '@/services/api'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
 
-const { t } = useI18n
+// const { t } = useI18n
 
 const form = reactive({
   reportYear: '',
@@ -83,9 +87,9 @@ const form = reactive({
   source: ''
 })
 
-const reportYears = computed(() => Object.keys(t('enums.ReportYear')))
-const district = computed(() => Object.keys(t('enums.District')))
-const source = computed(() => Object.keys(t('enums.Source')))
+// const reportYears = computed(() => Object.keys(t('enums.ReportYear')))
+// const district = computed(() => Object.keys(t('enums.District')))
+// const source = computed(() => Object.keys(t('enums.Source')))
 
 const calculateRate = () => {
   const m = form.marriageCount
@@ -114,7 +118,6 @@ const submit = async () => {
   }
 }
 </script>
-
 
 <style scoped>
 .modal-overlay {

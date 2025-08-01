@@ -1,22 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '@/views/Home.vue'
-import Login from '@/features/auth/Login.vue'
-import ChartPage from '@/features/analytics/views/ChartPage.vue'
-import Users from '@/features/users/views/Users.vue'
+import Login from '@/features/auth/LoginView.vue'
+import ChartDashboard from '@/features/analytics/views/ChartDashboard.vue'
+import Users from '@/features/users/views/UserListView.vue'
 import Profile from '@/features/profile/views/Profile.vue'
-import AdminRegister from '@/features/users/views/AdminRegister.vue'
+import AdminRegister from '@/features/users/views/UserRegisterForm.vue'
 import ReportTemplates from '@/features/templates/views/ReportTemplates.vue'
 import PartnerProfile from '@/features/profile/components/PartnerProfile.vue'
 import AnalystProfile from '@/features/profile/components/AnalystProfile.vue'
 import AdminUserList from '@/components/admin/AdminUserList.vue'
-import NewReport from '@/features/reports/views/NewReport.vue'
+import NewReport from '@/features/reports/views/NewReportView.vue'
 import AnalystReports from '@/features/analytics/views/AnalystReports.vue'
 
 // layouts
 import AdminLayout from '@/layouts/AdminLayout.vue'
 import PartnerLayout from '@/layouts/PartnerLayout.vue'
 import AnalystLayout from '@/layouts/AnalystLayout.vue'
+import { createWebSocketModuleRunnerTransport } from 'vite/module-runner'
+import ComponentPreview from '@/views/ComponentPreview.vue'
 
 const routes = [
   {
@@ -29,6 +31,12 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/preview',
+    name: 'Preview',
+    component: ComponentPreview
+    
   },
 
   // Админ-маршруты
@@ -103,7 +111,7 @@ const routes = [
       {
         path: 'chart',
         name: 'ChartPage',
-        component: ChartPage
+        component: ChartDashboard
       }
     ]
   },
@@ -152,6 +160,7 @@ const routes = [
       return `/${role}/users`
     }
   },
+  
 ]
 
 

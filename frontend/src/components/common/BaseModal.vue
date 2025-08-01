@@ -1,50 +1,74 @@
 <template>
-  <div v-if="visible" class="overlay" @click.self="$emit('close')">
-    <div class="modal">
-      <button class="close-button" @click="$emit('close')">✕</button>
-      <slot />
+  <teleport to="body">
+    <div v-if="modelValue" class="modal-overlay" @click="onBackdrop">
+      <div class="modal-content" @click.stop>
+        <header v-if="$slots.header" class="modal-header">
+          <slot name="header" />
+        </header>
+
+        <main class="modal-body">
+          <slot />
+        </main>
+
+        <footer v-if="$slots.footer" class="modal-footer">
+          <slot name="footer" />
+        </footer>
+      </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
-<script>
-export default {
-  name: 'BaseModal',
-  props: {
-    visible: {
-      type: Boolean,
-      default: false,
-    },
-  },
-};
+<script setup>
+const props = defineProps({
+  modelValue: { type: Boolean, default: false },
+  closeOnBackdrop: { type: Boolean, default: true }
+})
+const emit = defineEmits(['update:modelValue', 'close'])
+
+function onBackdrop() {
+  if (!props.closeOnBackdrop) return
+  emit('update:modelValue', false)
+  emit('close')
+}
 </script>
 
 <style scoped>
-.overlay {
+.modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background-color: rgba(0,0,0,.4);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  z-index: 999;
 }
-.modal {
+
+.modal-content {
   background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  min-width: 300px;
-  position: relative;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  font-family: 'Inter', sans-serif;
+  max-height: 85vh;
+  overflow: auto;
 }
-.close-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  border: none;
-  background: none;
-  font-size: 1.25rem;
-  cursor: pointer;
+
+.modal-header {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.modal-body {
+  /* содержимое формы/текста */
+}
+
+.modal-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
 }
 </style>

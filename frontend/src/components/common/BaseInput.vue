@@ -1,53 +1,49 @@
 <template>
-  <div class="base-input">
-    <label v-if="label" :for="id">{{ label }}</label>
+  <label class="base-label">
+    <span v-if="label" class="base-label-text">{{ label }}</span>
     <input
-      :id="id"
+      v-bind="$attrs"
       :type="type"
-      :placeholder="placeholder"
-      v-model="innerValue"
-      :disabled="disabled"
-      @input="$emit('update:modelValue', innerValue)"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      class="base-input"
     />
-  </div>
+  </label>
 </template>
 
-<script>
-export default {
-  name: 'BaseInput',
-  props: {
-    modelValue: [String, Number],
-    label: String,
-    placeholder: String,
-    type: {
-      type: String,
-      default: 'text',
-    },
-    id: String,
-    disabled: Boolean,
-  },
-  computed: {
-    innerValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(val) {
-        this.$emit('update:modelValue', val);
-      },
-    },
-  },
-};
+<script setup>
+defineProps({
+  modelValue: [String, Number],
+  label: String,
+  type: {
+    type: String,
+    default: 'text'
+  }
+})
+defineEmits(['update:modelValue'])
 </script>
 
 <style scoped>
-.base-input {
-  display: flex;
-  flex-direction: column;
+.base-label {
+  display: block;
   margin-bottom: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
 }
-input {
-  padding: 0.5rem;
-  border: 1px solid #cbd5e0;
-  border-radius: 0.375rem;
+
+.base-label-text {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.base-input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 2rem;
+  font-size: 0.95rem;
+  background-color: #f9f9f9;
+  outline: none;
 }
 </style>

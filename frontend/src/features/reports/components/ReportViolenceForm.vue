@@ -3,7 +3,6 @@
     <div class="modal-content">
       <h2>Отчет: Гендерное насилие</h2>
       <form @submit.prevent="submit">
-        <!-- Район -->
         <label>Район:
           <select v-model="form.district" required>
             <option disabled value="">Выберите</option>
@@ -11,17 +10,16 @@
               v-for="district in Districts" 
               :key="district" 
               :value="district">
-              {{ $t(`enums.District.${district}`) }}
+              <!-- {{ $t(`enums.District.${district}`) }} -->
+              {{ district }}
             </option>
           </select>
         </label>
 
-        <!-- Дата -->
         <label>Дата инцидента:
           <input v-model="form.date" type="date" required />
         </label>
 
-        <!-- Пол -->
         <label>Пол:
           <select v-model="form.gender" required>
             <option disabled value="">Выберите</option>
@@ -29,17 +27,16 @@
               v-for="gender in Genders" 
               :key="gender" 
               :value="gender">
-              {{ $t(`enums.Gender.${gender}`) }}
+              <!-- {{ $t(`enums.Gender.${gender}`) }} -->
+              {{ gender }}
             </option>
           </select>
         </label>
 
-        <!-- Возраст -->
         <label>Возраст:
           <input v-model="form.age" type="number" min="0" required />
         </label>
 
-        <!-- Тип насилия -->
         <label>Тип насилия:
           <select v-model="form.violenceType" required>
             <option disabled value="">Выберите</option>
@@ -47,12 +44,12 @@
               v-for="type in ViolenceTypes" 
               :key="type" 
               :value="type">
-              {{ $t(`enums.ViolenceType.${type}`) }}
+              <!-- {{ $t(`enums.ViolenceType.${type}`) }} -->
+              {{ type }}
             </option>
           </select>
         </label>
 
-        <!-- Место происшествия -->
         <label>Место происшествия:
           <select v-model="form.location" required>
             <option disabled value="">Выберите</option>
@@ -60,12 +57,12 @@
               v-for="loc in LocationTypes" 
               :key="loc" 
               :value="loc">
-              {{ $t(`enums.LocationType.${loc}`) }}
+              <!-- {{ $t(`enums.LocationType.${loc}`) }} -->
+              {{ loc }}
             </option>
           </select>
         </label>
 
-        <!-- Время суток -->
         <label>Время суток:
           <select v-model="form.timeOfDay" required>
             <option disabled value="">Выберите</option>
@@ -73,12 +70,12 @@
               v-for="time in TimeOfDay" 
               :key="time" 
               :value="time">
-              {{ $t(`enums.TimeOfDay.${time}`) }}
+              <!-- {{ $t(`enums.TimeOfDay.${time}`) }} -->
+              {{ time }}
             </option>
           </select>
         </label>
 
-        <!-- Социальный статус -->
         <label>Социальный статус:
           <select v-model="form.socialStatus" required>
             <option disabled value="">Выберите</option>
@@ -86,12 +83,12 @@
               v-for="status in SocialStatuses" 
               :key="status" 
               :value="status">
-              {{ $t(`enums.SocialStatus.${status}`) }}
+              <!-- {{ $t(`enums.SocialStatus.${status}`) }} -->
+              {{ status }}
             </option>
           </select>
         </label>
 
-        <!-- Отношения с агрессором -->
         <label>Отношения с агрессором:
           <select v-model="form.aggressorRelation" required>
             <option disabled value="">Выберите</option>
@@ -99,17 +96,16 @@
               v-for="relation in AggressorRelations" 
               :key="relation" 
               :value="relation">
-              {{ $t(`enums.AggressorRelation.${relation}`) }}
+              <!-- {{ $t(`enums.AggressorRelation.${relation}`) }} -->
+              {{ relation }}
             </option>
           </select>
         </label>
 
-        <!-- Описание -->
         <label>Описание случая:
           <textarea v-model="form.caseDescription" rows="3" />
         </label>
 
-        <!-- Орган -->
         <label>Орган, принявший меры:
           <select v-model="form.authority">
             <option disabled value="">Выберите</option>
@@ -117,12 +113,12 @@
               v-for="auth in Authorities" 
               :key="auth" 
               :value="auth">
-              {{ $t(`enums.Authority.${auth}`) }}
+              <!-- {{ $t(`enums.Authority.${auth}`) }} -->
+              {{ auth }}
             </option>
           </select>
         </label>
 
-        <!-- Меры -->
         <label>Принятые меры:
           <select v-model="form.action" required>
             <option disabled value="">Выберите</option>
@@ -130,7 +126,8 @@
               v-for="act in ActionTaken" 
               :key="act" 
               :value="act">
-              {{ $t(`enums.ActionTaken.${act}`) }}
+              <!-- {{ $t(`enums.ActionTaken.${act}`) }} -->
+              {{ act }}
             </option>
           </select>
         </label>
@@ -145,15 +142,21 @@
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { reactive } from 'vue'
 import { submitPartnerGenderViolenceReport } from '@/services/api'
-import { Genders, ViolenceTypes, LocationTypes, Districts, TimeOfDay, SocialStatuses, AggressorRelations, Authorities, ActionTaken } from '@/constants/enums'
+import { 
+  Genders, 
+  ViolenceTypes, 
+  LocationTypes, 
+  Districts, 
+  TimeOfDay, 
+  SocialStatuses, 
+  AggressorRelations, 
+  Authorities, 
+  ActionTaken 
+} from '@/constants/enums'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
-
-// 🎯 Получаем функцию $t
-const { t } = useI18n()
 
 const form = reactive({
   gender: '',
@@ -169,18 +172,6 @@ const form = reactive({
   authority: '',
   action: ''
 })
-
-// Опции enum'ов из i18n
-const districtOptions = computed(() => Object.keys(t('enums.District')))
-const genderOptions = computed(() => Object.keys(t('enums.Gender')))
-const violenceTypeOptions = computed(() => Object.keys(t('enums.ViolenceType')))
-const locationOptions = computed(() => Object.keys(t('enums.LocationType')))
-const timeOfDayOptions = computed(() => Object.keys(t('enums.TimeOfDay')))
-const socialStatusOptions = computed(() => Object.keys(t('enums.SocialStatus')))
-const aggressorRelationOptions = computed(() => Object.keys(t('enums.AggressorRelation')))
-const authorityOptions = computed(() => Object.keys(t('enums.Authority')))
-const actionOptions = computed(() => Object.keys(t('enums.ActionTaken')))
-
 
 const submit = async () => {
   try {
@@ -198,6 +189,7 @@ const submit = async () => {
   }
 }
 </script>
+
 
 
 <style scoped>
