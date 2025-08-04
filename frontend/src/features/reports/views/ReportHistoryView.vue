@@ -15,6 +15,21 @@
       </button>
     </div>
   </section>
+
+<EditMarriageDivorceReport
+  v-if="showEditModal && selectedReport?.type === 'MARRIAGE'"
+  :report-id="selectedReport.id"
+  @close="closeModal"
+  @reportUpdated="handleUpdateSuccess"
+/>
+
+<EditViolenceReport
+  v-if="showEditModal && selectedReport?.type === 'GENDER'"
+  :report-id="selectedReport.id"
+  @close="closeModal"
+  @reportUpdated="handleUpdateSuccess"
+  />
+
 </template>
 
 <script>
@@ -22,12 +37,16 @@ import {
   getRejectedGenderViolenceReports,
   getRejectedMarriageDivorceReports
 } from '@/services/api'
+import EditMarriageDivorceReport from '../components/EditMarriageDivorceReport.vue'
+import EditViolenceReport from '../components/EditViolenceReport.vue'
 
 export default {
   name: 'ReportHistory',
   data() {
     return {
-      reports: []
+      reports: [],
+      selectedReport: null,
+      showEditModal: false
     }
   },
   methods: {
@@ -47,21 +66,34 @@ export default {
       
     },
     viewReport(report) {
-      alert(`Открытие отчета: ${this.getReportTypeTitle(report)} от ${this.formatDate(report.date)}`)
+      this.selectedReport = report
+      this.showEditModal = true
     },
     getReportTypeTitle(report) {
       return report.type === 'GENDER'
-      ? 'gendernoe nasilie'
-      : 'braki i razvody'
+      ? 'Гендерное насилие'
+      : 'Браки и разводы'
     },
     formatDate(date) {
       const d = new Date(date)
       return d.toLocaleDateString('ru-RU')
+    },
+    closeModal() {
+      this.showEditModal = false
+      this.selectedReport = null
+    },
+    handleUpdateSuccess() {
+      this.fetchReports()
     }
   },
   mounted() {
     this.fetchReports()
-  }
+  },
+  components: {
+    EditMarriageDivorceReport,
+    EditViolenceReport
+  },
+  emits: ['close'],
 }
 </script>
 

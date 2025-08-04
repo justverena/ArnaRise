@@ -33,6 +33,12 @@ export const getRejectedGenderViolenceReports = () =>
 export const getRejectedMarriageDivorceReports = () =>
   api.get("/partner/reports/marriage-divorce/rejected")
 
+export const editRejectedMarriageDivorceReport = (id, data) =>
+  api.patch(`/partner/reports/marriage-divorce/${id}`, data)
+
+export const editRejectedViolenceReport = (id, data) => 
+  api.patch(`/partner/reports/gender-violence/${id}`, data)
+
 // export const getUsers = () => api.get("/users");
 // export const getAuditLogs = () => api.get("/audit");
 // export const getIndicators = () => api.get("/indicator");
