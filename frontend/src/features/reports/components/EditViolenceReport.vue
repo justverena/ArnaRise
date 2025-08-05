@@ -3,134 +3,95 @@
     <div class="modal-content">
       <h2>Изменение отчета</h2>
       <form @submit.prevent="submitUpdate">
-        <label>Район:
-          <select v-model="form.district" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="district in Districts" 
-              :key="district" 
-              :value="district">
-              <!-- {{ $t(`enums.District.${district}`) }} -->
-              {{ district }}
-            </option>
-          </select>
-        </label>
-
+        <BaseSelect
+        v-model="form.district"
+        :options="Districts"
+        label="Район"
+        placeholder="Выберите район"
+        value-key="key"
+        label-key="value"
+        />
+        
         <label>Дата инцидента:
           <input v-model="form.date" type="date" required />
         </label>
 
-        <label>Пол:
-          <select v-model="form.gender" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="gender in Genders" 
-              :key="gender" 
-              :value="gender">
-              <!-- {{ $t(`enums.Gender.${gender}`) }} -->
-              {{ gender }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+        v-model="form.gender"
+        :options="Genders"
+        label="Пол"
+        placeholder="Выберите пол"
+        value-key="key"
+        label-key="value"
+        />
 
         <label>Возраст:
           <input v-model="form.age" type="number" min="0" required />
         </label>
 
-        <label>Тип насилия:
-          <select v-model="form.violenceType" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="type in ViolenceTypes" 
-              :key="type" 
-              :value="type">
-              <!-- {{ $t(`enums.ViolenceType.${type}`) }} -->
-              {{ type }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+        v-model="form.violenceType"
+        :options="ViolenceTypes"
+        label="Вид насилия"
+        placeholder="Выберите вид насилия"
+        value-key="key"
+        label-key="value"
+        />
 
-        <label>Место происшествия:
-          <select v-model="form.location" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="loc in LocationTypes" 
-              :key="loc" 
-              :value="loc">
-              <!-- {{ $t(`enums.LocationType.${loc}`) }} -->
-              {{ loc }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+        v-model="form.location"
+        :options="Locations"
+        label="Место происшесвтия"
+        placeholder="Выберите место происшествия"
+        value-key="key"
+        label-key="value"
+        />
 
-        <label>Время суток:
-          <select v-model="form.timeOfDay" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="time in TimeOfDay" 
-              :key="time" 
-              :value="time">
-              <!-- {{ $t(`enums.TimeOfDay.${time}`) }} -->
-              {{ time }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+        v-model="form.timeOfDay"
+        :options="TimesOfDay"
+        label="Время суток"
+        placeholder="Выберите время суток"
+        value-key="key"
+        label-key="value"
+        />
 
-        <label>Социальный статус:
-          <select v-model="form.socialStatus" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="status in SocialStatuses" 
-              :key="status" 
-              :value="status">
-              <!-- {{ $t(`enums.SocialStatus.${status}`) }} -->
-              {{ status }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+        v-model="form.socialStatus"
+        :options="SocialStatuses"
+        label="Социальный статус"
+        placeholder="Выберите социальный статус"
+        value-key="key"
+        label-key="value"
+        />
 
-        <label>Отношения с агрессором:
-          <select v-model="form.aggressorRelation" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="relation in AggressorRelations" 
-              :key="relation" 
-              :value="relation">
-              <!-- {{ $t(`enums.AggressorRelation.${relation}`) }} -->
-              {{ relation }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+        v-model="form.aggressorRelation"
+        :options="AggressorRelations"
+        label="Отношения с агрессором"
+        placeholder="Выберите отношения с агрессором"
+        value-key="key"
+        label-key="value"
+        />
 
         <label>Описание случая:
           <textarea v-model="form.caseDescription" rows="3" />
         </label>
 
-        <label>Орган, принявший меры:
-          <select v-model="form.authority">
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="auth in Authorities" 
-              :key="auth" 
-              :value="auth">
-              <!-- {{ $t(`enums.Authority.${auth}`) }} -->
-              {{ auth }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+        v-model="form.authority"
+        :options="Authorities"
+        label="Орган принявший меры"
+        placeholder="Выберите орган принявший меры"
+        value-key="key"
+        label-key="value"
+        />
 
-        <label>Принятые меры:
-          <select v-model="form.action" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="act in ActionTaken" 
-              :key="act" 
-              :value="act">
-              <!-- {{ $t(`enums.ActionTaken.${act}`) }} -->
-              {{ act }}
-            </option>
-          </select>
-        </label>
+        <BaseMultiSelect
+        v-model="form.actions"
+        :label="'Принятые меры'"
+        :options="Actions"
+        />
 
         <div class="form-actions">
           <button class="submit-btn" type="submit">Отправить</button>
@@ -142,20 +103,12 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { editRejectedViolenceReport } from '@/services/api'
 import api from '@/services/api'
-import { 
-  Genders, 
-  ViolenceTypes, 
-  LocationTypes, 
-  Districts, 
-  TimeOfDay, 
-  SocialStatuses, 
-  AggressorRelations, 
-  Authorities, 
-  ActionTaken 
-} from '@/constants/enums'
+import BaseSelect from '@/components/common/BaseSelect.vue'
+import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
+import { getEnum } from '@/services/enumService'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
 
@@ -180,7 +133,36 @@ const form = reactive({
   aggressorRelation: '',
   caseDescription: '',
   authority: '',
-  action: ''
+  actions: []
+})
+
+const Genders = ref([])
+const Districts = ref([])
+const ViolenceTypes = ref([])
+const Locations = ref([])
+const TimesOfDay = ref([])
+const SocialStatuses = ref([])
+const AggressorRelations = ref([])
+const Authorities = ref([])
+const Actions = ref([])
+
+onMounted(async () => {
+  try {
+    Genders.value = await getEnum('gender')
+    Districts.value = await getEnum('district')
+    ViolenceTypes.value = await getEnum('violence-type')
+    Locations.value = await getEnum('location-type')
+    TimesOfDay.value = await getEnum('time-of-day')
+    SocialStatuses.value = await getEnum('social-status')
+    AggressorRelations .value = await getEnum('aggressor-relation')
+    Authorities.value = await getEnum('authority')
+    Actions.value = await getEnum('action-taken')
+    await fetchReports()
+  } catch (error) {
+    console.error('Ошибка загрузки enum-ов:', error)
+    alert('Не удалось загрузить данные. Проверьте консоль.')
+    emit('close')
+  }
 })
 
 const fetchReports = async () => {
@@ -200,7 +182,7 @@ const fetchReports = async () => {
         form.aggressorRelation = report.aggressorRelation
         form.caseDescription = report.caseDescription
         form.authority = report.authority
-        form.action = report.action
+        form.actions = report.action
     } catch (error) {
         console.error('oshibka pri poluchenii otcheta', error)
         alert('ne udalos zatruzit otchet. check console')
@@ -221,7 +203,7 @@ const submitUpdate = async () => {
         aggressorRelation: form.aggressorRelation,
         caseDescription: form.caseDescription,
         authority: form.authority,
-        action: form.action,
+        action: form.actions,
     };
 
 
@@ -236,10 +218,6 @@ const submitUpdate = async () => {
     alert('Не удалось отправить отчет. Проверьте консоль.')
   }
 }
-
-onMounted(() => {
-    fetchReports()
-})
 </script>
 
 

@@ -66,6 +66,18 @@ export default {
       
     },
     viewReport(report) {
+      if (report.type === 'GENDER') {
+    console.log('Просмотр отчета о гендерном насилии:', report)
+
+    // Если хочешь посмотреть, как выглядит объект для отправки (например, при сохранении):
+    const preparedForSend = {
+      ...report,
+      rejectionReason: '',  // если причина отклонения обнуляется
+      status: 'PENDING'     // если меняется статус
+    }
+    console.log('Готовый к отправке объект:', preparedForSend)
+  }
+  
       this.selectedReport = report
       this.showEditModal = true
     },

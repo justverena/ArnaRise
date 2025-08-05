@@ -3,31 +3,23 @@
     <div class="modal-content">
       <h2>Отчет: Браки и разводы</h2>
       <form @submit.prevent="submit">
+        <BaseSelect
+          v-model="form.reportYear"
+          :options="ReportYears"
+          label="Отчетный год"
+          placeholder="Выберите год"
+          value-key="key"
+          label-key="value"
+        />
 
-        <label>Отчетный год:
-          <select v-model="form.reportYear" required>
-            <option disabled value="">Выберите год</option>
-            <option v-for="reportYear in ReportYears"
-                    :key="reportYear"
-                    :value="reportYear">
-              <!-- {{ $t(`enums.ReportYear.${reportYear}`) }} -->
-              {{ reportYear }}
-            </option>
-          </select>
-        </label>
-
-        <label>Район:
-          <select v-model="form.district" required>
-            <option disabled value="">Выберите</option>
-            <option 
-              v-for="district in Districts" 
-              :key="district" 
-              :value="district">
-              <!-- {{ $t(`enums.District.${district}`) }} -->
-              {{ district }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+          v-model="form.district"
+          :options="Districts"
+          label="Район"
+          placeholder="Выберите район"
+          value-key="key"
+          label-key="value"
+        />
 
         <label>Количество зарегистрированных браков:
           <input v-model.number="form.marriageCount" type="number" min="1" @input="calculateRate" required />
@@ -45,17 +37,14 @@
           <input v-model.number="form.averageAge" type="number" step="0.1" min="0" required />
         </label>
 
-        <label>Источник:
-          <select v-model="form.source" required>
-            <option disabled value="">Выберите</option>
-            <option v-for="source in Sources"
-                    :key="source"
-                    :value="source">
-              <!-- {{ $t(`enums.Source.${source}`) }} -->
-              {{ source }}
-            </option>
-          </select>
-        </label>
+        <BaseSelect
+          v-model="form.source"
+          :options="Sources"
+          label="Источник"
+          placeholder="Выберите источник"
+          value-key="key"
+          label-key="value"
+        />
 
         <div class="form-actions">
           <button class="submit-btn" type="submit">Отправить</button>
@@ -66,11 +55,12 @@
   </div>
 </template>
 
+
 <script setup>
-import { reactive } from 'vue'
-import api from '@/services/api'
-import { ReportYears, Districts, Sources } from '@/constants/enums'
+import { reactive, ref, onMounted } from 'vue'
+import BaseSelect from '@/components/common/BaseSelect.vue'
 // import { useI18n } from 'vue-i18n'
+import { getEnum } from '@/services/enumService'
 import { submitMarriageDivorceReport } from '@/services/api'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
@@ -87,9 +77,19 @@ const form = reactive({
   source: ''
 })
 
-// const reportYears = computed(() => Object.keys(t('enums.ReportYear')))
-// const district = computed(() => Object.keys(t('enums.District')))
-// const source = computed(() => Object.keys(t('enums.Source')))
+const ReportYears = ref([])
+const Districts = ref([])
+const Sources = ref([])
+
+onMounted(async () => {
+  try {
+    ReportYears.value = await getEnum('report-year')
+    Districts.value = await getEnum('district')
+    Sources.value = await getEnum('source')
+  } catch (error) {
+    console.error('Ошибка загрузки enum-ов:', error)
+  }
+})
 
 const calculateRate = () => {
   const m = form.marriageCount
