@@ -18,11 +18,11 @@
         <tbody>
           <tr v-for="report in reports" :key="report.id">
             <td>{{ report.reportYear.replace('Y', '') }}</td>
-            <td>{{ districtMap[report.district] || report.district }}</td>
+            <td>{{ districts.find(d => d.key === report.district)?.value || report.district }}</td>
             <td>{{ report.marriageCount }}</td>
             <td>{{ report.divorceCount }}</td>
             <td>{{ report.ratioDivorcesToMarriagePercent.toFixed(2) }}</td>
-            <td>{{ sourceMap[report.source] || report.source }}</td>
+            <td>{{ sources.find(s => s.key === report.source)?.value || report.source }}</td>
             <td>
               <button class="approve-btn" @click="approveReport(report.id)">Одобрить</button>
               <button class="reject-btn" @click="rejectReport(report.id)">Отклонить</button>
@@ -40,70 +40,65 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '@/services/api'
+import { getEnum } from '@/services/enumService'
+import { 
+  getAnalystMarriageDivorceReports,
+  approveMarriageDivorceReport, 
+  rejectMarriageDivorceReport 
+} from '@/services/marriageDivorce.service'
 
 const emit = defineEmits(['close'])
 
 const reports = ref([])
-
-const districtMap = {
-  ALATAU: 'Алатау',
-  ALMALY: 'Алмалы',
-  AUEZOV: 'Ауэзов',
-  BOSTANDYK: 'Бостандык',
-  ZHETISU: 'Жетысу',
-  MEDEU: 'Медеу',
-  NAURYZBAY: 'Наурызбай',
-  TURKSIB: 'Турксиб'
-}
-
-const sourceMap = {
-  NATIONAL_STATISTICS: 'Нац. статистика',
-  LOCAL_ADMINISTRATION: 'Акимат',
-  MINISTRY_OF_JUSTICE: 'Минюст',
-  CIVIL_REGISTRY: 'ЗАГС',
-  OTHER: 'Другое'
-}
+const districts = ref([])
+const sources = ref([])
 
 const fetchReports = async () => {
   try {
-    const response = await api.get('/analyst/reports/marriage-divorce')
+    const response = await getAnalystMarriageDivorceReports()
     reports.value = response.data
   } catch (error) {
-    console.error('Ошибка загрузки отчетов:', error)
-    alert('Не удалось загрузить отчеты')
+    console.error("Ошибка загрузки отчетов:", error)
+    alert("Не удалось загрузить отчеты")
   }
 }
 
 const approveReport = async (id) => {
   try {
-    await api.post(`/analyst/reports/marriage-divorce/${id}/approve`)
-    alert('Отчет одобрен')
+    await approveMarriageDivorceReport(id)
+    alert("Отчет одобрен")
     await fetchReports()
   } catch (error) {
-    console.error('Ошибка при одобрении отчета:', error)
-    alert('Не удалось одобрить отчет')
+    console.error("Ошибка при одобрении отчета:", error)
+    alert("Не удалось одобрить отчет")
   }
 }
 
 const rejectReport = async (id) => {
-  const reason = prompt('Введите причину отклонения отчета:')
+  const reason = prompt("Введите причину отклонения отчета:")
   if (!reason) return
 
   try {
-    await api.post(`/analyst/reports/marriage-divorce/${id}/reject`, {
-      rejectionReason: reason
-    })
-    alert('Отчет отклонен')
+    await rejectMarriageDivorceReport(id, reason)
+    alert("Отчет отклонен")
     await fetchReports()
   } catch (error) {
-    console.error('Ошибка при отклонении отчета:', error)
-    alert('Не удалось отклонить отчет')
+    console.error("Ошибка при отклонении отчета:", error)
+    alert("Не удалось отклонить отчет")
   }
 }
 
-onMounted(fetchReports)
+onMounted(async () => {
+  try {
+    districts.value = await getEnum('district')
+    sources.value = await getEnum('source')
+    await fetchReports()
+  } catch (error) {
+    console.error('Ошибка загрузки enum-ов:', error)
+  }
+})
 </script>
+
 
 <style scoped>
 .modal-overlay {

@@ -8,6 +8,7 @@
           <tr>
             <th>Дата инцидента</th>
             <th>Район</th>
+            <th>Пол</th>
             <th>Тип насилия</th>
             <th>Действия</th>
           </tr>
@@ -15,11 +16,12 @@
         <tbody>
           <tr v-for="report in reports" :key="report.id">
             <td>{{ report.date }}</td>
-            <td>{{ report.district }}</td>
-            <td>{{ report.violenceType }}</td>
+            <td>{{ districts.find(d => d.key === report.district)?.value || report.district }}</td>
+            <td>{{ genders.find(g => g.key === report.gender)?.value || report.gender }}</td>
+            <td>{{ violenceTypes.find(vt => vt.key === report.violenceType)?.value || report.violenceType }}</td>
             <td>
-              <button class="approve-btn" @click="approveReport(report.id)">Одобрить</button>
-              <button class="reject-btn" @click="rejectReport(report.id)">Отклонить</button>
+              <button class="approve-btn" @click="approve(report.id)">Одобрить</button>
+              <button class="reject-btn" @click="reject(report.id)">Отклонить</button>
             </td>
           </tr>
         </tbody>
@@ -34,15 +36,23 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '@/services/api'
+import { getEnum } from '@/services/enumService'
+import {
+  getAnalystGenderViolenceReports,
+  approveAnalystGenderViolenceReport,
+  rejectAnalystGenderViolenceReport,
+  submitPartnerGenderViolenceReport} from '@/services/genderViolence.service'
 
 const emit = defineEmits(['close'])
 
 const reports = ref([])
+const districts = ref([])
+const genders = ref([])
+const violenceTypes = ref([])
 
 const fetchReports = async () => {
   try {
-    const response = await api.get('/analyst/reports/gender-violence')
+    const response = await getAnalystGenderViolenceReports()
     reports.value = response.data
   } catch (error) {
     console.error('Ошибка загрузки отчетов:', error)
@@ -50,9 +60,9 @@ const fetchReports = async () => {
   }
 }
 
-const approveReport = async (id) => {
+const approve = async (id) => {
   try {
-    await api.post(`/analyst/reports/gender-violence/${id}/approve`)
+    await approveAnalystGenderViolenceReport(id)
     alert('Отчет одобрен')
     await fetchReports()
   } catch (error) {
@@ -61,12 +71,11 @@ const approveReport = async (id) => {
   }
 }
 
-const rejectReport = async (id) => {
+const reject = async (id) => {
   const reason = prompt('Введите причину отклонения отчета:')
   if (!reason) return
-
   try {
-    await api.post(`/analyst/reports/gender-violence/${id}/reject`, { rejectionReason: reason })
+    await rejectAnalystGenderViolenceReport(id, { rejectionReason: reason })
     alert('Отчет отклонен')
     await fetchReports()
   } catch (error) {
@@ -75,8 +84,18 @@ const rejectReport = async (id) => {
   }
 }
 
-onMounted(fetchReports)
+onMounted(async () => {
+  try {
+    districts.value = await getEnum('district')
+    genders.value = await getEnum('gender')
+    violenceTypes.value = await getEnum('violence-type')
+    await fetchReports()
+  } catch (error) {
+    console.error('Ошибка загрузки enum-ов:', error)
+  }
+})
 </script>
+
 
 <style scoped>
 .modal-overlay {
