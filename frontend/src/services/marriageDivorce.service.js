@@ -1,6 +1,14 @@
 import api from '@/services/api'
 
-// marriageDivorce.service.js (для аналитика)
+export const submitMarriageDivorceReport = (data) =>
+  api.post("/partner/reports/marriage-divorce", data);
+
+export const getRejectedMarriageDivorceReports = () =>
+  api.get("/partner/reports/marriage-divorce/rejected")
+
+export const editRejectedMarriageDivorceReport = (id, data) =>
+  api.patch(`/partner/reports/marriage-divorce/${id}`, data)
+
 export const getAnalystMarriageDivorceReports = () =>
   api.get("/analyst/reports/marriage-divorce");
 

@@ -46,6 +46,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import api from '@/services/api'
+import { postAdminUser } from '@/services/adminService'
 
 const name = ref('')
 const email = ref('')
@@ -64,9 +65,14 @@ const registerUser = async () => {
   success.value = ''
   try {
     const token = localStorage.getItem('token')
-    const res = await api.post('/admin/register',
-      { name: name.value, email: email.value, password: password.value, role: role.value },
-      { headers: { Authorization: `Bearer ${token}` } }
+    const res = await postAdminUser(
+      {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+        role: role.value
+      },
+      token
     )
     success.value = res.data.message || 'Пользователь успешно зарегистрирован!'
   } catch (err) {

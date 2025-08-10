@@ -104,8 +104,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import { editRejectedViolenceReport } from '@/services/api'
-import api from '@/services/api'
+import { getRejectedGenderViolenceReports, editRejectedGenderViolenceReport } from '@/services/genderViolence.service'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
 import { getEnum } from '@/services/enumService'
@@ -167,7 +166,7 @@ onMounted(async () => {
 
 const fetchReports = async () => {
     try {
-        const { data } = await api.get('/partner/reports/gender-violence/rejected')
+        const { data } = await getRejectedGenderViolenceReports()
         const report = data.find(r => r.id === reportId)
         if (!report) throw new Error('No reports')
 
@@ -182,7 +181,7 @@ const fetchReports = async () => {
         form.aggressorRelation = report.aggressorRelation
         form.caseDescription = report.caseDescription
         form.authority = report.authority
-        form.actions = report.action
+        form.actions = report.actions || []
     } catch (error) {
         console.error('oshibka pri poluchenii otcheta', error)
         alert('ne udalos zatruzit otchet. check console')
@@ -203,13 +202,11 @@ const submitUpdate = async () => {
         aggressorRelation: form.aggressorRelation,
         caseDescription: form.caseDescription,
         authority: form.authority,
-        action: form.actions,
+        actions: form.actions,
     };
 
-
-
   try {
-    await editRejectedViolenceReport(reportId, updatedData)
+    await editRejectedGenderViolenceReport(reportId, updatedData)
     alert('Отчет успешно отправлен!')
     emit('reportSubmitted')
     emit('close')

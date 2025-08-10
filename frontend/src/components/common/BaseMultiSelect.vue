@@ -1,4 +1,3 @@
-<!-- src/components/common/BaseMultiSelect.vue -->
 <template>
   <div class="form-group">
     <label class="form-label">{{ label }}</label>

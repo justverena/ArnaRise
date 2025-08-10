@@ -40,8 +40,7 @@ import { getEnum } from '@/services/enumService'
 import {
   getAnalystGenderViolenceReports,
   approveAnalystGenderViolenceReport,
-  rejectAnalystGenderViolenceReport,
-  submitPartnerGenderViolenceReport} from '@/services/genderViolence.service'
+  rejectAnalystGenderViolenceReport} from '@/services/genderViolence.service'
 
 const emit = defineEmits(['close'])
 

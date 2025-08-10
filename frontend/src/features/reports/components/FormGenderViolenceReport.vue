@@ -41,7 +41,7 @@
         <BaseSelect
         v-model="form.location"
         :options="Locations"
-        label="Место происшесвтия"
+        label="Место происшествия"
         placeholder="Выберите место происшествия"
         value-key="key"
         label-key="value"
@@ -105,7 +105,7 @@
 
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
-import { submitPartnerGenderViolenceReport } from '@/services/api'
+import { submitPartnerGenderViolenceReport } from '@/services/genderViolence.service'
 import { getEnum } from '@/services/enumService'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
@@ -117,7 +117,7 @@ const form = reactive({
   gender: '',
   date: '',
   district: '',
-  age: null,
+  age: '',
   violenceType: '',
   location: '',
   timeOfDay: '',
@@ -175,8 +175,6 @@ const submit = async () => {
   }
 }
 </script>
-
-
 
 <style scoped>
 .modal-overlay {

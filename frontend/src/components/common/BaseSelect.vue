@@ -1,4 +1,3 @@
-<!-- src/components/common/BaseSelect.vue -->
 <template>
   <label class="base-label">
     <span v-if="label" class="base-label-text">{{ label }}</span>

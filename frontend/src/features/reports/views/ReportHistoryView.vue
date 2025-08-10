@@ -1,6 +1,6 @@
 <template>
   <section class="content">
-    <h2>История отчётов</h2>
+    <h2>Отклоненные отчеты</h2>
     <div class="report-grid">
       <button
         v-for="report in reports"
@@ -33,12 +33,10 @@
 </template>
 
 <script>
-import {
-  getRejectedGenderViolenceReports,
-  getRejectedMarriageDivorceReports
-} from '@/services/api'
+import { getRejectedGenderViolenceReports } from '@/services/genderViolence.service'
+import { getRejectedMarriageDivorceReports } from '@/services/marriageDivorce.service'
 import EditMarriageDivorceReport from '../components/EditMarriageDivorceReport.vue'
-import EditViolenceReport from '../components/EditViolenceReport.vue'
+import EditViolenceReport from '../components/EditGenderViolenceReport.vue'
 
 export default {
   name: 'ReportHistory',
@@ -69,11 +67,10 @@ export default {
       if (report.type === 'GENDER') {
     console.log('Просмотр отчета о гендерном насилии:', report)
 
-    // Если хочешь посмотреть, как выглядит объект для отправки (например, при сохранении):
     const preparedForSend = {
       ...report,
-      rejectionReason: '',  // если причина отклонения обнуляется
-      status: 'PENDING'     // если меняется статус
+      rejectionReason: '',  
+      status: 'PENDING'     
     }
     console.log('Готовый к отправке объект:', preparedForSend)
   }

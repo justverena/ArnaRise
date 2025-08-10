@@ -55,17 +55,13 @@
   </div>
 </template>
 
-
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
 import BaseSelect from '@/components/common/BaseSelect.vue'
-// import { useI18n } from 'vue-i18n'
 import { getEnum } from '@/services/enumService'
-import { submitMarriageDivorceReport } from '@/services/api'
+import { submitMarriageDivorceReport } from '@/services/marriageDivorce.service'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
-
-// const { t } = useI18n
 
 const form = reactive({
   reportYear: '',

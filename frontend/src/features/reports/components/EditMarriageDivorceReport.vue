@@ -57,11 +57,9 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import api, { editRejectedMarriageDivorceReport } from '@/services/api'
+import { getRejectedMarriageDivorceReports, editRejectedMarriageDivorceReport } from '@/services/marriageDivorce.service'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import { getEnum } from '@/services/enumService'
-// import { useI18n } from 'vue-i18n'
-
 
 const emit = defineEmits(['reportSubmitted', 'close'])
 
@@ -73,8 +71,6 @@ const props = defineProps({
 })
 
 const reportId = props.reportId
-
-// const { t } = useI18n
 
 const form = reactive({
   reportYear: '',
@@ -117,7 +113,7 @@ const calculateRate = () => {
 
 const fetchReports = async () => {
     try {
-        const { data } = await api.get('/partner/reports/marriage-divorce/rejected')
+        const { data } = await getRejectedMarriageDivorceReports()
         const report = data.find(r => r.id === reportId)
         if (!report) throw new Error('No reports')
         
