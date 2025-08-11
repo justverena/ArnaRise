@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import LangSwitch from '../i18n/LangSwitch.vue'
 
 const isAdmin = ref(false)
 const isAnalyst = ref(false)
@@ -18,6 +19,7 @@ onMounted(() => {
       <router-link v-if="isAnalyst" to="/chart" class="nav-link">Графики</router-link>
       <router-link to="/profile" class="nav-link">Личный кабинет</router-link>
       <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Регистрация пользователя</router-link>
+      <LangSwitch />
     </div>
   </nav>
 </template>

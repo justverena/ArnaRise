@@ -1,7 +1,9 @@
 package kz.kbtu.controller;
 
+import kz.kbtu.dto.report.PendingGenderViolenceReportResponse;
 import kz.kbtu.dto.report.PendingMarriageDivorceReportResponse;
 import kz.kbtu.dto.report.RejectionRequest;
+import kz.kbtu.dto.report.ReportShortResponse;
 import kz.kbtu.entity.report.PendingMarriageDivorceReport;
 import kz.kbtu.service.report.MarriageDivorceReportService;
 import kz.kbtu.service.report.PendingMarriageDivorceReportService;
@@ -35,7 +37,11 @@ public class AnalystMarriageDivorceReportController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<PendingMarriageDivorceReportResponse>> getPendingMarriageDivorceReports() {
+    public ResponseEntity<List<ReportShortResponse>> getPendingMarriageDivorceReports() {
         return ResponseEntity.ok(marriageDivorceReportService.getAllPendingReports());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<PendingMarriageDivorceReportResponse> getPendingMarriageDivorceReport(@PathVariable UUID id) {
+        return ResponseEntity.ok(marriageDivorceReportService.getPendingReportById(id));
     }
 }

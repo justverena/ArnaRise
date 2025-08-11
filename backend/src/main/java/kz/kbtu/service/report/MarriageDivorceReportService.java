@@ -3,6 +3,7 @@ package kz.kbtu.service.report;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import kz.kbtu.dto.report.PendingMarriageDivorceReportResponse;
+import kz.kbtu.dto.report.ReportShortResponse;
 import kz.kbtu.entity.report.MarriageDivorceReport;
 import kz.kbtu.entity.report.PendingMarriageDivorceReport;
 import kz.kbtu.enums.ReportStatus;
@@ -21,23 +22,12 @@ public class MarriageDivorceReportService {
     private final PendingMarriageDivorceReportRepository pendingRepository;
     private final MarriageDivorceReportRepository reportRepository;
 
-    public List<PendingMarriageDivorceReportResponse> getAllPendingReports() {
+    public List<ReportShortResponse> getAllPendingReports() {
         return pendingRepository.findAll().stream()
-                .map(r -> PendingMarriageDivorceReportResponse.builder()
-                        .id(r.getId())
-                        .reportYear(r.getReportYear())
-                        .district(r.getDistrict().name())
-                        .marriageCount(r.getMarriageCount())
-                        .divorceCount(r.getDivorceCount())
-                        .ratioDivorcesToMarriagePercent(r.getRatioDivorcesToMarriagePercent())
-                        .averageAge(r.getAverageAge())
-                        .source(r.getSource().name())
-                        .submittedBy(r.getSubmittedBy().getId())
-                        .status(r.getStatus())
-                        .rejectionReason(r.getRejectionReason())
-                        .build())
+                .map(r -> new ReportShortResponse(r.getId(), r.getSubmittedBy().getId()))
                 .toList();
     }
+
 
     @Transactional
     public void approveReport(UUID id){
@@ -67,4 +57,23 @@ public class MarriageDivorceReportService {
 
     }
 
+    public PendingMarriageDivorceReportResponse getPendingReportById(UUID id) {
+            PendingMarriageDivorceReport r = pendingRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Pending report not found"));
+            return PendingMarriageDivorceReportResponse.builder()
+                    .id(r.getId())
+                    .reportYear(r.getReportYear())
+                    .district(r.getDistrict())
+                    .marriageCount(r.getMarriageCount())
+                    .divorceCount(r.getDivorceCount())
+                    .ratioDivorcesToMarriagePercent(r.getRatioDivorcesToMarriagePercent())
+                    .averageAge(r.getAverageAge())
+                    .source(r.getSource())
+                    .submittedBy(r.getSubmittedBy().getId())
+                    .status(r.getStatus())
+                    .rejectionReason(r.getRejectionReason())
+                    .build();
+
+
+    }
 }

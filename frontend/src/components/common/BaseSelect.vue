@@ -20,10 +20,10 @@
 
       <option
         v-for="opt in normalizedOptions"
-        :key="opt.value"
-        :value="opt.value"
+        :key="opt[valueKey]"
+        :value="opt[valueKey]"
       >
-        {{ opt.label }}
+        {{ opt[labelKey] }}
       </option>
     </select>
 
@@ -36,16 +36,9 @@ import { computed } from 'vue'
 import FormError from './FormError.vue'
 
 const props = defineProps({
-  modelValue: {
-    type: [String, Number, Array],
-    default: ''
-  },
+  modelValue: [String, Number, Array],
   label: String,
   options: {
-    /** Можно передать:
-     *  - ['A', 'B']  -> value=label='A'
-     *  - [{ value:'A', label:'Алмалы' }, ...]
-     */
     type: Array,
     default: () => []
   },
@@ -57,14 +50,24 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  error: String
+  error: String,
+  valueKey: {
+    type: String,
+    default: 'value'
+  },
+  labelKey: {
+    type: String,
+    default: 'label'
+  }
 })
 
 const emit = defineEmits(['update:modelValue'])
 
 const normalizedOptions = computed(() =>
   props.options.map((o) =>
-    typeof o === 'object' ? o : { value: o, label: String(o) }
+    typeof o === 'object'
+      ? o
+      : { [props.valueKey]: o, [props.labelKey]: String(o) }
   )
 )
 
@@ -79,33 +82,22 @@ function onChange(e) {
 </script>
 
 <style scoped>
+.base-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
 .base-label {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  font-family: 'Inter', sans-serif;
-  color: #333;
 }
 
 .base-label-text {
-  display: block;
-  margin-bottom: 0.3rem;
-}
-
-.base-select {
-  width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #d1d5db;
-  border-radius: 2rem;
-  font-size: 0.95rem;
-  background-color: #f9f9f9;
-  outline: none;
-  appearance: none;
-}
-
-.base-select.is-multiple {
-  border-radius: 0.75rem; /* в multiple выглядит аккуратнее */
-  padding: 0.4rem;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 </style>

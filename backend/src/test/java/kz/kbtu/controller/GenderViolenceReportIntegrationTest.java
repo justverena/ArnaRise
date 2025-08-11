@@ -97,10 +97,35 @@ public class GenderViolenceReportIntegrationTest {
         mockMvc.perform(get("/api/analyst/reports/gender-violence")
                         .header("Authorization", "Bearer " + analystToken))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(1)));
+                .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(1)))
+                .andExpect(jsonPath("$[0].id").isNotEmpty())
+        .andExpect(jsonPath("$[0].submittedBy").isNotEmpty());
     }
+
     @Test
     @Order(3)
+    void analystCanSeePendingReportById() throws Exception {
+        mockMvc.perform(get("/api/analyst/reports/gender-violence/" + pendingReportId)
+        .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(pendingReportId.toString()))
+                .andExpect(jsonPath("$.gender").value("FEMALE"))
+                .andExpect(jsonPath("$.district").value("ALATAU"))
+                .andExpect(jsonPath("$.age").value(30))
+                .andExpect(jsonPath("$.violenceType").value("PHYSICAL"))
+                .andExpect(jsonPath("$.location").value("HOME"))
+                .andExpect(jsonPath("$.timeOfDay").value("EVENING"))
+                .andExpect(jsonPath("$.socialStatus").value("EMPLOYED"))
+                .andExpect(jsonPath("$.aggressorRelation").value("EX_SPOUSE"))
+                .andExpect(jsonPath("$.caseDescription").value("Some description"))
+                .andExpect(jsonPath("$.authority").value("POLICE"))
+                .andExpect(jsonPath("$.status").value("PENDING"))
+                .andExpect(jsonPath("$.actions").isArray())
+                .andExpect(jsonPath("$.submittedBy").isNotEmpty());
+    }
+
+    @Test
+    @Order(4)
     void approveReport_shouldReturn200() throws Exception{
         mockMvc.perform(post("/api/analyst/reports/gender-violence/" + pendingReportId + "/approve")
                 .header("Authorization", "Bearer " + analystToken))
@@ -113,7 +138,7 @@ public class GenderViolenceReportIntegrationTest {
         assertFalse(pendingRepository.findById(pendingReportId).isPresent());
     }
     @Test
-    @Order(4)
+    @Order(5)
     void rejectReport_shouldReturn200() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -163,7 +188,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     void submitReport_shouldReturn403_whenUnauthorized() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -189,7 +214,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void rejectReport_shouldReturn403_whenUnauthorized() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.MALE)
@@ -233,7 +258,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     void approveReport_shouldReturn403_whenPartnerTriesToApprove() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -270,7 +295,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     void submitReport_shouldReturn403_whenAnalystTriesToSubmit() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.MALE)
@@ -296,7 +321,7 @@ public class GenderViolenceReportIntegrationTest {
                 .andExpect(status().isForbidden());
     }
     @Test
-    @Order(9)
+    @Order(10)
     void partnerCanGetRejectedReports() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -344,7 +369,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     void partnerCanUpdateRejectedReports() throws Exception {
         PendingGenderViolenceReportRequest request = PendingGenderViolenceReportRequest.builder()
                 .gender(Gender.FEMALE)
@@ -413,7 +438,7 @@ public class GenderViolenceReportIntegrationTest {
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     void partnerShouldNotSeeOthersRejectedReports() throws Exception {
         LoginRequest partner2 = new LoginRequest("partner2@example.com", "partner123");
         String partner2Token = objectMapper.readTree(mockMvc.perform(post("/api/auth/login")
@@ -465,7 +490,7 @@ public class GenderViolenceReportIntegrationTest {
                 .andExpect(jsonPath("$[?(@.id == '" + reportId + "')]").doesNotExist());
     }
     @Test
-    @Order(12)
+    @Order(13)
     void partnerShouldNotUpdateOthersRejectedReports() throws Exception {
         LoginRequest partner2 = new LoginRequest("partner2@example.com", "partner123");
         String partner2Token = objectMapper.readTree(mockMvc.perform(post("/api/auth/login")

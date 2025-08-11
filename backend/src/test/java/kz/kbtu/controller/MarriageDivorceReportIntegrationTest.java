@@ -93,11 +93,28 @@ public class MarriageDivorceReportIntegrationTest {
             mockMvc.perform(get("/api/analyst/reports/marriage-divorce")
                             .header("Authorization", "Bearer " + analystToken))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(1)));
+                    .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.greaterThanOrEqualTo(1)))
+                    .andExpect(jsonPath("$[0].id").isNotEmpty())
+                    .andExpect(jsonPath("$[0].submittedBy").isNotEmpty());
         }
-
         @Test
         @Order(3)
+        void analystCanSeePendingReportById() throws Exception {
+            mockMvc.perform(get("/api/analyst/reports/marriage-divorce/" + pendingReportId)
+                            .header("Authorization", "Bearer " + analystToken))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.id").value(pendingReportId.toString()))
+                    .andExpect(jsonPath("$.reportYear").value("Y2015"))
+                    .andExpect(jsonPath("$.district").value("ALATAU"))
+                    .andExpect(jsonPath("$.marriageCount").value(34))
+                    .andExpect(jsonPath("$.divorceCount").value(40))
+                    .andExpect(jsonPath("$.averageAge").value(29.5))
+                    .andExpect(jsonPath("$.source").value("CIVIL_REGISTRY"))
+                    .andExpect(jsonPath("$.status").value("PENDING"))
+                    .andExpect(jsonPath("$.submittedBy").isNotEmpty());
+        }
+        @Test
+        @Order(4)
         void approveReport_shouldReturn200() throws Exception{
             mockMvc.perform(post("/api/analyst/reports/marriage-divorce/" + pendingReportId + "/approve")
                             .header("Authorization", "Bearer " + analystToken))
@@ -110,7 +127,7 @@ public class MarriageDivorceReportIntegrationTest {
             assertFalse(pendingRepository.findById(pendingReportId).isPresent());
         }
         @Test
-        @Order(4)
+        @Order(5)
         void rejectReport_shouldReturn200() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -154,7 +171,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(5)
+        @Order(6)
         void submitReport_shouldReturn403_whenUnauthorized() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -174,7 +191,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(6)
+        @Order(7)
         void rejectReport_shouldReturn403_whenUnauthorized() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -212,7 +229,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(7)
+        @Order(8)
         void approveReport_shouldReturn403_whenPartnerTriesToApprove() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -242,7 +259,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(8)
+        @Order(9)
         void submitReport_shouldReturn403_whenAnalystTriesToSubmit() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2015)
@@ -263,7 +280,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(9)
+        @Order(10)
         void partnerCanGetRejectedReports() throws Exception {
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
                     .reportYear(ReportYear.Y2018)
@@ -303,7 +320,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(10)
+        @Order(11)
         void partnerCanUpdateRejectedReports() throws Exception {
 
             PendingMarriageDivorceReportRequest request = PendingMarriageDivorceReportRequest.builder()
@@ -361,7 +378,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(11)
+        @Order(12)
         void partnerShouldNotSeeOthersRejectedReports() throws Exception {
             LoginRequest partner2Request = new LoginRequest("partner2@example.com", "partner123");
             String partner2Response = mockMvc.perform(post("/api/auth/login")
@@ -409,7 +426,7 @@ public class MarriageDivorceReportIntegrationTest {
         }
 
         @Test
-        @Order(12)
+        @Order(13)
         void partnerShouldNotUpdateOthersRejectedReports() throws Exception {
 
             LoginRequest partner2Request = new LoginRequest("partner2@example.com", "partner123");

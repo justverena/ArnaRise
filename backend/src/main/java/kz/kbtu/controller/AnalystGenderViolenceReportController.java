@@ -2,6 +2,9 @@ package kz.kbtu.controller;
 
 import kz.kbtu.dto.report.RejectionRequest;
 import kz.kbtu.dto.report.PendingGenderViolenceReportResponse;
+import kz.kbtu.dto.report.ReportShortResponse;
+import kz.kbtu.entity.report.GenderViolenceReport;
+import kz.kbtu.entity.report.PendingGenderViolenceReport;
 import kz.kbtu.service.report.GenderViolenceReportService;
 import kz.kbtu.service.report.PendingGenderViolenceReportService;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +37,12 @@ public class AnalystGenderViolenceReportController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<PendingGenderViolenceReportResponse>> getPendingGenderViolenceReports() {
+    public ResponseEntity<List<ReportShortResponse>> getAllPendingGenderViolenceReports() {
         return ResponseEntity.ok(genderViolenceReportService.getAllPendingReports());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PendingGenderViolenceReportResponse> getPendingGenderViolenceReport(@PathVariable UUID id) {
+        return ResponseEntity.ok(genderViolenceReportService.getPendingReportById(id));
+    }
 }

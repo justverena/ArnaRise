@@ -29,12 +29,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '@/services/api'
+import { getAdminUsers, deleteAdminUsers } from '@/services/adminService'
 
 const users = ref([])
 
 const fetchUsers = async () => {
     try {
-        const response = await api.get('/admin/users')
+        const response = await getAdminUsers()
         console.log('Ответ с сервера:', response.data)
         users.value = response.data
     }
@@ -51,9 +52,9 @@ const deleteUser = async (userId) => {
   if (!confirmed) return
 
   try {
-    await api.delete(`/admin/users/delete/${userId}`)
+    await deleteAdminUsers(userId)
     alert('Пользователь удалён')
-    await fetchUsers() // Перезагружаем список
+    await fetchUsers() 
   } catch (error) {
     console.error('Ошибка при удалении пользователя:', error)
     alert('Не удалось удалить пользователя')
