@@ -1,55 +1,48 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Ожидающие отчеты о гендерном насилии</h2>
+   <div>
+    <h1>Гендерное насилие</h1>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Дата инцидента</th>
-            <th>Район</th>
-            <th>Пол</th>
-            <th>Тип насилия</th>
-            <th>Действия</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="report in reports" :key="report.id">
-            <td>{{ report.date }}</td>
-            <td>{{ districts.find(d => d.key === report.district)?.value || report.district }}</td>
-            <td>{{ genders.find(g => g.key === report.gender)?.value || report.gender }}</td>
-            <td>{{ violenceTypes.find(vt => vt.key === report.violenceType)?.value || report.violenceType }}</td>
-            <td>
-              <button class="approve-btn" @click="approve(report.id)">Одобрить</button>
-              <button class="reject-btn" @click="reject(report.id)">Отклонить</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="form-actions">
-        <button class="cancel-btn" @click="$emit('close')">Закрыть</button>
-      </div>
-    </div>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Отправил (ID пользователя)</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="report in reports" :key="report.id">
+          <td>{{ report.id }}</td>
+          <td>{{ report.submittedBy }}</td>
+          <td>
+            <button @click="openReport(report.id)">Просмотр</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <ShowFormGenderViolenceReport
+      v-if="selectedReportId"
+      :report-id="selectedReportId"
+      @close="selectedReportId = null"
+      @updated="fetchReports"
+    />
   </div>
+
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getEnum } from '@/services/enumService'
 import {
   getAnalystGenderViolenceReports,
   approveAnalystGenderViolenceReport,
   rejectAnalystGenderViolenceReport} from '@/services/genderViolence.service'
-
-const emit = defineEmits(['close'])
+import ShowFormGenderViolenceReport from './ShowFormGenderViolenceReport.vue'
 
 const reports = ref([])
-const districts = ref([])
-const genders = ref([])
-const violenceTypes = ref([])
+const selectedReportId = ref(null)
 
-const fetchReports = async () => {
+async function fetchReports() {
   try {
     const response = await getAnalystGenderViolenceReports()
     reports.value = response.data
@@ -59,40 +52,11 @@ const fetchReports = async () => {
   }
 }
 
-const approve = async (id) => {
-  try {
-    await approveAnalystGenderViolenceReport(id)
-    alert('Отчет одобрен')
-    await fetchReports()
-  } catch (error) {
-    console.error('Ошибка при одобрении отчета:', error)
-    alert('Не удалось одобрить отчет')
-  }
+function openReport(id) {
+  selectedReportId.value = id
 }
 
-const reject = async (id) => {
-  const reason = prompt('Введите причину отклонения отчета:')
-  if (!reason) return
-  try {
-    await rejectAnalystGenderViolenceReport(id, { rejectionReason: reason })
-    alert('Отчет отклонен')
-    await fetchReports()
-  } catch (error) {
-    console.error('Ошибка при отклонении отчета:', error)
-    alert('Не удалось отклонить отчет')
-  }
-}
-
-onMounted(async () => {
-  try {
-    districts.value = await getEnum('district')
-    genders.value = await getEnum('gender')
-    violenceTypes.value = await getEnum('violence-type')
-    await fetchReports()
-  } catch (error) {
-    console.error('Ошибка загрузки enum-ов:', error)
-  }
-})
+onMounted(fetchReports)
 </script>
 
 

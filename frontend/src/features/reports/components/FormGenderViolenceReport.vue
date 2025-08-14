@@ -147,7 +147,7 @@ onMounted(async () => {
     Locations.value = await getEnum('location-type')
     TimesOfDay.value = await getEnum('time-of-day')
     SocialStatuses.value = await getEnum('social-status')
-    AggressorRelations .value = await getEnum('aggressor-relation')
+    AggressorRelations.value = await getEnum('aggressor-relation')
     Authorities.value = await getEnum('authority')
     Actions.value = await getEnum('action-taken')
   } catch (error) {
@@ -157,8 +157,8 @@ onMounted(async () => {
 
 const submit = async () => {
   try {
-    console.log('Отправляемые данные:', { ...form, rejectionReason: '', status: 'PENDING' })
-    console.log('Выбранные меры:', form.actions)
+    //console.log('Отправляемые данные:', { ...form, rejectionReason: '', status: 'PENDING' })
+    //console.log('Выбранные меры:', form.actions)
 
 
     await submitPartnerGenderViolenceReport({
