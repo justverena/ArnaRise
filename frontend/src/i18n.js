@@ -24,6 +24,7 @@ async function loadEnumsForLang(lang) {
     'source',
     'time-of-day',
     'violence-type',
+    'report-status',
   ]
 
   const enums = {}

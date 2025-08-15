@@ -2,24 +2,14 @@
   <div>
     <h1>Браки и Разводы</h1>
 
-    <table class="report-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Отправил (ID пользователя)</th>
-          <th>Действия</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="report in reports" :key="report.id">
-          <td>{{ report.id }}</td>
-          <td>{{ report.submittedBy }}</td>
-          <td>
-            <button @click="openReport(report.id)">Просмотр</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <BaseTable
+      :columns="columns"
+      :rows="reports"
+    >
+      <template #actions="{ row }">
+        <button @click="openReport(row.id)">Просмотр</button>
+      </template>
+    </BaseTable>
 
     <ShowFormMarriageDivorceReport
       v-if="selectedReportId"
@@ -33,9 +23,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getAnalystMarriageDivorceReports } from '@/services/marriageDivorce.service'
+import BaseTable from '@/components/common/BaseTable.vue'
 import ShowFormMarriageDivorceReport from './ShowFormMarriageDivorceReport.vue'
+
 const reports = ref([])
 const selectedReportId = ref(null)
+
+const columns = [
+  { label: 'ID', key: 'id' },
+  { label: 'Отправил (ID пользователя)', key: 'submittedBy' }
+]
 
 async function loadReports() {
   const res = await getAnalystMarriageDivorceReports()
@@ -50,17 +47,14 @@ onMounted(loadReports)
 </script>
 
 <style scoped>
-.report-table {
-  width: 100%;
-  border-collapse: collapse;
+button {
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
 }
 
-.report-table th, .report-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.report-table th {
-  background-color: #f4f4f4;
+button:hover {
+  background-color: #f0f0f0;
 }
 </style>

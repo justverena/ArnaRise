@@ -5,27 +5,35 @@
       <button class="top-button" @click="goBack">Назад</button>
     </header>
 
-    <main class="template-wrapper">
-      <div class="template-box">
+    <div class="main-content">
+      <!-- Левая панель -->
+      <nav class="sidebar">
+        <ul>
+          <li 
+            :class="{ active: selected === 'marriage' }" 
+            @click="selected = 'marriage'"
+          >
+            Браки и разводы
+          </li>
+          <li 
+            :class="{ active: selected === 'violence' }" 
+            @click="selected = 'violence'"
+          >
+            Гендерное насилие
+          </li>
+        </ul>
+      </nav>
 
-        <div class="template-grid">
-          <div class="template-card">
-            <h3>Браки и разводы</h3>
-            <p>Статистика по регистрации браков и разводов.</p>
-            <button class="template-button" @click="selected = 'marriage'">Посмотреть Отчеты</button>
-          </div>
+      <!-- Правая область -->
+      <div class="content">
+        <ReportMarriageTable v-if="selected === 'marriage'" @close="selected = ''" />
+        <ReportViolenceTable v-if="selected === 'violence'" @close="selected = ''" />
 
-          <div class="template-card">
-            <h3>Гендерное насилие</h3>
-            <p>Отчет по случаям домашнего и гендерного насилия.</p>
-            <button class="template-button" @click="selected = 'violence'">Посмотреть Отчеты</button>
-          </div>
+        <div v-if="!selected" class="placeholder">
+          <p>Выберите категорию отчётов в меню слева</p>
         </div>
       </div>
-    </main>
-
-    <ReportMarriageTable v-if="selected === 'marriage'" @close="selected = ''" />
-    <ReportViolenceTable v-if="selected === 'violence'" @close="selected = ''" />
+    </div>
   </div>
 </template>
 
@@ -40,25 +48,12 @@ const goBack = () => router.back()
 const selected = ref('')
 </script>
 
-
-
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  background-color: #f9fafb;
-}
-
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
 .header {
@@ -85,67 +80,56 @@ body {
   font-size: 0.9rem;
 }
 
-.template-wrapper {
+/* Основная двухколоночная структура */
+.main-content {
   display: flex;
-  justify-content: center;
-  padding: 2rem;
+  flex: 1;
 }
 
-.template-box {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 800px;
-  width: 100%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+/* Левая панель */
+.sidebar {
+  width: 250px;
+  background: #f3f4f6;
+  padding: 1rem 0;
+  border-right: 1px solid #e5e7eb;
 }
 
-.template-box h2 {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.template-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.template-card {
-  background-color: #f3f4f6;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.template-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-.template-card p {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 1rem;
-}
-
-.template-button {
-  align-self: flex-start;
-  padding: 0.5rem 1.2rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 2rem;
-  font-size: 0.9rem;
+.sidebar li {
+  padding: 0.8rem 1.2rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-weight: 500;
+  color: #333;
+  transition: background 0.2s;
 }
 
-.template-button:hover {
-  background-color: #43a047;
+.sidebar li:hover {
+  background: #e1e1e1;
+}
+
+.sidebar li.active {
+  background: #4caf50;
+  color: white;
+}
+
+/* Контент справа */
+.content {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #777;
+  font-size: 1rem;
+  
 }
 </style>
