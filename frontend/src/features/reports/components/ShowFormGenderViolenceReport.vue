@@ -35,10 +35,11 @@
             </td>
           </tr>
           <tr><td>Отправил</td><td>{{ report.submittedBy }}</td></tr>
-          <tr><td>Статус</td><td>{{ getEnumValue(ReportStatuses, report.reportStatus) }}</td></tr>
+          <tr><td>Статус</td><td>{{ getEnumValue(ReportStatuses, report.status) }}</td></tr>
           <tr v-if="report.rejectionReason"><td>Причина отклонения</td><td>{{ report.rejectionReason }}</td></tr>
         </tbody>
       </table>
+
     </div>
 
     <template #footer>
@@ -121,6 +122,7 @@ onMounted(async () => {
     Authorities.value = await getEnum('authority')
     Actions.value = await getEnum('action-taken')
     ReportStatuses.value = await getEnum('report-status')
+
     await loadReport()
   } catch (error) {
     console.error('Ошибка загрузки enum-ов:', error)

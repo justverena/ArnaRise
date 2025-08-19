@@ -23,7 +23,7 @@
             <tr><td>Средний возраст</td><td>{{ report.averageAge }}</td></tr>
             <tr><td>Источник</td><td>{{ getEnumValue(sources, report.source) }}</td></tr>
             <tr><td>Отправил</td><td>{{ report.submittedBy }}</td></tr>
-            <tr><td>Статус</td><td>{{ getEnumValue(ReportStatuses, report.reportStatus) }}</td></tr>
+            <tr><td>Статус</td><td>{{ getEnumValue(ReportStatuses, report.status) }}</td></tr>
             <tr v-if="report.rejectionReason"><td>Причина отклонения</td><td>{{ report.rejectionReason }}</td></tr>
           </tbody>
         </table>
