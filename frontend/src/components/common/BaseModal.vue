@@ -36,33 +36,37 @@ function onBackdrop() {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0,0,0,.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
+  backdrop-filter: blur(2px); /* лёгкое размытие заднего фона */
 }
 
 .modal-content {
   background: white;
   padding: 2rem;
-  border-radius: 1rem;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  border-radius: 0; /* более мягкие закругления */
+  max-width: 900px; /* увеличена ширина */
+  width: 90%; /* адаптивная ширина на экранах меньше 900px */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* мягкая тень */
   font-family: 'Inter', sans-serif;
   max-height: 85vh;
-  overflow: auto;
+  overflow-y: auto;
+  transition: all 0.3s ease; /* плавное появление/изменение */
 }
 
 .modal-header {
   margin-bottom: 1rem;
-  font-size: 1.4rem;
+  font-size: 1.6rem; /* чуть больше заголовок */
   font-weight: 600;
+  border-bottom: 1px solid #eee; /* разделитель */
+  padding-bottom: 0.5rem;
 }
 
 .modal-body {
-  /* содержимое формы/текста */
+  padding-top: 0.5rem;
 }
 
 .modal-footer {
@@ -72,3 +76,4 @@ function onBackdrop() {
   justify-content: flex-end;
 }
 </style>
+

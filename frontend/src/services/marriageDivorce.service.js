@@ -12,6 +12,9 @@ export const editRejectedMarriageDivorceReport = (id, data) =>
 export const getAnalystMarriageDivorceReports = () =>
   api.get("/analyst/reports/marriage-divorce");
 
+export const getAnalystMarriageDivorceReportById = (id) =>
+  api.get(`/analyst/reports/marriage-divorce/${id}`);
+
 export const approveMarriageDivorceReport = (id) =>
   api.post(`/analyst/reports/marriage-divorce/${id}/approve`);
 

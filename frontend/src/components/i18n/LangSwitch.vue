@@ -1,15 +1,11 @@
 <template>
-  <div class="lang-switch">
-    <button 
-      v-for="option in languages" 
-      :key="option.value"
-      :class="{ active: lang === option.value }"
-      @click="changeLang(option.value)"
-    >
-      {{ option.label }}
-    </button>
+  <div class="lang-toggle" @click="toggleLang">
+    <div class="lang-option" :class="{ active: lang === 'ru' }">RU</div>
+    <div class="lang-option" :class="{ active: lang === 'kz' }">KZ</div>
+    <div class="lang-slider" :class="{ right: lang === 'kz' }"></div>
   </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'
@@ -17,35 +13,52 @@ import { loadEnumsForLang } from '@/i18n'
 
 const lang = ref(localStorage.getItem('lang') || 'ru')
 
-const changeLang = async (newLang) => {
-  if (lang.value !== newLang) {
-    lang.value = newLang
-    await loadEnumsForLang(newLang) 
-  }
+const toggleLang = async () => {
+  lang.value = lang.value === 'ru' ? 'kz' : 'ru'
+  localStorage.setItem('lang', lang.value)
+  await loadEnumsForLang(lang.value)
 }
-
-const languages = [
-  { value: 'ru', label: 'Русский' },
-  { value: 'kz', label: 'Қазақ' }
-]
 </script>
 
 <style scoped>
-.lang-switch {
+.lang-toggle {
+  position: relative;
   display: flex;
-  gap: 8px;
-}
-
-button {
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  background: white;
+  align-items: center;
+  background: #e0e0e0;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 80px;
+  height: 32px;
   cursor: pointer;
 }
 
-button.active {
-  background: #007bff;
+.lang-option {
+  flex: 1;
+  text-align: center;
+  z-index: 2;
+  font-weight: bold;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.lang-option.active {
   color: white;
-  border-color: #007bff;
+}
+
+.lang-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 36px;
+  height: 28px;
+  background: #009B67;
+  border-radius: 18px;
+  transition: transform 0.3s ease;
+  z-index: 1;
+}
+
+.lang-slider.right {
+  transform: translateX(40px);
 }
 </style>

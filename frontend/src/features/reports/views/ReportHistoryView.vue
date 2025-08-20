@@ -20,21 +20,21 @@
   v-if="showEditModal && selectedReport?.type === 'MARRIAGE'"
   :report-id="selectedReport.id"
   @close="closeModal"
-  @reportUpdated="handleUpdateSuccess"
+  
 />
 
 <EditViolenceReport
   v-if="showEditModal && selectedReport?.type === 'GENDER'"
   :report-id="selectedReport.id"
   @close="closeModal"
-  @reportUpdated="handleUpdateSuccess"
+  
   />
-
 </template>
 
 <script>
 import { getRejectedGenderViolenceReports } from '@/services/genderViolence.service'
 import { getRejectedMarriageDivorceReports } from '@/services/marriageDivorce.service'
+import { getAnalystMarriageDivorceReportById } from '@/services/marriageDivorce.service'
 import EditMarriageDivorceReport from '../components/EditMarriageDivorceReport.vue'
 import EditViolenceReport from '../components/EditGenderViolenceReport.vue'
 

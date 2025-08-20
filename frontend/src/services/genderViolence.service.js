@@ -1,7 +1,7 @@
 import api from '@/services/api'
 
 export const submitPartnerGenderViolenceReport = (data) =>
-  api.post("/partner/reports/gender-violence", data);
+  api.post(`/partner/reports/gender-violence`, data);
 
 export const getPartnerGenderViolenceReports = () =>
   api.get("/partner/reports/gender-violence");
@@ -14,6 +14,9 @@ export const editRejectedGenderViolenceReport = (id, data) =>
 
 export const getAnalystGenderViolenceReports = () =>
   api.get('/analyst/reports/gender-violence')
+
+export const getAnalystGenderViolenceReportById = (id) =>
+  api.get(`/analyst/reports/gender-violence/${id}`);
 
 export const approveAnalystGenderViolenceReport = (id) =>
   api.post(`/analyst/reports/gender-violence/${id}/approve`)
