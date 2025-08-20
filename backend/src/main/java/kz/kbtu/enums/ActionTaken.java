@@ -1,0 +1,15 @@
+package kz.kbtu.enums;
+
+public enum ActionTaken {
+    SHELTER, PSYCHOLOGIST,
+    POLICE,
+    MEDICAL_ASSISTANCE,
+    PSYCHOLOGICAL_SUPPORT,
+    LEGAL_SUPPORT,
+    RELOCATION,
+    RESTRAINING_ORDER,
+    CASE_OPENED,
+    FOLLOW_UP_SCHEDULED,
+    OTHER
+}
+

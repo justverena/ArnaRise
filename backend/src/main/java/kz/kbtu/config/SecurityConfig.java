@@ -28,7 +28,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/auth/admin/**").hasAuthority("admin")
+                        .requestMatchers("/api/admin/**").hasAuthority("admin")
+                        .requestMatchers("/api/partner/**").hasAuthority("partner")
+                        .requestMatchers("/api/analyst/**").hasAuthority("analyst")
+                        .requestMatchers("/api/enums/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
