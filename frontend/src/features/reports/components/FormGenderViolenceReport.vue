@@ -1,8 +1,9 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Отчет: Гендерное насилие</h2>
-      <form @submit.prevent="submit">
+  <BaseModal v-model="isOpen" @close="$emit('close')">
+  <template #header>
+    Отчет: Гендерное насилие
+  </template>
+        <form @submit.prevent="submit">
         <BaseSelect
         v-model="form.district"
         :options="Districts"
@@ -16,6 +17,7 @@
           <input v-model="form.date" type="date" required />
         </label>
 
+
         <BaseSelect
         v-model="form.gender"
         :options="Genders"
@@ -25,9 +27,13 @@
         label-key="value"
         />
 
-        <label>Возраст:
-          <input v-model="form.age" type="number" min="0" required />
-        </label>
+        <BaseInput
+        v-model="form.age"
+        label="Возраст:"
+        type="number"
+        min="1"
+        required
+        />
 
         <BaseSelect
         v-model="form.violenceType"
@@ -74,9 +80,12 @@
         label-key="value"
         />
 
-        <label>Описание случая:
-          <textarea v-model="form.caseDescription" rows="3" />
-        </label>
+        <BaseInput
+        v-model="form.caseDescription"
+        label="Описание случая:"
+        multiline
+        required
+        />
 
         <BaseSelect
         v-model="form.authority"
@@ -95,23 +104,27 @@
 
 
         <div class="form-actions">
-          <button class="submit-btn" type="submit">Отправить</button>
-          <button class="cancel-btn" type="button" @click="$emit('close')">Закрыть</button>
+          <BaseButton type="submit" size="lg">Отправить</BaseButton>
+          <BaseButton @click="$emit('close')" type="button" variant="secondary" size="lg">Закрыть</BaseButton>
         </div>
       </form>
-    </div>
-  </div>
+  </BaseModal>
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, isProxy } from 'vue'
 import { submitPartnerGenderViolenceReport } from '@/services/genderViolence.service'
 import { getEnum } from '@/services/enumService'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
+import BaseModal from '@/components/common/BaseModal.vue'
+import BaseInput from '@/components/common/BaseInput.vue'
 
 
 const emit = defineEmits(['reportSubmitted', 'close'])
+
+const isOpen = ref(true)
 
 const form = reactive({
   gender: '',
@@ -157,10 +170,6 @@ onMounted(async () => {
 
 const submit = async () => {
   try {
-    //console.log('Отправляемые данные:', { ...form, rejectionReason: '', status: 'PENDING' })
-    //console.log('Выбранные меры:', form.actions)
-
-
     await submitPartnerGenderViolenceReport({
       ...form,
       rejectionReason: '',
@@ -194,8 +203,8 @@ const submit = async () => {
   background: white;
   padding: 2rem;
   border-radius: 1rem;
-  max-width: 1000px;
-  width: 800px;
+  max-width: 600px;
+  width: 100%;
   height: 800px;
   overflow-y: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -204,8 +213,7 @@ const submit = async () => {
 
 h2 {
   margin-bottom: 1.5rem;
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.4rem;
 }
 
 form {
@@ -238,52 +246,16 @@ textarea {
   resize: vertical;
 }
 
-select {
-  appearance: none;
-}
-
 textarea {
   min-height: 80px;
   line-height: 1.5;
 }
 
-.form-action {
+.form-actions {
   display: flex;
-  justify-content: space-between;
   gap: 1rem;
   margin-top: 1.5rem;
 }
 
-.submit-btn {
-  flex: 1;
-  background-color: #4caf50;
-  color: white;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: #43a047;
-}
-
-.cancel-btn {
-  flex: 1;
-  background-color: #ccc;
-  color: #333;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #b0b0b0;
-}
 </style>
 

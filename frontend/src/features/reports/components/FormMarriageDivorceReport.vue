@@ -1,8 +1,11 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Отчет: Браки и разводы</h2>
-      <form @submit.prevent="submit">
+
+  <BaseModal v-model="isOpen" @close="$emit('close')">
+  <template #header>
+    Отчет: Браки и разводы
+  </template>
+
+  <form @submit.prevent="submit">
         <BaseSelect
           v-model="form.reportYear"
           :options="ReportYears"
@@ -21,21 +24,38 @@
           label-key="value"
         />
 
-        <label>Количество зарегистрированных браков:
-          <input v-model.number="form.marriageCount" type="number" min="1" @input="calculateRate" required />
-        </label>
+        <BaseInput
+        v-model="form.marriageCount"
+        label="Количество зарегистрированных браков:"
+        type="number"
+        min="1"
+        required
+        @input="calculateRate"
+        />
 
-        <label>Количество разводов:
-          <input v-model.number="form.divorceCount" type="number" min="0" @input="calculateRate" required />
-        </label>
+        <BaseInput
+        v-model="form.divorceCount"
+        label="Количество разводов:"
+        type="number"
+        min="1"
+        required
+        @input="calculateRate"
+        />
 
-        <label>Отношение разводов к бракам (%):
-          <input :value="form.ratioDivorcesToMarriagePercent.toFixed(2)" type="number" disabled />
-        </label>
+        <BaseInput
+        :model-value="form.ratioDivorcesToMarriagePercent.toFixed(2)"
+        label="Отношение разводов к бракам (%):"
+        type="number"
+        disabled />
 
-        <label>Средний возраст вступающих в брак:
-          <input v-model.number="form.averageAge" type="number" step="0.1" min="0" required />
-        </label>
+        <BaseInput
+        v-model="form.averageAge"
+        label="Средний возраст вступающих в брак:"
+        type="number"
+        min="1"
+        required
+        @input="calculateRate"
+        />
 
         <BaseSelect
           v-model="form.source"
@@ -47,12 +67,11 @@
         />
 
         <div class="form-actions">
-          <button class="submit-btn" type="submit">Отправить</button>
-          <button class="cancel-btn" type="button" @click="$emit('close')">Закрыть</button>
+          <BaseButton type="submit" size="lg">Отправить</BaseButton>
+          <BaseButton @click="$emit('close')" type="button" variant="secondary" size="lg">Закрыть</BaseButton>
         </div>
       </form>
-    </div>
-  </div>
+  </BaseModal>
 </template>
 
 <script setup>
@@ -60,8 +79,12 @@ import { reactive, ref, onMounted } from 'vue'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import { getEnum } from '@/services/enumService'
 import { submitMarriageDivorceReport } from '@/services/marriageDivorce.service'
-
+import BaseButton from '@/components/common/BaseButton.vue'
+import BaseModal from '@/components/common/BaseModal.vue'
+import BaseInput from '@/components/common/BaseInput.vue'
 const emit = defineEmits(['reportSubmitted', 'close'])
+
+const isOpen = ref(true)
 
 const form = reactive({
   reportYear: '',
@@ -171,38 +194,8 @@ select {
 
 .form-actions {
   display: flex;
-  justify-content: space-between;
   gap: 1rem;
   margin-top: 1.5rem;
 }
 
-.submit-btn {
-  flex: 1;
-  background-color: #4caf50;
-  color: white;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.submit-btn:hover {
-  background-color: #43a047;
-}
-
-.cancel-btn {
-  flex: 1;
-  background-color: #ccc;
-  color: #333;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.cancel-btn:hover {
-  background-color: #b0b0b0;
-}
 </style>

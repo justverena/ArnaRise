@@ -41,27 +41,27 @@ function onBackdrop() {
   justify-content: center;
   align-items: center;
   z-index: 999;
-  backdrop-filter: blur(2px); /* лёгкое размытие заднего фона */
+  backdrop-filter: blur(2px);
 }
 
 .modal-content {
   background: white;
   padding: 2rem;
-  border-radius: 0; /* более мягкие закругления */
-  max-width: 900px; /* увеличена ширина */
-  width: 90%; /* адаптивная ширина на экранах меньше 900px */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* мягкая тень */
+  border-radius: 0;
+  max-width: 900px;
+  width: 90%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
   font-family: 'Inter', sans-serif;
   max-height: 85vh;
   overflow-y: auto;
-  transition: all 0.3s ease; /* плавное появление/изменение */
+  transition: all 0.3s ease;
 }
 
 .modal-header {
   margin-bottom: 1rem;
-  font-size: 1.6rem; /* чуть больше заголовок */
+  font-size: 1.6rem; 
   font-weight: 600;
-  border-bottom: 1px solid #eee; /* разделитель */
+  border-bottom: 1px solid #eee;
   padding-bottom: 0.5rem;
 }
 
@@ -76,4 +76,3 @@ function onBackdrop() {
   justify-content: flex-end;
 }
 </style>
-

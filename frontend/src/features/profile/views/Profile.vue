@@ -2,24 +2,25 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <router-link to="/admin/register" class="nav-button">Регистрация Пользователя</router-link>
-        <router-link to="/admin/users" class="nav-button">Список Пользователей</router-link>
-        
-        <button @click="logout" class="nav-button logout">Выйти</button>
+        <BaseButton to="/admin/register" shape="square">Регистрация Пользователя</BaseButton>
+        <BaseButton to="/admin/users" shape="square">Список Пользователей</BaseButton>
+        <BaseButton @click="logout" variant="danger" shape="square">Выйти</BaseButton>
       </div>
     </header>
 
     <main class="main">
       <section class="content">
-        <p>Добро пожаловать в личный кабинет администратора. Здесь будут отображаться доступные вам функции.</p>
+        <!-- Вместо текста вставляем компонент -->
+        <UserListView />
       </section>
     </main>
   </div>
 </template>
 
 <script setup>
-//import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import UserListView from '@/features/users/views/UserListView.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const router = useRouter()
 
@@ -28,21 +29,6 @@ function logout() {
   localStorage.removeItem('role')
   router.push('/login')
 }
-/*
-onMounted(() => {
-  const role = localStorage.getItem('role')
-  if (role === 'partner') {
-    router.replace('/partner/profile')
-  }
-  if (role === 'analyst') {
-    router.replace('/analyst/profile')
-  } 
-  if (role === 'admin') {
-    router.replace('')
-  } else if (!role) {
-    router.push('/login')
-  }
-}) */
 </script>
 
 <style scoped>

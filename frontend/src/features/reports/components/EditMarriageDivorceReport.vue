@@ -1,8 +1,10 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Изменение отчета</h2>
-      <form @submit.prevent="submitUpdate">
+  <BaseModal v-model="isOpen" @close="$emit('close')">
+    <template #header>
+      Изменение отчета: Браки и разводы
+    </template>
+
+    <form @submit.prevent="submitUpdate">
         <BaseSelect
           v-model="form.reportYear"
           :options="reportYears"
@@ -21,21 +23,38 @@
           label-key="value"
         />
 
-        <label>Количество зарегистрированных браков:
-          <input v-model.number="form.marriageCount" type="number" min="1" @input="calculateRate" required />
-        </label>
+        <BaseInput
+        v-model="form.marriageCount"
+        label="Количество зарегистрированных браков:"
+        type="number"
+        min="1"
+        required
+        @input="calculateRate"
+        />
 
-        <label>Количество разводов:
-          <input v-model.number="form.divorceCount" type="number" min="0" @input="calculateRate" required />
-        </label>
+        <BaseInput
+        v-model="form.divorceCount"
+        label="Количество разводов:"
+        type="number"
+        min="1"
+        required
+        @input="calculateRate"
+        />
 
-        <label>Отношение разводов к бракам (%):
-          <input :value="form.ratioDivorcesToMarriagePercent.toFixed(2)" type="number" disabled />
-        </label>
+        <BaseInput
+        :model-value="form.ratioDivorcesToMarriagePercent.toFixed(2)"
+        label="Отношение разводов к бракам (%):"
+        type="number"
+        disabled />
 
-        <label>Средний возраст вступающих в брак:
-          <input v-model.number="form.averageAge" type="number" step="0.1" min="0" required />
-        </label>
+        <BaseInput
+        v-model="form.averageAge"
+        label="Средний возраст вступающих в брак:"
+        type="number"
+        min="1"
+        required
+        @input="calculateRate"
+        />
 
         <BaseSelect
           v-model="form.source"
@@ -47,21 +66,25 @@
         />
 
         <div class="form-actions">
-          <button class="submit-btn" type="submit">Отправить</button>
-          <button class="cancel-btn" type="button" @click="$emit('close')">Закрыть</button>
+          <BaseButton type="submit">Отправить</BaseButton>
+          <BaseButton type="button" @click="$emit('close')" variant="secondary">Закрыть</BaseButton>
         </div>
       </form>
-    </div>
-  </div>
+  </BaseModal>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import { getRejectedMarriageDivorceReports, editRejectedMarriageDivorceReport } from '@/services/marriageDivorce.service'
 import BaseSelect from '@/components/common/BaseSelect.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
+import BaseModal from '@/components/common/BaseModal.vue'
+import BaseInput from '@/components/common/BaseInput.vue'
 import { getEnum } from '@/services/enumService'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
+
+const isOpen = ref(true)
 
 const props = defineProps({
   reportId: {

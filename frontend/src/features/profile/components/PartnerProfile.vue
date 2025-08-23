@@ -2,10 +2,9 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <router-link to="/new-report" class="green-btn">Создать Отчет</router-link>
-        <!--<button class="green-btn" @click="showHistory = true">История отчётов</button> -->
-        <button class="green-btn" @click="showOrganizations = true">Организации</button>
-        <button @click="logout" class="logout">Выйти</button>
+        <BaseButton to="/new-report" shape="square">Создать Отчет</BaseButton>
+        <BaseButton @click="showOrganizations = true" shape="square">Организация</BaseButton>
+                <BaseButton @click="logout" variant="danger" shape="square">Выйти</BaseButton>
       </div>
     </header>
 
@@ -25,6 +24,7 @@ import { useRouter } from 'vue-router'
 import ReportHistoryView from '@/features/reports/views/ReportHistoryView.vue'
 import NewReport from '@/features/reports/views/NewReportView.vue'
 import Organizations from '@/features/organizations/Organizations.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 
 const router = useRouter()

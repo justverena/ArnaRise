@@ -1,8 +1,10 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Изменение отчета</h2>
-      <form @submit.prevent="submitUpdate">
+  <BaseModal v-model="isOpen" @close="$emit('close')">
+    <template #header>
+      Изменение отчета: Гендерное насилие
+    </template>
+
+    <form @submit.prevent="submitUpdate">
         <BaseSelect
         v-model="form.district"
         :options="Districts"
@@ -25,9 +27,13 @@
         label-key="value"
         />
 
-        <label>Возраст:
-          <input v-model="form.age" type="number" min="0" required />
-        </label>
+        <BaseInput
+        v-model="form.age"
+        label="Возраст:"
+        type="number"
+        min="1"
+        required
+        />
 
         <BaseSelect
         v-model="form.violenceType"
@@ -74,9 +80,12 @@
         label-key="value"
         />
 
-        <label>Описание случая:
-          <textarea v-model="form.caseDescription" rows="3" />
-        </label>
+        <BaseInput
+        v-model="form.caseDescription"
+        label="Описание случая:"
+        multiline
+        required
+        />
 
         <BaseSelect
         v-model="form.authority"
@@ -94,12 +103,11 @@
         />
 
         <div class="form-actions">
-          <button class="submit-btn" type="submit">Отправить</button>
-          <button class="cancel-btn" type="button" @click="$emit('close')">Закрыть</button>
+          <BaseButton type="submit">Отправить</BaseButton>
+          <BaseButton type="button" @click="$emit('close')" variant="secondary">Закрыть</BaseButton>
         </div>
       </form>
-    </div>
-  </div>
+  </BaseModal>
 </template>
 
 <script setup>
@@ -107,9 +115,14 @@ import { onMounted, reactive, ref } from 'vue'
 import { getRejectedGenderViolenceReports, editRejectedGenderViolenceReport } from '@/services/genderViolence.service'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
+import BaseModal from '@/components/common/BaseModal.vue'
+import BaseInput from '@/components/common/BaseInput.vue'
 import { getEnum } from '@/services/enumService'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
+
+const isOpen = ref(true)
 
 const props = defineProps({
     reportId: {

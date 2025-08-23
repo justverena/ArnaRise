@@ -2,17 +2,17 @@
   <div class="chart-page">
     <!-- upper panel -->
     <div class="top-bar">
-      <button @click="updateChart">Обновить</button>
+     <BaseButton @click="updateChart" shape="square">Обновить</BaseButton>
 
       <div class="dropdown-container">
-        <button @click="toggleIndicators">Индикаторы</button>
+        <BaseButton @click="toggleIndicators" shape="square">Индикаторы</BaseButton>
         <div class="dropdown" v-if="showIndicators">
           <Indicators @indicator-selected="onIndicatorSelected" />
         </div>
       </div>
 
       <div class="dropdown-container">
-        <button @click="toggleFilters">Фильтры</button>
+        <BaseButton @click="toggleFilters" shape="square">Фильтры</BaseButton>
         <div class="dropdown" v-if="showFilters">
           <Filters @filter-updated="onFiltersChanged" />
         </div>
@@ -40,6 +40,8 @@ import MarriageChart from '@/features/analytics/components/MarriageIndicator.vue
 import DivorceRatioChart from '@/features/analytics/components/DivorceRatioIndicator.vue'
 import AvgAgeChart from '@/features/analytics/components/AvgAgeIndicator.vue'
 import DivorceChart from '@/features/analytics/components/DivorceIndicator.vue'
+
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const chartKey = ref(0)
 
