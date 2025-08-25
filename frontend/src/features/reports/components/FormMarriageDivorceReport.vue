@@ -29,6 +29,7 @@
         label="Количество зарегистрированных браков:"
         type="number"
         min="1"
+        size="small"
         required
         @input="calculateRate"
         />
@@ -38,6 +39,7 @@
         label="Количество разводов:"
         type="number"
         min="1"
+        size="small"
         required
         @input="calculateRate"
         />
@@ -46,6 +48,7 @@
         :model-value="form.ratioDivorcesToMarriagePercent.toFixed(2)"
         label="Отношение разводов к бракам (%):"
         type="number"
+        size="small"
         disabled />
 
         <BaseInput
@@ -53,6 +56,7 @@
         label="Средний возраст вступающих в брак:"
         type="number"
         min="1"
+        size="small"
         required
         @input="calculateRate"
         />
@@ -67,8 +71,8 @@
         />
 
         <div class="form-actions">
-          <BaseButton type="submit" size="lg">Отправить</BaseButton>
-          <BaseButton @click="$emit('close')" type="button" variant="secondary" size="lg">Закрыть</BaseButton>
+          <BaseButton type="submit" >Отправить</BaseButton>
+          <BaseButton @click="$emit('close')" type="button" variant="secondary" >Закрыть</BaseButton>
         </div>
       </form>
   </BaseModal>
@@ -139,58 +143,22 @@ const submit = async () => {
 </script>
 
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+
+form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  font-family: 'Inter', sans-serif;
-}
-
-h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.4rem;
-}
-
-.form-box label {
-  display: block;
-  margin-bottom: 1rem;
+label {
+  display: flex;
+  flex-direction: column;
   font-size: 0.95rem;
   font-weight: 500;
+  color: #333;
 }
 
-input[type="text"],
-input[type="number"],
 input[type="date"],
-input[type="file"],
-select {
-  width: 100%;
-  padding: 0.6rem;
-  margin-top: 0.3rem;
-  border: 1px solid #d1d5db;
-  border-radius: 2rem;
-  font-size: 0.95rem;
-  background-color: #f9f9f9;
-}
-
-select {
-  appearance: none;
-}
 
 .form-actions {
   display: flex;

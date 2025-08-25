@@ -3,14 +3,12 @@
     <header class="header">
       <div class="header-buttons">
         <BaseButton to="/admin/register" shape="square">Регистрация Пользователя</BaseButton>
-        <BaseButton to="/admin/users" shape="square">Список Пользователей</BaseButton>
         <BaseButton @click="logout" variant="danger" shape="square">Выйти</BaseButton>
       </div>
     </header>
 
     <main class="main">
       <section class="content">
-        <!-- Вместо текста вставляем компонент -->
         <UserListView />
       </section>
     </main>
@@ -19,7 +17,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import UserListView from '@/features/users/views/UserListView.vue'
+import UserListView from '@/features/users/components/UserListTable.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 
 const router = useRouter()
@@ -69,7 +67,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Универсальный стиль для кнопок */
 .nav-button {
   display: inline-block;
   background-color: #4caf50;

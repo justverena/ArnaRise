@@ -104,8 +104,8 @@
 
 
         <div class="form-actions">
-          <BaseButton type="submit" size="lg">Отправить</BaseButton>
-          <BaseButton @click="$emit('close')" type="button" variant="secondary" size="lg">Закрыть</BaseButton>
+          <BaseButton type="submit" >Отправить</BaseButton>
+          <BaseButton @click="$emit('close')" type="button" variant="secondary">Закрыть</BaseButton>
         </div>
       </form>
   </BaseModal>
@@ -120,6 +120,7 @@ import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseModal from '@/components/common/BaseModal.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
+import BaseTextarea from '@/components/common/BaseTextarea.vue'
 
 
 const emit = defineEmits(['reportSubmitted', 'close'])
@@ -186,35 +187,6 @@ const submit = async () => {
 </script>
 
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 600px;
-  width: 100%;
-  height: 800px;
-  overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  font-family: 'Inter', sans-serif;
-}
-
-h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.4rem;
-}
 
 form {
   display: flex;
@@ -228,22 +200,23 @@ label {
   font-size: 0.95rem;
   font-weight: 500;
   color: #333;
+  gap: 0.3rem;
+  width: 100%;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
-  width: 100%;
+input[type="date"] {
   padding: 0.6rem 0.8rem;
-  margin-top: 0.4rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
   font-family: inherit;
-  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="date"]:focus {
+  border-color: #3b82f6; 
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 textarea {

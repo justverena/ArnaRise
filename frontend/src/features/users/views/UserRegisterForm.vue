@@ -2,7 +2,7 @@
   <div class="container">
     <header class="header">
       <h1 class="logo">Админ Панель</h1>
-      <BaseButton variant="primary" size="l" shape="square" @click="goBack">Назад</BaseButton>
+      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">Назад</BaseButton>
     </header>
 
     <main class="form-wrapper">

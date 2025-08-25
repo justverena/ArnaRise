@@ -1,19 +1,19 @@
 <template>
   <label class="base-label">
     <span v-if="label" class="base-label-text">{{ label }}</span>
-
     <select
       v-bind="$attrs"
       class="base-select"
-      :class="{ 'is-multiple': multiple }"
+      :class="[{ 'is-multiple': multiple, 'has-placeholder': !modelValue }, sizes[size]]"
       :multiple="multiple"
       :value="modelValue"
       @change="onChange"
     >
       <option
-        v-if="!multiple && placeholder"
+        v-if="!multiple && !modelValue && placeholder"
+        value=""
         disabled
-        :value="''"
+        hidden
       >
         {{ placeholder }}
       </option>
@@ -58,10 +58,21 @@ const props = defineProps({
   labelKey: {
     type: String,
     default: 'label'
+  },
+  size: {
+    type: String,
+    default: 'md',
+    validator: (value) => ['sm', 'md', 'lg'].includes(value)
   }
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const sizes = {
+  sm: 'base-select-sm',
+  md: 'base-select-md',
+  lg: 'base-select-lg'
+}
 
 const normalizedOptions = computed(() =>
   props.options.map((o) =>
@@ -83,21 +94,49 @@ function onChange(e) {
 
 <style scoped>
 .base-select {
-  width: 100%;
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
 }
 
+.base-select-sm {
+  max-width: 150px;
+  min-width: 110px;
+  width: 110px;
+}
+
+.base-select-md {
+  min-width: 220px;
+  width: auto;
+}
+
+.base-select option[disabled] {
+  color: #999;
+}
+
+.base-select option:not([disabled]) {
+  color: #000;
+}
+
 .base-label {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  width: 100%;
+}
+
+.base-select-lg {
+  flex: 1;
+  width: 100%;
 }
 
 .base-label-text {
   margin-bottom: 6px;
   font-weight: 500;
+}
+
+.base-select.has-placeholder {
+  color: #999;
 }
 </style>
