@@ -79,7 +79,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import { getRejectedMarriageDivorceReports, editRejectedMarriageDivorceReport } from '@/services/marriageDivorce.service'
+import { getRejectedMarriageDivorceReports, editRejectedMarriageDivorceReport } from '@/services/reports/marriageDivorce.service'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseModal from '@/components/common/BaseModal.vue'

@@ -45,7 +45,7 @@ import {
   getAnalystMarriageDivorceReportById,
   approveMarriageDivorceReport,
   rejectMarriageDivorceReport
-} from '@/services/marriageDivorce.service'
+} from '@/services/reports/marriageDivorce.service'
 import { getEnum } from '@/services/enumService'
 
 const props = defineProps({

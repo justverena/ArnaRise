@@ -22,7 +22,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getAnalystGenderViolenceReports } from '@/services/genderViolence.service'
+import { getAnalystGenderViolenceReports } from '@/services/reports/genderViolence.service'
 import BaseTable from '@/components/common/BaseTable.vue'
 import ShowFormGenderViolenceReport from './ShowFormGenderViolenceReport.vue'
 import BaseButton from '@/components/common/BaseButton.vue'

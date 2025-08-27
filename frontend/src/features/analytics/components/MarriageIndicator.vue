@@ -1,11 +1,30 @@
 <template>
-  <LineChart
-    :labels="['2020', '2021', '2022', '2023']"
-    :values="[2400, 3100, 2900, 3300]"
-    label="Зарегистрированные браки"
-  />
+  <div>
+    <LineChart
+      v-if="labels.length && values.length"
+      :labels="labels"
+      :values="values"
+      label="Зарегистрированные браки"
+    />
+    <p v-else>Загрузка данных...</p>
+  </div>
 </template>
 
 <script setup>
-import LineChart from '@/components/charts/LineChart.vue';
+import { ref, onMounted } from "vue";
+import LineChart from "@/components/charts/LineChart.vue";
+import { fetchMarriageCountByYear } from "@/services/indicators/marriageIndicator.service";
+
+const labels = ref([]);
+const values = ref([]);
+
+onMounted(async () => {
+  try {
+    const data = await fetchMarriageCountByYear();
+    labels.value = data.map(item => String(item.reportYear));
+    values.value = data.map(item => item.marriageCount);
+  } catch (error) {
+    console.error("Ошибка загрузки данных для графика:", error);
+  }
+});
 </script>

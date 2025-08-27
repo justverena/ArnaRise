@@ -5,7 +5,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      Отчёт: Браки и Разводы
+      Отчёт: Гендерное насилие
     </template>
 
     <div v-if="loading">Загрузка...</div>
@@ -57,7 +57,7 @@ import {
   getAnalystGenderViolenceReportById,
   approveAnalystGenderViolenceReport,
   rejectAnalystGenderViolenceReport
-} from '@/services/genderViolence.service'
+} from '@/services/reports/genderViolence.service'
 import { getEnum } from '@/services/enumService'
 
 const props = defineProps({
