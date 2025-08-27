@@ -7,7 +7,7 @@
       :rows="reports"
     >
       <template #actions="{ row }">
-        <button @click="openReport(row.id)">Просмотр</button>
+        <BaseButton @click="openReport(row.id)" variant="secondary" size="sm" shape="square">Просмотр</BaseButton>
       </template>
     </BaseTable>
 
@@ -24,6 +24,7 @@
 import { ref, onMounted } from 'vue'
 import { getAnalystMarriageDivorceReports } from '@/services/marriageDivorce.service'
 import BaseTable from '@/components/common/BaseTable.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 import ShowFormMarriageDivorceReport from './ShowFormMarriageDivorceReport.vue'
 
 const reports = ref([])

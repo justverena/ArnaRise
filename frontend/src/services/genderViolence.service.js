@@ -21,7 +21,9 @@ export const getAnalystGenderViolenceReportById = (id) =>
 export const approveAnalystGenderViolenceReport = (id) =>
   api.post(`/analyst/reports/gender-violence/${id}/approve`)
 
-export const rejectAnalystGenderViolenceReport = (id, data) =>
-  api.post(`/analyst/reports/gender-violence/${id}/reject`, data)
+export const rejectAnalystGenderViolenceReport = (id, rejectionReason) =>
+  api.post(`/analyst/reports/gender-violence/${id}/reject`, {
+    rejectionReason,
+  })
 
 

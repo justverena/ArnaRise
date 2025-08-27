@@ -1,10 +1,8 @@
-package kz.kbtu.controller;
+package kz.kbtu.controller.report;
 
 import kz.kbtu.dto.report.RejectionRequest;
 import kz.kbtu.dto.report.PendingGenderViolenceReportResponse;
 import kz.kbtu.dto.report.ReportShortResponse;
-import kz.kbtu.entity.report.GenderViolenceReport;
-import kz.kbtu.entity.report.PendingGenderViolenceReport;
 import kz.kbtu.service.report.GenderViolenceReportService;
 import kz.kbtu.service.report.PendingGenderViolenceReportService;
 import lombok.RequiredArgsConstructor;

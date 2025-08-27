@@ -1,105 +1,126 @@
 <template>
-  <div class="modal-overlay">
-    <div class="modal-content">
-      <h2>Изменение отчета</h2>
-      <form @submit.prevent="submitUpdate">
-        <BaseSelect
+  <BaseModal v-model="isOpen" @close="$emit('close')">
+    <template #header>
+      Изменение отчета: Гендерное насилие
+    </template>
+
+    <form @submit.prevent="submitUpdate">
+      
+      <BaseSelect
         v-model="form.district"
         :options="Districts"
         label="Район"
         placeholder="Выберите район"
         value-key="key"
         label-key="value"
-        />
+        size="lg"
+      />
         
-        <label>Дата инцидента:
-          <input v-model="form.date" type="date" required />
-        </label>
+      <label>
+        Дата инцидента:
+        <input v-model="form.date" type="date" required />
+      </label>
 
-        <BaseSelect
-        v-model="form.gender"
-        :options="Genders"
-        label="Пол"
-        placeholder="Выберите пол"
-        value-key="key"
-        label-key="value"
+      <BaseSelect
+          v-model="form.gender"
+          :options="Genders"
+          label="Пол"
+          value-key="key"
+          label-key="value"
+          size="sm"
         />
 
-        <label>Возраст:
-          <input v-model="form.age" type="number" min="0" required />
-        </label>
-
-        <BaseSelect
+      <BaseInput
+          v-model="form.age"
+          label="Возраст:"
+          type="number"
+          size="small"
+          min="1"
+          required
+        />
+      
+      <BaseSelect
         v-model="form.violenceType"
         :options="ViolenceTypes"
         label="Вид насилия"
         placeholder="Выберите вид насилия"
         value-key="key"
         label-key="value"
-        />
+        size="lg"
+      />
 
-        <BaseSelect
+      <BaseSelect
         v-model="form.location"
         :options="Locations"
         label="Место происшесвтия"
         placeholder="Выберите место происшествия"
         value-key="key"
         label-key="value"
-        />
+        size="lg"
+      />
 
-        <BaseSelect
+      <BaseSelect
         v-model="form.timeOfDay"
         :options="TimesOfDay"
         label="Время суток"
         placeholder="Выберите время суток"
         value-key="key"
         label-key="value"
-        />
+        size="md"
+      />
 
-        <BaseSelect
+      <BaseSelect
         v-model="form.socialStatus"
         :options="SocialStatuses"
         label="Социальный статус"
         placeholder="Выберите социальный статус"
         value-key="key"
         label-key="value"
-        />
+        size="md"
+      />
 
-        <BaseSelect
+      <BaseSelect
         v-model="form.aggressorRelation"
         :options="AggressorRelations"
         label="Отношения с агрессором"
         placeholder="Выберите отношения с агрессором"
         value-key="key"
         label-key="value"
-        />
+        size="lg"
+      />
 
-        <label>Описание случая:
-          <textarea v-model="form.caseDescription" rows="3" />
-        </label>
+      <BaseTextarea
+        v-model="form.caseDescription"
+        label="Описание случая:"
+        size="large"
+        required
+        class="full-width"
+      />
 
-        <BaseSelect
+      <BaseSelect
         v-model="form.authority"
         :options="Authorities"
         label="Орган принявший меры"
         placeholder="Выберите орган принявший меры"
         value-key="key"
         label-key="value"
-        />
+        size="md"
+      />  
 
         <BaseMultiSelect
-        v-model="form.actions"
-        :label="'Принятые меры'"
-        :options="Actions"
+          v-model="form.actions"
+          :label="'Принятые меры'"
+          :options="Actions"
+          size="md"
+          border-size="sm"
         />
 
-        <div class="form-actions">
-          <button class="submit-btn" type="submit">Отправить</button>
-          <button class="cancel-btn" type="button" @click="$emit('close')">Закрыть</button>
-        </div>
-      </form>
-    </div>
-  </div>
+      <div class="form-actions">
+        <BaseButton type="submit">Отправить</BaseButton>
+        <BaseButton type="button" @click="$emit('close')" variant="secondary">Закрыть</BaseButton>
+      </div>
+    </form>
+  </BaseModal>
 </template>
 
 <script setup>
@@ -107,9 +128,15 @@ import { onMounted, reactive, ref } from 'vue'
 import { getRejectedGenderViolenceReports, editRejectedGenderViolenceReport } from '@/services/genderViolence.service'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
+import BaseModal from '@/components/common/BaseModal.vue'
+import BaseInput from '@/components/common/BaseInput.vue'
+import BaseTextarea from '@/components/common/BaseTextarea.vue'
 import { getEnum } from '@/services/enumService'
 
 const emit = defineEmits(['reportSubmitted', 'close'])
+
+const isOpen = ref(true)
 
 const props = defineProps({
     reportId: {
@@ -183,8 +210,8 @@ const fetchReports = async () => {
         form.authority = report.authority
         form.actions = report.actions || []
     } catch (error) {
-        console.error('oshibka pri poluchenii otcheta', error)
-        alert('ne udalos zatruzit otchet. check console')
+        console.error('Ошибка при получении отчета.', error)
+        alert('Неу удалось загрузить отчет. Проверьте консоль.')
         emit('close')
     }
 }
@@ -217,44 +244,12 @@ const submitUpdate = async () => {
 }
 </script>
 
-
-
 <style scoped>
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 1000px;
-  width: 800px;
-  height: 800px;
-  overflow-y: auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  font-family: 'Inter', sans-serif;
-}
-
-h2 {
-  margin-bottom: 1.5rem;
-  font-size: 1.6rem;
-  font-weight: 600;
-}
-
 form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 }
 
 label {
@@ -263,70 +258,29 @@ label {
   font-size: 0.95rem;
   font-weight: 500;
   color: #333;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
+  gap: 0.3rem;
   width: 100%;
+}
+
+input[type="date"] {
   padding: 0.6rem 0.8rem;
-  margin-top: 0.4rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
   font-family: inherit;
-  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-select {
-  appearance: none;
+input[type="date"]:focus {
+  border-color: #3b82f6; 
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-textarea {
-  min-height: 80px;
-  line-height: 1.5;
-}
-
-.form-action {
+.form-actions {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   margin-top: 1.5rem;
 }
-
-.submit-btn {
-  flex: 1;
-  background-color: #4caf50;
-  color: white;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: #43a047;
-}
-
-.cancel-btn {
-  flex: 1;
-  background-color: #ccc;
-  color: #333;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.cancel-btn:hover {
-  background-color: #b0b0b0;
-}
 </style>
-

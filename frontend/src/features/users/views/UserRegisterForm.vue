@@ -2,7 +2,7 @@
   <div class="container">
     <header class="header">
       <h1 class="logo">Админ Панель</h1>
-      <button class="top-button" @click="goBack">Назад</button>
+      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">Назад</BaseButton>
     </header>
 
     <main class="form-wrapper">
@@ -33,7 +33,7 @@
           </select>
         </label>
 
-        <button class="submit-button" type="submit">Зарегистрировать</button>
+        <BaseButton type="submit">Зарегистрировать</BaseButton>
 
         <p v-if="success" class="success">{{ success }}</p>
         <p v-if="error" class="error">{{ error }}</p>
@@ -45,8 +45,8 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import api from '@/services/api'
 import { postAdminUser } from '@/services/adminService'
+import BaseButton from '@/components/common/BaseButton.vue' 
 
 const name = ref('')
 const email = ref('')
@@ -71,8 +71,7 @@ const registerUser = async () => {
         email: email.value,
         password: password.value,
         role: role.value
-      },
-      token
+      }
     )
     success.value = res.data.message || 'Пользователь успешно зарегистрирован!'
   } catch (err) {
@@ -95,6 +94,7 @@ body {
 }
 
 .container {
+  width: 800px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -112,16 +112,6 @@ body {
 .logo {
   font-weight: 700;
   font-size: 1.2rem;
-}
-
-.top-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 0.9rem;
 }
 
 .form-wrapper {
@@ -166,22 +156,6 @@ select {
 
 select {
   appearance: none;
-}
-
-.submit-button {
-  width: 100%;
-  padding: 0.8rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 2rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
-}
-
-.submit-button:hover {
-  background-color: #43a047;
 }
 
 .success {

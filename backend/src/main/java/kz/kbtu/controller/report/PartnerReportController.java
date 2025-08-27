@@ -1,17 +1,14 @@
-package kz.kbtu.controller;
+package kz.kbtu.controller.report;
 
 
-import kz.kbtu.dto.report.GenderViolenceReportRequest;
 import kz.kbtu.dto.report.PendingGenderViolenceReportRequest;
 import kz.kbtu.dto.report.PendingGenderViolenceReportResponse;
 import kz.kbtu.dto.report.PendingMarriageDivorceReportRequest;
-import kz.kbtu.entity.report.PendingGenderViolenceReport;
 import kz.kbtu.entity.report.PendingMarriageDivorceReport;
 import kz.kbtu.service.report.PendingGenderViolenceReportService;
 import kz.kbtu.service.report.PendingMarriageDivorceReportService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,8 @@
-package kz.kbtu.controller;
+package kz.kbtu.controller.report;
 
-import kz.kbtu.dto.report.PendingGenderViolenceReportResponse;
 import kz.kbtu.dto.report.PendingMarriageDivorceReportResponse;
 import kz.kbtu.dto.report.RejectionRequest;
 import kz.kbtu.dto.report.ReportShortResponse;
-import kz.kbtu.entity.report.PendingMarriageDivorceReport;
 import kz.kbtu.service.report.MarriageDivorceReportService;
 import kz.kbtu.service.report.PendingMarriageDivorceReportService;
 import lombok.RequiredArgsConstructor;

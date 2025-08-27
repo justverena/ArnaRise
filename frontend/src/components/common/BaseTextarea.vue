@@ -4,9 +4,10 @@
 
     <textarea
       v-bind="$attrs"
-      class="base-textarea"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
+      class="base-textarea"
+      :class="sizes[size]"
     />
 
     <div v-if="showCounter" class="counter">
@@ -20,7 +21,7 @@
 <script setup>
 import FormError from './FormError.vue'
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: String,
     default: ''
@@ -31,9 +32,21 @@ defineProps({
     type: Boolean,
     default: false
   },
-  error: String
+  error: String,
+  size: {
+    type: String,
+    default: 'medium',
+    validator: val => ['small', 'medium', 'large'].includes(val)
+  }
 })
+
 defineEmits(['update:modelValue'])
+
+const sizes = {
+  small: 'textarea-sm',
+  medium: 'textarea-md',
+  large: 'textarea-lg'
+}
 </script>
 
 <style scoped>
@@ -54,15 +67,38 @@ defineEmits(['update:modelValue'])
 .base-textarea {
   width: 100%;
   min-height: 100px;
-  padding: 0.6rem 0.8rem;
-  margin-top: 0.3rem;
+  max-height: 250px;
   border: 1px solid #d1d5db;
   border-radius: 0.75rem;
-  font-size: 1rem;
-  background-color: #f9f9f9;
   font-family: inherit;
-  resize: vertical;
+  background-color: #f9f9f9;
   outline: none;
+  resize: vertical;
+  margin-top: 0.3rem;
+  box-sizing: border-box;
+}
+
+.textarea-sm {
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  width: 30%;
+}
+
+.textarea-md {
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  width: 50%;
+}
+
+.textarea-lg {
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.base-textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .counter {

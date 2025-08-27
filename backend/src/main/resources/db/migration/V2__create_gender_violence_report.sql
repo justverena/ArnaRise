@@ -5,14 +5,14 @@ CREATE TABLE gender_violence_reports (
                                          district VARCHAR(50) NOT NULL,
                                          age INTEGER NOT NULL,
 
-                                         violence_type VARCHAR(30) NOT NULL, -- enum
-                                         location VARCHAR(30) NOT NULL,      -- enum
-                                         time_of_day VARCHAR(20) NOT NULL,   -- enum
-                                         social_status VARCHAR(30) NOT NULL, -- enum
-                                         aggressor_relation VARCHAR(30) NOT NULL, -- enum
+                                         violence_type VARCHAR(30) NOT NULL,
+                                         location VARCHAR(30) NOT NULL,
+                                         time_of_day VARCHAR(20) NOT NULL,
+                                         social_status VARCHAR(30) NOT NULL,
+                                         aggressor_relation VARCHAR(30) NOT NULL,
 
                                          case_description TEXT,
-                                         measures_taken_by VARCHAR(30), -- enum
+                                         measures_taken_by VARCHAR(30),
 
                                          submitted_by UUID REFERENCES users(id),
                                          status VARCHAR(20) NOT NULL DEFAULT 'PENDING',

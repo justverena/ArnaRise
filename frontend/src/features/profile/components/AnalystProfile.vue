@@ -2,10 +2,10 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <router-link to="/analyst/reports" class="nav-button">Проверить новые отчеты</router-link>
-        <router-link to="/analyst/templates" class="nav-button">Управление индикаторами</router-link>
-        <router-link to="/analyst/chart" class="nav-button">Графики</router-link>
-        <button @click="logout" class="nav-button logout">Выйти</button>
+        <BaseButton to="/analyst/reports" shape="square">Проверить новые отчеты</BaseButton>
+        <BaseButton to="/analyst/templates" shape="square">Управление индикаторами</BaseButton>
+        <BaseButton to="/analyst/chart" shape="square">Графики</BaseButton>
+        <BaseButton @click="logout" variant="danger" shape="square">Выйти</BaseButton>
       </div>
     </header>
 
@@ -20,6 +20,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const router = useRouter()
 

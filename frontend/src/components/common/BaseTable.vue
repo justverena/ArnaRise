@@ -45,11 +45,17 @@ defineProps({
 .base-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .base-table th, .base-table td {
   border: 1px solid #ddd;
   padding: 8px;
+  text-align: left;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .base-table th {
