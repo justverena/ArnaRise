@@ -82,7 +82,7 @@
 import { reactive, ref, onMounted } from 'vue'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import { getEnum } from '@/services/enumService'
-import { submitMarriageDivorceReport } from '@/services/marriageDivorce.service'
+import { submitMarriageDivorceReport } from '@/services/reports/marriageDivorce.service'
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseModal from '@/components/common/BaseModal.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
@@ -134,7 +134,7 @@ const submit = async () => {
     })
     alert('Отчет успешно отправлен!')
     emit('reportSubmitted')
-    emit('close')
+    //emit('close')
   } catch (error) {
     console.error('Ошибка отправки:', error)
     alert('Не удалось отправить отчет. Проверьте консоль.')

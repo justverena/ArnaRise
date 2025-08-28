@@ -50,8 +50,22 @@ public class MarriageDivorceIndicatorIntegrationTest {
                 .andExpect(jsonPath("$").isArray());
     }
     @Test
-    void shouldReturnIsForbidden() throws Exception {
+    void shouldReturnMarriageCountIsForbidden() throws Exception {
         mockMvc.perform(get("/api/analyst/indicators/marriage-count-by-year"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void shouldReturnDivorceCountByYear() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/divorce-count-by-year")
+                .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
+    }
+
+    @Test
+    void shouldReturnDivorceCountIsForbidden() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/divorce-count-by-year"))
                 .andExpect(status().isForbidden());
     }
 }

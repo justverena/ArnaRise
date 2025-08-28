@@ -14,4 +14,6 @@ public interface MarriageDivorceReportRepository extends JpaRepository<MarriageD
     @Query("select r.reportYear, sum(r.marriageCount) " + "from MarriageDivorceReport r " + "group by r.reportYear " + "order by r.reportYear ")
     List<Object[]> getMarriageCountByYear();
 
+    @Query("select r.reportYear, sum(r.divorceCount) " + "from MarriageDivorceReport r " + "group by r.reportYear " + "order by r.reportYear ")
+    List<Object[]> getDivorceCountByYear();
 }

@@ -113,7 +113,7 @@
 
 <script setup>
 import { reactive, ref, onMounted, isProxy } from 'vue'
-import { submitPartnerGenderViolenceReport } from '@/services/genderViolence.service'
+import { submitPartnerGenderViolenceReport } from '@/services/reports/genderViolence.service'
 import { getEnum } from '@/services/enumService'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'

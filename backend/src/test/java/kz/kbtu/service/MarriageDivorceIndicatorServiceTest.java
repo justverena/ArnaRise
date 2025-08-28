@@ -1,5 +1,6 @@
 package kz.kbtu.service;
 
+import kz.kbtu.dto.indicator.DivorceCountIndicator;
 import kz.kbtu.dto.indicator.MarriageCountIndicator;
 import kz.kbtu.enums.ReportYear;
 import kz.kbtu.repository.MarriageDivorceReportRepository;
@@ -44,6 +45,23 @@ public class MarriageDivorceIndicatorServiceTest {
         assertThat(result.get(0).getMarriageCount()).isEqualTo(1200L);
         assertThat(result.get(1).getReportYear()).isEqualTo(2021);
         assertThat(result.get(1).getMarriageCount()).isEqualTo(1500L);
+    }
+
+    @Test
+    void testGetDivorceCountByYear(){
+        List<Object[]> mockData = Arrays.asList(
+                new Object[]{ReportYear.Y2015, 1300L},
+                new Object[]{ReportYear.Y2016, 2000L}
+        );
+
+        when(repository.getDivorceCountByYear()).thenReturn(mockData);
+
+        List<DivorceCountIndicator> result = service.getDivorceCountByYear();
+        assertThat(result).hasSize(2);
+        assertThat(result.get(0).getReportYear()).isEqualTo(2015);
+        assertThat(result.get(0).getDivorceCount()).isEqualTo(1300L);
+        assertThat(result.get(1).getReportYear()).isEqualTo(2016);
+        assertThat(result.get(1).getDivorceCount()).isEqualTo(2000L);
     }
 
 }

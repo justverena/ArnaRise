@@ -125,7 +125,7 @@
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import { getRejectedGenderViolenceReports, editRejectedGenderViolenceReport } from '@/services/genderViolence.service'
+import { getRejectedGenderViolenceReports, editRejectedGenderViolenceReport } from '@/services/reports/genderViolence.service'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
