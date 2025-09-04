@@ -5,7 +5,7 @@
     @close="$emit('close')"
   >
     <template #header>
-      Отчёт: Браки и Разводы
+      Отчёт: Гендерное насилие
     </template>
 
     <div v-if="loading">Загрузка...</div>
@@ -43,8 +43,8 @@
     </div>
 
     <template #footer>
-      <button class="approve-btn" @click="approve">Одобрить</button>
-      <button class="reject-btn" @click="reject">Отклонить</button>
+      <BaseButton @click="approve" size="sm" shape="square">Одобрить</BaseButton>
+      <BaseButton @click="reject" variant="danger" size="sm" shape="square">Отклонить</BaseButton>
     </template>
   </BaseModal>
 </template>
@@ -52,11 +52,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import BaseModal from '@/components/common/BaseModal.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 import {
   getAnalystGenderViolenceReportById,
   approveAnalystGenderViolenceReport,
   rejectAnalystGenderViolenceReport
-} from '@/services/genderViolence.service'
+} from '@/services/reports/genderViolence.service'
 import { getEnum } from '@/services/enumService'
 
 const props = defineProps({
@@ -138,21 +139,5 @@ onMounted(async () => {
 .details-table td {
   border: 1px solid #ddd;
   padding: 6px;
-}
-.approve-btn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 0.6rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.reject-btn {
-  background-color: #f44336;
-  color: white;
-  padding: 0.6rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 </style>

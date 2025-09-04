@@ -2,11 +2,10 @@
   <div class="container">
     <header class="header">
       <h1 class="logo">Посмотреть Отчеты</h1>
-      <button class="top-button" @click="goBack">Назад</button>
+      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">Назад</BaseButton>
     </header>
 
     <div class="main-content">
-      <!-- Левая панель -->
       <nav class="sidebar">
         <ul>
           <li 
@@ -24,7 +23,6 @@
         </ul>
       </nav>
 
-      <!-- Правая область -->
       <div class="content">
         <ReportMarriageTable v-if="selected === 'marriage'" @close="selected = ''" />
         <ReportViolenceTable v-if="selected === 'violence'" @close="selected = ''" />
@@ -42,6 +40,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ReportViolenceTable from '@/features/reports/components/TableGenderViolenceReport.vue'
 import ReportMarriageTable from '@/features/reports/components/TableMarriageDivorceReport.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const router = useRouter()
 const goBack = () => router.back()
@@ -68,16 +67,6 @@ const selected = ref('')
 .logo {
   font-weight: 700;
   font-size: 1.2rem;
-}
-
-.top-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 0.9rem;
 }
 
 /* Основная двухколоночная структура */

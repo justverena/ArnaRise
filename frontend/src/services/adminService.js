@@ -6,7 +6,5 @@ export const getAdminUsers = (data) =>
 export const deleteAdminUsers = (id, data) =>
     api.delete(`/admin/users/delete/${id}`, data);
 
-export const postAdminUser = (data, token) =>
-    api.post("/admin/register", data, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
+export const postAdminUser = (data) =>
+    api.post("/admin/register", data);

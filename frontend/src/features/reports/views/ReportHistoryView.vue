@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import { getRejectedGenderViolenceReports } from '@/services/genderViolence.service'
-import { getRejectedMarriageDivorceReports } from '@/services/marriageDivorce.service'
-import { getAnalystMarriageDivorceReportById } from '@/services/marriageDivorce.service'
+import { getRejectedGenderViolenceReports } from '@/services/reports/genderViolence.service'
+import { getRejectedMarriageDivorceReports } from '@/services/reports/marriageDivorce.service'
+import { getAnalystMarriageDivorceReportById } from '@/services/reports/marriageDivorce.service'
 import EditMarriageDivorceReport from '../components/EditMarriageDivorceReport.vue'
 import EditViolenceReport from '../components/EditGenderViolenceReport.vue'
 

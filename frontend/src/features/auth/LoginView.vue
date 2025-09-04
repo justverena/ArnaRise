@@ -5,7 +5,7 @@
       <form @submit.prevent="handleLogin">
         <input v-model="email" placeholder="Email" type="email" required />
         <input v-model="password" placeholder="Password" type="password" required />
-        <button type="submit">Войти</button>
+        <BaseButton type="submit" size="lg" shape="square">Войти</BaseButton>
       </form>
       <p v-if="error" style="color: red;">{{ error }}</p>
     </div>
@@ -15,9 +15,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import api from '@/services/api.js'
+import { login } from '@/services/api.js'
 import { useRouter, useRoute } from 'vue-router'
 import { jwtDecode } from 'jwt-decode'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const email = ref('')
 const password = ref('')
@@ -36,7 +37,7 @@ function decodeToken(token) {
 const handleLogin = async () => {
   error.value = ''
   try {
-    const res = await api.post('/auth/login', {
+    const res = await login({
       email: email.value,
       password: password.value
     })

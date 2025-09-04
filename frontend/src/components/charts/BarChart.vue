@@ -73,12 +73,11 @@ const chartOptions = {
 </script>
 
 <style scoped>
-.chart-container {
-  
 
-  width: 800px;
+.chart-container {
+  width: 100%;
   max-width: 1000px;
-  height: 500px;
+  height: 400px;
   margin: auto;
 }
 </style>

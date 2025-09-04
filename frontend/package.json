@@ -16,6 +16,8 @@
     "vue": "^3.5.13",
     "vue-chartjs": "^5.3.2",
     "vue-i18n": "^11.1.10",
+    "vue-multiselect": "^3.3.1",
+    "vue-multiselect-next": "^2.1.7",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {

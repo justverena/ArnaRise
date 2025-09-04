@@ -29,20 +29,22 @@ ChartJS.register(
 )
 
 const props = defineProps({
-  labels: Array,
-  values: Array,
-  label: String
+  labels: { type: Array, default: () => [] },
+  values: { type: Array, default: () => [] },
+  label: { type: String, default: "" }
 })
 
 const chartData = computed(() => ({
   labels: props.labels,
-  datasets: [{
-    label: props.label,
-    data: props.values,
-    borderColor: '#59C0D5',
-    fill: false,
-    tension: 0.4
-  }]
+  datasets: [
+    {
+      label: props.label,
+      data: props.values,
+      borderColor: '#59C0D5',
+      fill: false,
+      tension: 0.4
+    }
+  ]
 }))
 
 const chartOptions = {
@@ -57,7 +59,7 @@ const chartOptions = {
 .chart-container {
   width: 800px;
   max-width: 1000px;
-  height: 500px;
+  height: 450px;
   margin: auto;
 }
 </style>

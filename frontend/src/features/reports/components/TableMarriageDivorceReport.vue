@@ -7,7 +7,8 @@
       :rows="reports"
     >
       <template #actions="{ row }">
-        <button @click="openReport(row.id)">Просмотр</button>
+        <BaseButton @click="openReport(row.id)" variant="secondary" size="sm" shape="square">Просмотр</BaseButton>
+        <BaseButton @click="approve(row.id)" size="sm" shape="square">Одобрить</BaseButton>
       </template>
     </BaseTable>
 
@@ -22,9 +23,20 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getAnalystMarriageDivorceReports } from '@/services/marriageDivorce.service'
+import { getAnalystMarriageDivorceReports } from '@/services/reports/marriageDivorce.service'
 import BaseTable from '@/components/common/BaseTable.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 import ShowFormMarriageDivorceReport from './ShowFormMarriageDivorceReport.vue'
+import { approveMarriageDivorceReport } from '@/services/reports/marriageDivorce.service'
+
+async function approve(id) {
+  try {
+    await approveMarriageDivorceReport(id)
+    await loadReports() // обновляем таблицу после одобрения
+  } catch (error) {
+    console.error('Ошибка при одобрении отчёта:', error)
+  }
+}
 
 const reports = ref([])
 const selectedReportId = ref(null)
