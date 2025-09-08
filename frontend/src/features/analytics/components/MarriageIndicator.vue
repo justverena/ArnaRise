@@ -32,7 +32,7 @@ import { ref, onMounted } from "vue";
 import LineChart from "@/components/charts/LineChart.vue";
 import BarChart from "@/components/charts/BarChart.vue";
 import PieChart from "@/components/charts/PieChart.vue";
-import { fetchMarriageCountByYear } from "@/services/indicators/marriageIndicator.service";
+import { fetchMarriageCountByYear } from "@/services/indicators/indicators.service";
 
 const props = defineProps({
   activeCharts: {

@@ -1,12 +1,57 @@
 <template>
-  <BarChart
-    :labels="['2020', '2021', '2022', '2023']"
-    :values="[1100, 1300, 1200, 1350]"
-    label="Разводы"
-    :colors="['#F47321']"
-  />
+  <div>
+    <div v-if="labels.length && values.length">
+      <LineChart
+        v-if="activeCharts.includes('Line')"
+        :labels="labels"
+        :values="values"
+        label="Зарегистрированные разводы (линейный график)"
+      />
+
+      <PieChart
+      v-if="activeCharts.includes('Pie')"
+      :labels="labels"
+      :values="values"
+      label="Распределение разводы (круговая диаграмма)"
+      />
+
+
+      <BarChart
+        v-if="activeCharts.includes('Bar')"
+        :labels="labels"
+        :values="values"
+        label="Зарегистрированные разводы (столбчатый график)"
+      />
+    </div>
+    <p v-else>Загрузка данных...</p>
+  </div>
 </template>
 
 <script setup>
 import BarChart from '@/components/charts/BarChart.vue';
+import LineChart from '@/components/charts/LineChart.vue';
+import PieChart from '@/components/charts/PieChart.vue';
+import {ref, onMounted} from "vue";
+import { fetchDivorceCountByYear } from '@/services/indicators/indicators.service';
+
+const props = defineProps({
+  activeCharts: {
+    type: Array,
+    default: () => ['Line', 'Bar', 'Pie']
+  }
+})
+
+const labels = ref([])
+const values = ref([])
+
+onMounted(async () => {
+  try {
+    const data = await fetchDivorceCountByYear();
+    labels.value = data.map(item => String(item.reportYear));
+    values.value = data.map(item => item.divorceCount);
+  } catch (error) {
+    console.error("Ошибка загрузки данных для графика:", error);
+  }
+});
+
 </script>

@@ -1,62 +1,69 @@
 <template>
   <div class="chart-page">
-    <!-- верхняя панель -->
-    <div class="top-bar">
-      <BaseButton @click="updateChart" shape="square">Обновить</BaseButton>
+    <div class="main-content">
+      <!-- Сайдбар с чекбоксами -->
+      <nav class="sidebar">
+        <div class="sidebar-actions">
+          <BaseButton @click="updateChart" shape="square">Обновить</BaseButton>
 
-      <div class="dropdown-container">
-        <BaseButton @click="toggleIndicators" shape="square">Индикаторы</BaseButton>
-        <div class="dropdown" v-if="showIndicators">
-          <Indicators @indicator-selected="onIndicatorSelected" />
+          <BaseButton @click="toggleIndicators" shape="square">Индикаторы</BaseButton>
+          <div class="dropdown" v-if="showIndicators">
+            <Indicators @indicator-selected="onIndicatorSelected" />
+          </div>
+
+          <BaseButton @click="toggleFilters" shape="square">Фильтры</BaseButton>
+          <div class="dropdown" v-if="showFilters">
+            <Filters @filter-updated="onFiltersChanged" />
+          </div>
         </div>
-      </div>
 
-      <div class="dropdown-container">
-        <BaseButton @click="toggleFilters" shape="square">Фильтры</BaseButton>
-        <div class="dropdown" v-if="showFilters">
-          <Filters @filter-updated="onFiltersChanged" />
+
+        <h3 class="sidebar-title">Типы графиков</h3>
+        <ul>
+          <li v-for="type in availableCharts" :key="type">
+            <label class="chart-type-option">
+              <input type="checkbox" v-model="activeCharts" :value="type" />
+              {{ type }}
+            </label>
+          </li>
+        </ul>
+
+        
+      </nav>
+
+      <!-- Контент справа -->
+      <div class="content">
+        <div class="chart-wrapper">
+          <!-- Line -->
+          <div v-if="activeCharts.includes('Line')" class="chart line-chart">
+            <component
+              :is="currentChartComponent"
+              :filters="selectedFilters"
+              :active-charts="['Line']"
+              :key="chartKey + '-line'"
+            />
+          </div>
+
+          <!-- Pie -->
+          <div v-if="activeCharts.includes('Pie')" class="chart pie-chart">
+            <component
+              :is="currentChartComponent"
+              :filters="selectedFilters"
+              :active-charts="['Pie']"
+              :key="chartKey + '-pie'"
+            />
+          </div>
+
+          <!-- Bar -->
+          <div v-if="activeCharts.includes('Bar')" class="chart bar-chart">
+            <component
+              :is="currentChartComponent"
+              :filters="selectedFilters"
+              :active-charts="['Bar']"
+              :key="chartKey + '-bar'"
+            />
+          </div>
         </div>
-      </div>
-
-      <!-- выбор типа графика -->
-      <div class="chart-types">
-        <label v-for="type in availableCharts" :key="type" class="chart-type-option">
-          <input type="checkbox" v-model="activeCharts" :value="type" />
-          {{ type }}
-        </label>
-      </div>
-    </div>
-
-    <!-- контейнер с графиками -->
-    <div class="chart-wrapper">
-      <!-- Line -->
-      <div v-if="activeCharts.includes('Line')" class="chart line-chart">
-        <component
-          :is="currentChartComponent"
-          :filters="selectedFilters"
-          :active-charts="['Line']"
-          :key="chartKey + '-line'"
-        />
-      </div>
-
-      <!-- Pie (новое) -->
-      <div v-if="activeCharts.includes('Pie')" class="chart pie-chart">
-        <component
-          :is="currentChartComponent"
-          :filters="selectedFilters"
-          :active-charts="['Pie']"
-          :key="chartKey + '-pie'"
-        />
-      </div>
-
-      <!-- Bar -->
-      <div v-if="activeCharts.includes('Bar')" class="chart bar-chart">
-        <component
-          :is="currentChartComponent"
-          :filters="selectedFilters"
-          :active-charts="['Bar']"
-          :key="chartKey + '-bar'"
-        />
       </div>
     </div>
   </div>
@@ -82,9 +89,9 @@ const showIndicators = ref(false)
 const selectedFilters = ref({})
 const selectedIndicator = ref('marriage')
 
-// доступные графики (добавили Pie)
+// доступные графики
 const availableCharts = ['Line', 'Bar', 'Pie']
-const activeCharts = ref([...availableCharts]) // по умолчанию все включены
+const activeCharts = ref([...availableCharts]) // все включены по умолчанию
 
 const indicatorComponentMap = {
   marriage: MarriageChart,
@@ -126,61 +133,60 @@ function toggleIndicators() {
 
 <style scoped>
 .chart-page {
-  padding: 2rem;
-  max-width: 1200px;
+  padding: 1rem;
+  max-width: 100%;
   margin: 0 auto;
+  font-family: 'Inter', sans-serif;
 }
 
-.top-bar {
+.main-content {
   display: flex;
+}
+
+/* Сайдбар */
+.sidebar {
+  width: 220px;
+  background: #f3f4f6;
+  padding: 1rem;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  align-items: flex-start;
-  margin-bottom: 1rem;
-  position: relative;
-  flex-wrap: wrap;
 }
 
-.chart-types {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
+.sidebar-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 0.5rem;
 }
 
 .chart-type-option {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-/* кнопки */
-button {
-  padding: 0.6rem 1rem;
-  background-color: #6CC069;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+.sidebar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-button:hover {
-  background-color: #009B67;
-}
-
-.dropdown-container {
-  position: relative;
-}
-
-.dropdown {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  z-index: 10;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  min-width: 300px;
-  animation: fadeIn 0.25s ease-in-out;
+/* Контент справа */
+.content {
+  flex: 1;
+  padding: 1.5rem;
 }
 
 /* --- GRID для графиков --- */
@@ -188,20 +194,26 @@ button:hover {
   display: grid;
   grid-template-areas:
     "line pie"
-    "bar pie";  /* Pie всегда сверху над Bar */
+    "bar bar";
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 2rem;
+  gap: 2rem;
   min-height: 600px;
 }
 
 .line-chart {
   grid-area: line;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .pie-chart {
   grid-area: pie;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bar-chart {
@@ -216,14 +228,13 @@ button:hover {
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.dropdown {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
 }
 </style>

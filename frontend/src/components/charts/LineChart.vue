@@ -59,7 +59,7 @@ const chartOptions = {
 .chart-container {
   width: 800px;
   max-width: 1000px;
-  height: 500px;
+  height: 450px;
   margin: auto;
 }
 </style>
