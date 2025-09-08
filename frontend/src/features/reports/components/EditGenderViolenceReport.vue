@@ -52,3 +52,7 @@ async function submitUpdate(updatedForm) {
 
 onMounted(fetchReport)
 </script>
+
+<style scoped>
+
+</style>

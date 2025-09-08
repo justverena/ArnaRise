@@ -30,3 +30,7 @@ async function submit(form) {
 }
 
 </script>
+
+<style scoped>
+
+</style>

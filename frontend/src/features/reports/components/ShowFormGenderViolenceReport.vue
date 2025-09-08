@@ -60,3 +60,7 @@ async function reject() {
 
 onMounted(loadReport)
 </script>
+
+<style scoped>
+
+</style>
