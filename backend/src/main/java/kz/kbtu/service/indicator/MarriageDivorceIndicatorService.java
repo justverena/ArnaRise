@@ -1,6 +1,8 @@
 package kz.kbtu.service.indicator;
 
+import kz.kbtu.dto.filter.FilterDto;
 import kz.kbtu.dto.indicator.DivorceCountIndicator;
+import kz.kbtu.dto.indicator.MarriageAvAgeIndicator;
 import kz.kbtu.dto.indicator.MarriageCountIndicator;
 import kz.kbtu.enums.ReportYear;
 import kz.kbtu.repository.MarriageDivorceReportRepository;
@@ -16,8 +18,10 @@ public class MarriageDivorceIndicatorService {
     public MarriageDivorceIndicatorService(MarriageDivorceReportRepository repository) {
         this.marriageDivorceReportRepository = repository;
     }
-    public List<MarriageCountIndicator> getMarriageCountByYear() {
-        List<Object[]> data = marriageDivorceReportRepository.getMarriageCountByYear();
+    public List<MarriageCountIndicator> getMarriageCountByYear(FilterDto filter) {
+        List<Object[]> data = marriageDivorceReportRepository.getMarriageCountByYear(
+                filter.getDistrict()
+        );
         return data.stream().map(row -> {
             ReportYear year = (ReportYear) row[0];
             Long marriageCount = (Long) row[1];
@@ -26,13 +30,28 @@ public class MarriageDivorceIndicatorService {
                 .collect(Collectors.toList());
     }
 
-    public List<DivorceCountIndicator> getDivorceCountByYear() {
-        List<Object[]> data = marriageDivorceReportRepository.getDivorceCountByYear();
+    public List<DivorceCountIndicator> getDivorceCountByYear(FilterDto filter) {
+        List<Object[]> data = marriageDivorceReportRepository.getDivorceCountByYear(
+                filter.getDistrict()
+        );
         return data.stream().map(row -> {
             ReportYear year = (ReportYear) row[0];
             Long divorceCount = (Long) row[1];
             return new DivorceCountIndicator(year.getValue(), divorceCount);
         })
                 .collect(Collectors.toList());
+    }
+
+    public List<MarriageAvAgeIndicator> getMarriageAvAgeByYear(FilterDto filter) {
+        List <Object[]> data = marriageDivorceReportRepository.getMarriageAvAgeByYear(
+                filter.getDistrict()
+        );
+        return data.stream().map(row -> {
+            ReportYear year = (ReportYear) row[0];
+            Double marriageAvAge = (Double) row[1];
+            return new MarriageAvAgeIndicator(year.getValue(), marriageAvAge);
+        })
+                .collect(Collectors.toList());
+
     }
 }

@@ -43,9 +43,19 @@ public class MarriageDivorceIndicatorIntegrationTest {
     }
 
     @Test
-    void shouldReturnMarriageCountIndicator() throws Exception {
+    void shouldReturnMarriageCountIndicatorWithFilter() throws Exception {
         mockMvc.perform(get("/api/analyst/indicators/marriage-count-by-year")
+                        .param("district", "ALATAU")
                 .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].reportYear").exists())
+                .andExpect(jsonPath("$[0].marriageCount").exists());
+    }
+    @Test
+    void shouldReturnMarriageCountIndicatorWoFilter() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/marriage-count-by-year")
+                        .header("Authorization", "Bearer " + analystToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
     }
@@ -56,7 +66,18 @@ public class MarriageDivorceIndicatorIntegrationTest {
     }
 
     @Test
-    void shouldReturnDivorceCountByYear() throws Exception {
+    void shouldReturnDivorceCountByYearWithFilter() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/divorce-count-by-year")
+                        .param("district", "MEDEU")
+                        .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].reportYear").exists())
+                .andExpect(jsonPath("$[0].divorceCount").exists());
+    }
+
+    @Test
+    void shouldReturnDivorceCountByYearWoFilter() throws Exception {
         mockMvc.perform(get("/api/analyst/indicators/divorce-count-by-year")
                 .header("Authorization", "Bearer " + analystToken))
                 .andExpect(status().isOk())
@@ -66,6 +87,29 @@ public class MarriageDivorceIndicatorIntegrationTest {
     @Test
     void shouldReturnDivorceCountIsForbidden() throws Exception {
         mockMvc.perform(get("/api/analyst/indicators/divorce-count-by-year"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void shouldReturnMarriageAveAgeIndicatorWithFilter() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/marriage-av-age-by-year")
+                        .param("district", "ALATAU")
+                        .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].reportYear").exists())
+                .andExpect(jsonPath("$[0].marriageAvAge").exists());
+    }
+    @Test
+    void shouldReturnMarriageAveAgeIndicatorWoFilter() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/marriage-av-age-by-year")
+                        .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
+    }
+    @Test
+    void shouldReturnMarriageAveAgeIsForbidden() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/marriage-av-age-by-year"))
                 .andExpect(status().isForbidden());
     }
 }
