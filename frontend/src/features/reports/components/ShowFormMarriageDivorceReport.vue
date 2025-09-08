@@ -1,52 +1,24 @@
 <template>
-  <BaseModal
-    :model-value="true"
-    @update:model-value="$emit('close')"
-    @close="$emit('close')"
-  >
-    <template #header>
-      Отчёт: Браки и Разводы
-    </template>
-
-    <template #default>
-      <div v-if="loading">Загрузка...</div>
-
-      <div v-else-if="report && report.id">
-        <table class="details-table">
-          <tbody>
-            <tr><td>ID</td><td>{{ report.id }}</td></tr>
-            <tr><td>Год</td><td>{{ report.reportYear.replace('Y', '') }}</td></tr>
-            <tr><td>Район</td><td>{{ getEnumValue(districts, report.district) }}</td></tr>
-            <tr><td>Количество браков</td><td>{{ report.marriageCount }}</td></tr>
-            <tr><td>Количество разводов</td><td>{{ report.divorceCount }}</td></tr>
-            <tr><td>Процент разводов к бракам</td><td>{{ report.ratioDivorcesToMarriagePercent }}</td></tr>
-            <tr><td>Средний возраст</td><td>{{ report.averageAge }}</td></tr>
-            <tr><td>Источник</td><td>{{ getEnumValue(sources, report.source) }}</td></tr>
-            <tr><td>Отправил</td><td>{{ report.submittedBy }}</td></tr>
-            <tr><td>Статус</td><td>{{ getEnumValue(ReportStatuses, report.status) }}</td></tr>
-            <tr v-if="report.rejectionReason"><td>Причина отклонения</td><td>{{ report.rejectionReason }}</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </template>
-
-    <template #footer>
-      <BaseButton @click="approve" size="sm" shape="square">Одобрить</BaseButton>
-      <BaseButton @click="reject" variant="danger" size="sm" shape="square">Отклонить</BaseButton>
-    </template>
-  </BaseModal>
+  <MarriageDivorceReport
+    v-if="report"
+    mode="show"
+    :report-id="reportId"
+    :initial-data="report"
+    :show-approve-reject="true"
+    @close="handleClose"
+    @approve="approve"
+    @reject="reject"
+  />
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import BaseModal from '@/components/common/BaseModal.vue'
-import BaseButton from '@/components/common/BaseButton.vue'
-import {
-  getAnalystMarriageDivorceReportById,
-  approveMarriageDivorceReport,
+import MarriageDivorceReport from './MarriageDivorceReport.vue'
+import { getAnalystMarriageDivorceReportById, 
+  approveMarriageDivorceReport, 
   rejectMarriageDivorceReport
-} from '@/services/reports/marriageDivorce.service'
-import { getEnum } from '@/services/enumService'
+ } from '@/services/reports/marriageDivorce.service'
 
 const props = defineProps({
   reportId: { type: String, required: true }
@@ -54,21 +26,20 @@ const props = defineProps({
 const emit = defineEmits(['close', 'updated'])
 
 const report = ref(null)
-const loading = ref(true)
-const districts = ref([])
-const sources = ref([])
-const ReportStatuses = ref([])
 
-function getEnumValue(list, key) {
-  if (!Array.isArray(list) || !key) return key
-  return list.find(item => item.key === key)?.value || key
+function handleClose() {
+  emit('close')
 }
 
 async function loadReport() {
-  loading.value = true
-  const res = await getAnalystMarriageDivorceReportById(props.reportId)
-  report.value = res.data
-  loading.value = false
+  try {
+    const res = await getAnalystMarriageDivorceReportById(props.reportId)
+    report.value = res.data
+  } catch (err) {
+    console.error('Ошибка загрузки отчёта:', err)
+    alert('Не удалось загрузить отчет')
+    emit('close')
+  }
 }
 
 async function approve() {
@@ -86,26 +57,5 @@ async function reject() {
   }
 }
 
-onMounted(async () => {
-  try {
-    districts.value = await getEnum('district')
-    sources.value = await getEnum('source')
-    ReportStatuses.value = await getEnum('report-status')
-    await loadReport()
-  } catch (error) {
-    console.error('Ошибка загрузки enum-ов:', error)
-  }
-})
+onMounted(loadReport)
 </script>
-
-<style scoped>
-.details-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.details-table td {
-  border: 1px solid #ddd;
-  padding: 6px;
-}
-
-</style>

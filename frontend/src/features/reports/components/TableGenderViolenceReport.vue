@@ -26,6 +26,7 @@ import { getAnalystGenderViolenceReports } from '@/services/reports/genderViolen
 import BaseTable from '@/components/common/BaseTable.vue'
 import ShowFormGenderViolenceReport from './ShowFormGenderViolenceReport.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
+import { approveAnalystGenderViolenceReport } from '@/services/reports/genderViolence.service'
 
 const reports = ref([])
 const selectedReportId = ref(null)

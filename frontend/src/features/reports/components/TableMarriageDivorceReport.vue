@@ -16,7 +16,7 @@
       v-if="selectedReportId"
       :report-id="selectedReportId"
       @close="selectedReportId = null"
-      @updated="loadReports"
+      @updated="fetchReports"
     />
   </div>
 </template>
@@ -29,6 +29,14 @@ import BaseButton from '@/components/common/BaseButton.vue'
 import ShowFormMarriageDivorceReport from './ShowFormMarriageDivorceReport.vue'
 import { approveMarriageDivorceReport } from '@/services/reports/marriageDivorce.service'
 
+const reports = ref([])
+const selectedReportId = ref(null)
+
+const columns = [
+  { label: 'ID', key: 'id' },
+  { label: 'Отправил (ID пользователя)', key: 'submittedBy' }
+]
+
 async function approve(id) {
   try {
     await approveMarriageDivorceReport(id)
@@ -38,24 +46,21 @@ async function approve(id) {
   }
 }
 
-const reports = ref([])
-const selectedReportId = ref(null)
-
-const columns = [
-  { label: 'ID', key: 'id' },
-  { label: 'Отправил (ID пользователя)', key: 'submittedBy' }
-]
-
-async function loadReports() {
-  const res = await getAnalystMarriageDivorceReports()
-  reports.value = res.data
+async function fetchReports() {
+  try {
+    const res = await getAnalystMarriageDivorceReports()
+    reports.value = res.data
+  } catch (error) {
+    console.error('', error)
+    alert('')
+  }
 }
 
 function openReport(id) {
   selectedReportId.value = id
 }
 
-onMounted(loadReports)
+onMounted(fetchReports)
 </script>
 
 <style scoped>
