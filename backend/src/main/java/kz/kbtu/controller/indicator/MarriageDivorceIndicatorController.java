@@ -4,6 +4,7 @@ import kz.kbtu.dto.filter.FilterDto;
 import kz.kbtu.dto.indicator.DivorceCountIndicator;
 import kz.kbtu.dto.indicator.MarriageAvAgeIndicator;
 import kz.kbtu.dto.indicator.MarriageCountIndicator;
+import kz.kbtu.dto.indicator.RatioIndicator;
 import kz.kbtu.service.indicator.MarriageDivorceIndicatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,5 +35,10 @@ public class MarriageDivorceIndicatorController {
     @GetMapping("/marriage-av-age-by-year")
     public List<MarriageAvAgeIndicator> getMarriageAvAge(@ModelAttribute FilterDto filter) {
         return marriageDivorceIndicatorService.getMarriageAvAgeByYear(filter);
+    }
+
+    @GetMapping("/ratio-divorces-to-marriages-by-year")
+    public List<RatioIndicator> getRatio(@ModelAttribute FilterDto filter) {
+        return marriageDivorceIndicatorService.getRatioByYear(filter);
     }
 }

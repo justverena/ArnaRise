@@ -4,6 +4,7 @@ import kz.kbtu.dto.filter.FilterDto;
 import kz.kbtu.dto.indicator.DivorceCountIndicator;
 import kz.kbtu.dto.indicator.MarriageAvAgeIndicator;
 import kz.kbtu.dto.indicator.MarriageCountIndicator;
+import kz.kbtu.dto.indicator.RatioIndicator;
 import kz.kbtu.enums.District;
 import kz.kbtu.enums.ReportYear;
 import kz.kbtu.repository.MarriageDivorceReportRepository;
@@ -94,5 +95,26 @@ public class MarriageDivorceIndicatorServiceTest {
 
         verify(repository, times(1))
                 .getMarriageAvAgeByYear(filter.getDistrict());
+    }
+
+    @Test
+    void testGetRatioYear(){
+        FilterDto filter = new FilterDto(District.AUEZOV);
+        List<Object[]> mockData = Arrays.asList(
+                new Object[]{ReportYear.Y2017, 333.8},
+                new Object[]{ReportYear.Y2019, 560.9}
+        );
+        when(repository.getRatioByYear(filter.getDistrict())).thenReturn(mockData);
+
+        List<RatioIndicator> result = service.getRatioByYear(filter);
+
+        assertThat(result).hasSize(2);
+        assertThat(result.get(0).getReportYear()).isEqualTo(2017);
+        assertThat(result.get(0).getRatioDivorcesToMarriagePercent()).isEqualTo(333.8);
+        assertThat(result.get(1).getReportYear()).isEqualTo(2019);
+        assertThat(result.get(1).getRatioDivorcesToMarriagePercent()).isEqualTo(560.9);
+
+        verify(repository, times(1))
+                .getRatioByYear(filter.getDistrict());
     }
 }

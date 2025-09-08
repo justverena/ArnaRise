@@ -91,7 +91,30 @@ public class MarriageDivorceIndicatorIntegrationTest {
     }
 
     @Test
-    void shouldReturnMarriageAveAgeIndicatorWithFilter() throws Exception {
+    void shouldReturnRatioIndicatorWithFilter() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/ratio-divorces-to-marriages-by-year")
+                        .param("district", "ALATAU")
+                        .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].reportYear").exists())
+                .andExpect(jsonPath("$[0].ratioDivorcesToMarriagePercent").exists());
+    }
+    @Test
+    void shouldReturnRatioIndicatorWoFilter() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/ratio-divorces-to-marriages-by-year")
+                        .header("Authorization", "Bearer " + analystToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
+    }
+    @Test
+    void shouldReturnRatioIsForbidden() throws Exception {
+        mockMvc.perform(get("/api/analyst/indicators/ratio-divorces-to-marriages-by-year"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void shouldReturnMarriageAvAgeIndicatorWithFilter() throws Exception {
         mockMvc.perform(get("/api/analyst/indicators/marriage-av-age-by-year")
                         .param("district", "ALATAU")
                         .header("Authorization", "Bearer " + analystToken))
@@ -101,14 +124,14 @@ public class MarriageDivorceIndicatorIntegrationTest {
                 .andExpect(jsonPath("$[0].marriageAvAge").exists());
     }
     @Test
-    void shouldReturnMarriageAveAgeIndicatorWoFilter() throws Exception {
+    void shouldReturnMarriageAvAgeIndicatorWoFilter() throws Exception {
         mockMvc.perform(get("/api/analyst/indicators/marriage-av-age-by-year")
                         .header("Authorization", "Bearer " + analystToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
     }
     @Test
-    void shouldReturnMarriageAveAgeIsForbidden() throws Exception {
+    void shouldReturnMarriageAvAgeIsForbidden() throws Exception {
         mockMvc.perform(get("/api/analyst/indicators/marriage-av-age-by-year"))
                 .andExpect(status().isForbidden());
     }

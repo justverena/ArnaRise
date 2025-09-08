@@ -29,4 +29,9 @@ public interface MarriageDivorceReportRepository extends JpaRepository<MarriageD
     List<Object[]> getMarriageAvAgeByYear(
             @Param("district")District district
     );
+
+    @Query("select r.reportYear, AVG(r.ratioDivorcesToMarriagePercent) " + "from MarriageDivorceReport r " + "where(:district is null or r.district = :district)" + "group by r.reportYear " + "order by r.reportYear ")
+    List<Object[]> getRatioByYear(
+            @Param("district")District district
+    );
 }

@@ -4,6 +4,7 @@ import kz.kbtu.dto.filter.FilterDto;
 import kz.kbtu.dto.indicator.DivorceCountIndicator;
 import kz.kbtu.dto.indicator.MarriageAvAgeIndicator;
 import kz.kbtu.dto.indicator.MarriageCountIndicator;
+import kz.kbtu.dto.indicator.RatioIndicator;
 import kz.kbtu.enums.ReportYear;
 import kz.kbtu.repository.MarriageDivorceReportRepository;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,17 @@ public class MarriageDivorceIndicatorService {
             return new MarriageAvAgeIndicator(year.getValue(), marriageAvAge);
         })
                 .collect(Collectors.toList());
+    }
 
+    public List<RatioIndicator> getRatioByYear(FilterDto filter) {
+        List <Object[]> data = marriageDivorceReportRepository.getRatioByYear(
+                filter.getDistrict()
+        );
+        return data.stream().map(row -> {
+                    ReportYear year = (ReportYear) row[0];
+                    Double ratioDivorcesToMarriagePercent = (Double) row[1];
+                    return new RatioIndicator(year.getValue(), ratioDivorcesToMarriagePercent);
+                })
+                .collect(Collectors.toList());
     }
 }

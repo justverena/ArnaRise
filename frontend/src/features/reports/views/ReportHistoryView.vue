@@ -26,6 +26,7 @@
 <EditViolenceReport
   v-if="showEditModal && selectedReport?.type === 'GENDER'"
   :report-id="selectedReport.id"
+  mode="edit"
   @close="closeModal"
   
   />
