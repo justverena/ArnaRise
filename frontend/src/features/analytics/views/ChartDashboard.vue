@@ -70,7 +70,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import Filters from '@/features/filters/Filters.vue'
 import Indicators from '@/features/analytics/components/Indicators.vue'
 // индикаторы
@@ -86,7 +86,7 @@ const chartKey = ref(0)
 const showFilters = ref(false)
 const showIndicators = ref(false)
 
-const selectedFilters = ref({})
+const selectedFilters = ref({  district: '' })
 const selectedIndicator = ref('marriage')
 
 // доступные графики
@@ -109,10 +109,13 @@ function updateChart() {
 }
 
 function onFiltersChanged(filters) {
-  selectedFilters.value = filters
+  selectedFilters.value = {
+    district: filters.district?.key || '' 
+  }
   showFilters.value = false
   updateChart()
 }
+
 
 function onIndicatorSelected(indicator) {
   selectedIndicator.value = indicator
@@ -129,6 +132,10 @@ function toggleIndicators() {
   showIndicators.value = !showIndicators.value
   showFilters.value = false
 }
+
+watch(selectedFilters, () => {
+  updateChart()
+}, {deep: true})
 </script>
 
 <style scoped>

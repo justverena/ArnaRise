@@ -31,7 +31,8 @@ ChartJS.register(
 const props = defineProps({
   labels: { type: Array, default: () => [] },
   values: { type: Array, default: () => [] },
-  label: { type: String, default: "" }
+  label: { type: String, default: "" },
+  showPercent: { type:Boolean, default:false }
 })
 
 const chartData = computed(() => ({
@@ -47,12 +48,34 @@ const chartData = computed(() => ({
   ]
 }))
 
-const chartOptions = {
+const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
-  plugins: { legend: { position: 'top' } },
-  scales: { y: { beginAtZero: true } }
-}
+  plugins: {
+    legend: {
+      position: 'top'
+    },
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          let label = context.dataset.label ? context.dataset.label + ': ' : ''
+          if (context.parsed.y !== null) {
+            label += context.parsed.y
+            if (props.showPercent) {
+              label += '%'
+            }
+          }
+          return label
+        }
+      }
+    }
+  },
+  scales: {
+    y: {
+      beginAtZero: true
+    }
+  }
+}))
 </script>
 
 <style scoped>

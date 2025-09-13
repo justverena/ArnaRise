@@ -9,12 +9,11 @@
       />
 
       <PieChart
-      v-if="activeCharts.includes('Pie')"
-      :labels="labels"
-      :values="values"
-      label="Распределение браков (круговая диаграмма)"
+        v-if="activeCharts.includes('Pie')"
+        :labels="labels"
+        :values="values"
+        label="Зарегистрированные браки (круговая диаграмма)"
       />
-
 
       <BarChart
         v-if="activeCharts.includes('Bar')"
@@ -28,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import LineChart from "@/components/charts/LineChart.vue";
 import BarChart from "@/components/charts/BarChart.vue";
 import PieChart from "@/components/charts/PieChart.vue";
@@ -38,19 +37,27 @@ const props = defineProps({
   activeCharts: {
     type: Array,
     default: () => ['Line', 'Bar', 'Pie']
+  },
+  filters: {
+    type: Object,
+    default: () => ({ district: ""})
   }
 })
 
 const labels = ref([]);
 const values = ref([]);
 
-onMounted(async () => {
+async function loadData() {
   try {
-    const data = await fetchMarriageCountByYear();
+    const data = await fetchMarriageCountByYear(props.filters.district || null)
     labels.value = data.map(item => String(item.reportYear));
     values.value = data.map(item => item.marriageCount);
   } catch (error) {
     console.error("Ошибка загрузки данных для графика:", error);
   }
-});
+  
+}
+
+onMounted(loadData)
+watch(() => props.filters, loadData, {deep:true})
 </script>

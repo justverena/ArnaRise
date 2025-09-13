@@ -42,6 +42,10 @@ const props = defineProps({
   colors: {
     type: Array,
     default: () => ['#42a5f5', '#66bb6a']
+  },
+  showPercent: {
+    type:Boolean,
+    default: false
   }
 })
 
@@ -56,12 +60,26 @@ const chartData = computed(() => ({
   ]
 }))
 
-const chartOptions = {
+const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'top'
+    },
+    tooltip: {
+      callbacks: {
+        label: function (context) {
+          let label = context.dataset.label ? context.dataset.label + ': ' : ''
+          if (context.parsed.y !== null) {
+            label += context.parsed.y
+            if (props.showPercent) {
+              label += '%'
+            }
+          }
+          return label
+        }
+      }
     }
   },
   scales: {
@@ -69,7 +87,7 @@ const chartOptions = {
       beginAtZero: true
     }
   }
-}
+}))
 </script>
 
 <style scoped>

@@ -1,13 +1,8 @@
 <template>
   <div class="filters">
-    <h3>Фильтры</h3>
+    <h3>Фильтр по районам</h3>
 
     <form @submit.prevent="applyFilters">
-      <select v-model="localFilters.city">
-        <option disabled value="">Выберите город</option>
-        <option value="Алматы">Алматы</option>
-      </select>
-
       <select v-model="localFilters.district">
         <option disabled value="">Выберите район</option>
         <option v-for="district in districts" :key="district" :value="district">
@@ -15,58 +10,39 @@
         </option>
       </select>
 
-      <select v-model="localFilters.gender">
-        <option disabled value="">Пол</option>
-        <option value="мужской">Мужской</option>
-        <option value="женский">Женский</option>
-      </select>
-
-      <input v-model="localFilters.age" type="number" min="0" placeholder="Возраст" />
-
-      <select v-model="localFilters.violenceType">
-        <option disabled value="">Вид насилия</option>
-        <option value="физическое">Физическое</option>
-        <option value="психологическое">Психологическое</option>
-        <option value="сексуальное">Сексуальное</option>
-        <option value="экономическое">Экономическое</option>
-      </select>
-
-      <input v-model="localFilters.date" type="date" placeholder="Дата" />
-
       <button type="submit">Применить</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { reactive, toRefs, watch } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { defineEmits } from 'vue'
+import { getEnum } from '@/services/enumService.js'
 
 const emit = defineEmits(['filter-updated'])
-
-const districts = [
-  'Алатауский',
-  'Алмалинский',
-  'Ауэзовский',
-  'Бостандыкский',
-  'Жетысуский',
-  'Медеуский',
-  'Наурызбайский',
-  'Турксибский'
-]
+const districts = ref([])
 
 const localFilters = reactive({
-  city: '',
-  district: '',
-  gender: '',
-  age: '',
-  violenceType: '',
-  date: ''
+  district: ''
 })
+
+async function loadDistricts() {
+  try {
+    // enumName и lang подставь как у тебя на бэке
+    districts.value = await getEnum('District', 'ru')
+  } catch (e) {
+    console.error('Ошибка загрузки районов:', e)
+  }
+}
 
 function applyFilters() {
   emit('filter-updated', { ...localFilters })
 }
+
+onMounted(() => {
+  loadDistricts()
+})
 </script>
 
 <style scoped>
@@ -81,7 +57,7 @@ form {
   flex-direction: column;
   gap: 0.75rem;
 }
-form input, form select {
+select {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 6px;

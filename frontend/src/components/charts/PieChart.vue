@@ -14,7 +14,8 @@ Chart.register(PieController, ArcElement, Tooltip, Legend);
 const props = defineProps({
   labels: { type: Array, required: true },
   values: { type: Array, required: true },
-  label: { type: String, default: "Диаграмма" }
+  label: { type: String, default: "Диаграмма" },
+  showPercent: { type:Boolean, default:false },
 });
 
 const canvas = ref(null);
@@ -44,7 +45,20 @@ onMounted(() => {
         responsive: true,
         plugins: {
           legend: { position: "top" },
-          tooltip: { enabled: true }
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                let label = context.label ? context.label + ": " : "";
+                if (context.parsed !== null) {
+                  label += context.parsed;
+                  if (props.showPercent) {
+                    label += "%";
+                  }
+                }
+                return label;
+              }
+            }
+          }
         }
       }
     });
