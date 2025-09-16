@@ -1,9 +1,14 @@
 {
   "report": {
-    
+
     "genderViolence": "Гендерлік зорлық-зомбылық",
     "marriageDivorce": "Неке және ажырасу",
+
+    "genderViolenceDescription": "Тұрмыстық және гендерлік зорлық-зомбылық туралы есептеме.",
+    "marriageDivorceDescription": "Неке және ажырасуды тіркеу туралы есептеме.",
+
     "create": "Есептеме: {type}",
+    "createReport": "Есептеме құрастыру",
     "edit": "Есептеме өзгерту: {type}",
     "read": "Есептеме қарау: {type}",
     "approve": "Қабылдау",
@@ -42,6 +47,32 @@
     "submit": "Жіберу",
     "close": "Жабу",
     "send": "Жіберу",
-    "cancel": "Отмена"
-  }
+    "cancel": "Отмена",
+    "logout": "Шығу",
+    "back": "Қайту",
+    "create": "Құрастыру"
+  },
+
+  "navBar": {
+  "home": "Басты бет",
+  "profile": "Жеке кабинет"
+},
+
+"admin": {
+  "userRegister": "Пайдаланушыны тіркеу",
+  "usersList": "Пайдаланушылар тізімі"
+},
+
+"analyst": {
+  "charts": "Графиктер",
+  "reportHistory": "Жаңа есептеме тексеру",
+  "indicators": "Көрсеткіштерді басқару"
+},
+
+"partner": {
+  "newReport": "Есептеме қосу",
+  "organization": "Ұйым",
+  "rejectedReports": "Қабылданбаған есептемелер"
+}
+
 }

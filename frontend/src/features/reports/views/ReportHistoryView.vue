@@ -1,6 +1,6 @@
 <template>
   <section class="content">
-    <h2>Отклоненные отчеты</h2>
+    <h2>{{ $t('partner.rejectedReports') }}</h2>
     <div class="report-grid">
       <button
         v-for="report in reports"
@@ -8,9 +8,8 @@
         class="report-card"
         @click="viewReport(report)">
       <h3>{{ getReportTypeTitle(report) }}</h3>
-      <p>{{ formatDate(report.date) }}</p>
       <p v-if="report.rejectionReason" class="text-red-600 text-sm">
-        Отклонен: {{ report.rejectionReason }}
+        {{ $t('report.rejectionReason') }}: {{ report.rejectionReason }}
       </p>
       </button>
     </div>
@@ -35,7 +34,6 @@
 <script>
 import { getRejectedGenderViolenceReports } from '@/services/reports/genderViolence.service'
 import { getRejectedMarriageDivorceReports } from '@/services/reports/marriageDivorce.service'
-import { getAnalystMarriageDivorceReportById } from '@/services/reports/marriageDivorce.service'
 import EditMarriageDivorceReport from '../components/EditMarriageDivorceReport.vue'
 import EditViolenceReport from '../components/EditGenderViolenceReport.vue'
 
@@ -81,8 +79,8 @@ export default {
     },
     getReportTypeTitle(report) {
       return report.type === 'GENDER'
-      ? 'Гендерное насилие'
-      : 'Браки и разводы'
+      ? this.$t('report.genderViolence')
+      : this.$t('report.marriageDivorce')
     },
     formatDate(date) {
       const d = new Date(date)

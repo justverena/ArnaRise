@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <header class="header">
-      <h1 class="logo">Создать Отчет</h1>
-      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">Назад</BaseButton>
+      <h1 class="logo">{{ $t('report.createReport') }}</h1>
+      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">{{ $t('buttons.back') }}</BaseButton>
     </header>
 
     <main class="template-wrapper">
@@ -10,15 +10,15 @@
 
         <div class="template-grid">
           <div class="template-card">
-            <h3>Браки и разводы</h3>
-            <p>Отчет по регистрации браков и разводов.</p>
-            <BaseButton @click="selected = 'marriage'">Создать Отчет</BaseButton>
+            <h3>{{ $t('report.marriageDivorce') }}</h3>
+            <p>{{ $t('report.marriageDivorceDescription') }}</p>
+            <BaseButton @click="selected = 'marriage'">{{ $t('buttons.create') }}</BaseButton>
           </div>
 
           <div class="template-card">
-            <h3>Гендерное насилие</h3>
-            <p>Отчет по случаям домашнего и гендерного насилия.</p>
-            <BaseButton @click="selected = 'violence'">Создать Отчет</BaseButton>
+            <h3>{{ $t('report.genderViolence') }}</h3>
+            <p>{{ $t('report.genderViolenceDescription') }}</p>
+            <BaseButton @click="selected = 'violence'">{{ $t('buttons.create') }}</BaseButton>
           </div>
         </div>
       </div>

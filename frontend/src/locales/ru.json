@@ -1,9 +1,14 @@
 {
   "report": 
-  {
+  { 
     "genderViolence": "Гендерное насилие",
     "marriageDivorce": "Браки и разводы",
+
+    "genderViolenceDescription": "Отчет по случаям домашнего и гендерного насилия.",
+    "marriageDivorceDescription": "Отчет по регистрации браков и разводов.",
+    
     "create": "Отчёт: {type}",
+    "createReport": "Создать отчёт",
     "edit": "Изменение отчёта: {type}",
     "read": "Просмотр отчёта: {type}",
     "approve": "Принять",
@@ -36,11 +41,36 @@
     "averageAge": "Средний возраст вступающих в брак",
     "source": "Источник"
   },
-  "buttons":
-  {
+
+  "buttons": {
     "submit": "Отправить",
     "close": "Закрыть",
     "send": "Отправить",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "logout": "Выйти",
+    "back": "Назад",
+    "create": "Создать"
+  },
+
+  "navBar": {
+    "home": "Главная",
+    "profile": "Личный кабинет"
+  },
+
+  "admin": {
+    "userRegister": "Регистрация пользователя",
+    "usersList": "Список пользователей"
+  },
+
+  "analyst": {
+    "charts": "Графики",
+    "reportHistory": "Проверить новые отчёты",
+    "indicators": "Управление индикаторами"
+  },
+
+  "partner": {
+    "newReport": "Создать отчёт",
+    "organization": "Организация",
+    "rejectedReports": "Отклоненные отчёты"
   }
 }

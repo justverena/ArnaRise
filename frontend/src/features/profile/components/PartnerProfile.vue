@@ -2,9 +2,9 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <BaseButton to="/new-report" shape="square">Создать Отчет</BaseButton>
-        <BaseButton @click="showOrganizations = true" shape="square">Организация</BaseButton>
-                <BaseButton @click="logout" variant="danger" shape="square">Выйти</BaseButton>
+        <BaseButton to="/new-report" shape="square">{{ $t('report.createReport') }}</BaseButton>
+        <BaseButton @click="showOrganizations = true" shape="square">{{ $t('partner.organization') }}</BaseButton>
+                <BaseButton @click="logout" variant="danger" shape="square">{{ $t('buttons.logout') }}</BaseButton>
       </div>
     </header>
 

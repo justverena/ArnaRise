@@ -15,10 +15,10 @@ onMounted(() => {
 <template>
   <nav class="navbar">
     <div class="nav-links">
-      <router-link to="/" class="nav-link">Главная</router-link>
-      <router-link v-if="isAnalyst" to="/chart" class="nav-link">Графики</router-link>
-      <router-link to="/profile" class="nav-link">Личный кабинет</router-link>
-      <router-link v-if="isAdmin" to="/admin/register" class="nav-link">Регистрация пользователя</router-link>
+      <router-link to="/" class="nav-link">{{ $t('navBar.home') }}</router-link>
+      <router-link v-if="isAnalyst" to="/chart" class="nav-link">{{ $t('analyst.charts') }}</router-link>
+      <router-link to="/profile" class="nav-link">{{ $t('navBar.profile') }}</router-link>
+      <router-link v-if="isAdmin" to="/admin/register" class="nav-link">{{ $t('admin.userRegister') }}</router-link>
       <LangSwitch />
     </div>
   </nav>
