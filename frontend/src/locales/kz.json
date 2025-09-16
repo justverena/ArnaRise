@@ -16,6 +16,7 @@
     "loading": "Жүктелуде...",
     "field": "Баған",
     "value": "Мән",
+    "action": "Әрекеттер",
 
     "senderId": "Жіберген",
     "reportStatus": "Есептеме ахуалы", 
@@ -50,7 +51,12 @@
     "cancel": "Отмена",
     "logout": "Шығу",
     "back": "Қайту",
-    "create": "Құрастыру"
+    "create": "Құрастыру",
+    "read": "Қарау",
+    "update": "Жаңарту",
+    "indicators": "Көрсеткіштер",
+    "filters": "Сүзгілер",
+    "chartTypes": "График түрлері"
   },
 
   "navBar": {
@@ -66,13 +72,37 @@
 "analyst": {
   "charts": "Графиктер",
   "reportHistory": "Жаңа есептеме тексеру",
-  "indicators": "Көрсеткіштерді басқару"
+  "indicators": "Көрсеткіштерді басқару",
+  "readReports": "Есептемелер тексеру"
 },
 
 "partner": {
   "newReport": "Есептеме қосу",
   "organization": "Ұйым",
   "rejectedReports": "Қабылданбаған есептемелер"
+},
+
+"chartTypes": {
+  "line": "{name} (сызықтық график)",
+  "pie": "{name} (дөңгелек диаграмма)",
+  "bar": "{name} (бағандық график)"
+},
+"loading": "Деректер жүктелуде...",
+
+"indicators": {
+  "averageMarriageAge": "Некеге тұрушылардың орташа жасы",
+  "divorces": "Тіркелген ажырасулар",
+  "divorcesPie": "Ажырасулардың бөлінісі",
+  "ratio": "Некелер мен ажырасулардың арақатынасы",
+  "marriages": "Тіркелген некелер",
+  "chooseIndicator": "Көрсеткішті таңдау"
+},
+
+"filters": {
+  "title": "Аудандар бойынша сүзгі",
+  "selectDistrict": "Аудан таңдаңыз",
+  "apply": "Қолдану"
 }
+
 
 }

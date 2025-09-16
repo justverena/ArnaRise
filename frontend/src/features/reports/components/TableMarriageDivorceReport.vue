@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h1>Браки и Разводы</h1>
+    <h1>{{ $t('report.marriageDivorce') }}</h1>
 
     <BaseTable
       :columns="columns"
       :rows="reports"
     >
       <template #actions="{ row }">
-        <BaseButton @click="openReport(row.id)" variant="secondary" size="sm" shape="square">Просмотр</BaseButton>
-        <BaseButton @click="approve(row.id)" size="sm" shape="square">Одобрить</BaseButton>
+        <BaseButton @click="openReport(row.id)" variant="secondary" size="sm" shape="square">{{ $t('buttons.read') }}</BaseButton>
+        <BaseButton @click="approve(row.id)" size="sm" shape="square">{{ $t('report.approve') }}</BaseButton>
       </template>
     </BaseTable>
 
@@ -23,6 +23,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { getAnalystMarriageDivorceReports } from '@/services/reports/marriageDivorce.service'
 import BaseTable from '@/components/common/BaseTable.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
@@ -32,9 +33,11 @@ import { approveMarriageDivorceReport } from '@/services/reports/marriageDivorce
 const reports = ref([])
 const selectedReportId = ref(null)
 
+const {t} = useI18n()
+
 const columns = [
   { label: 'ID', key: 'id' },
-  { label: 'Отправил (ID пользователя)', key: 'submittedBy' }
+  {label: t('report.senderId'), key:'value'}
 ]
 
 async function approve(id) {

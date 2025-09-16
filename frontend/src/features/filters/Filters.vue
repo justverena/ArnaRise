@@ -1,19 +1,20 @@
 <template>
   <div class="filters">
-    <h3>Фильтр по районам</h3>
+    <h3>{{ $t('filters.title') }}</h3>
 
     <form @submit.prevent="applyFilters">
       <select v-model="localFilters.district">
-        <option disabled value="">Выберите район</option>
+        <option disabled value="">{{ $t('filters.selectDistrict') }}</option>
         <option v-for="district in districts" :key="district" :value="district">
           {{ district }}
         </option>
       </select>
 
-      <button type="submit">Применить</button>
+      <button type="submit">{{ $t('filters.apply') }}</button>
     </form>
   </div>
 </template>
+
 
 <script setup>
 import { reactive, ref, onMounted } from 'vue'

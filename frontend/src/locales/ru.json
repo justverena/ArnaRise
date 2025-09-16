@@ -16,6 +16,7 @@
     "loading": "Загрузка...",
     "field": "Поле",
     "value": "Значение",
+    "action": "Дейсвтия",
 
     "senderId": "Отправил",
     "reportStatus": "Статус отчёта",  
@@ -43,13 +44,18 @@
   },
 
   "buttons": {
-    "submit": "Отправить",
+    "submit": "Применить",
     "close": "Закрыть",
     "send": "Отправить",
     "cancel": "Отмена",
     "logout": "Выйти",
     "back": "Назад",
-    "create": "Создать"
+    "create": "Создать",
+    "read": "Просмотр",
+    "update": "Обновить",
+    "indicators": "Индикаторы",
+    "filters": "Фильтры",
+    "chartTypes": "Типы графиков"
   },
 
   "navBar": {
@@ -65,12 +71,35 @@
   "analyst": {
     "charts": "Графики",
     "reportHistory": "Проверить новые отчёты",
-    "indicators": "Управление индикаторами"
+    "indicators": "Управление индикаторами",
+    "readReports": "Посмотреть Отчеты"
   },
 
   "partner": {
     "newReport": "Создать отчёт",
     "organization": "Организация",
     "rejectedReports": "Отклоненные отчёты"
-  }
+  },
+
+  "chartTypes": {
+    "line": "{name} (линейный график)",
+    "pie": "{name} (круговой график)",
+    "bar": "{name} (столбчатый график)"
+  },
+  "loading": "Загрузка данных...",
+
+  "indicators": {
+    "averageMarriageAge": "Средний возраст вступающих в брак",
+    "divorces": "Зарегистрированные разводы",
+    "divorcesPie": "Распределение разводы",
+    "ratio": "Отношение браков к разводам",
+    "marriages": "Зарегистрированные браки",
+    "chooseIndicator": "Выбор индикатора"
+  },
+  "filters": {
+  "title": "Фильтр по районам",
+  "selectDistrict": "Выберите район",
+  "apply": "Применить"
+}
+
 }

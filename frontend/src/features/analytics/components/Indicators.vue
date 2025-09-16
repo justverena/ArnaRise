@@ -1,9 +1,9 @@
 <template>
   <div class="indicators">
-    <h3>Выбор индикатора</h3>
+    <h3>{{ $t('indicators.chooseIndicator') }}</h3>
 
     <select v-model="selectedIndicator" @change="emitIndicator">
-      <option disabled value="" v-if="!selectedIndicator">Выберите индикатор</option>
+      <option disabled value="" v-if="!selectedIndicator">{{ $t('indicators.chooseIndicator') }}</option>
       <option
         v-for="indicator in indicators"
         :key="indicator.value"
@@ -18,14 +18,17 @@
 
 <script setup>
 import { ref, defineEmits } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['indicator-selected'])
 
+const {t} = useI18n()
+
 const indicators = [
-  { label: 'Количество зарегистрированных браков', value: 'marriage' },
-  { label: 'Количество разводов', value: 'divorce' },
-  { label: 'Отношение разводов к бракам (%)', value: 'divorceRatio' },
-  { label: 'Средний возраст вступающих в брак', value: 'avgAge' }
+  { label: t('indicators.marriages'), value: 'marriage' },
+  { label: t('indicators.divorces'), value: 'divorce' },
+  { label: t('indicators.ratio'), value: 'divorceRatio' },
+  { label: t('indicators.averageMarriageAge'), value: 'avgAge' }
 ]
 
 const selectedIndicator = ref('')

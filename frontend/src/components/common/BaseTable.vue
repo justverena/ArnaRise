@@ -5,7 +5,7 @@
         <th v-for="col in columns" :key="col.key">
           {{ col.label }}
         </th>
-        <th v-if="$slots.actions">Действия</th>
+        <th v-if="$slots.actions">{{ $t('report.action') }}</th>
       </tr>
     </thead>
 

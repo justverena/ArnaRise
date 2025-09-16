@@ -2,27 +2,25 @@
   <div>
     <div v-if="labels.length && values.length">
       <LineChart
-      v-if="activeCharts.includes('Line')"
-      :labels="labels"
-      :values="values"
-      label="Средний возраст вступающих в брак (линейный график)"
+        v-if="activeCharts.includes('Line')"
+        :labels="labels"
+        :values="values"
+        :label="$t('chartTypes.line', { name: $t('indicators.averageMarriageAge') })"
       />
 
       <PieChart
-      v-if="activeCharts.includes('Pie')"
-      :labels="labels"
-      :values="values"
-      label="Средний возраст вступающих в брак (круговой график)"
+        v-if="activeCharts.includes('Pie')"
+        :labels="labels"
+        :values="values"
+        :label="$t('chartTypes.pie', { name: $t('indicators.averageMarriageAge') })"
       />
 
       <BarChart
-      v-if="activeCharts.includes('Bar')"
-      :labels="labels"
-      :values="values"
-      label="Средний возраст вступающих в брак (столбчатый график)"
+        v-if="activeCharts.includes('Bar')"
+        :labels="labels"
+        :values="values"
+        :label="$t('chartTypes.bar', { name: $t('indicators.averageMarriageAge') })"
       />
-
-
     </div>
   </div>
 </template>

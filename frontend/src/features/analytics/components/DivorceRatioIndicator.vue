@@ -2,32 +2,32 @@
   <div>
     <div v-if="labels.length && values.length">
       <LineChart
-      v-if="activeCharts.includes('Line')"
-      :labels="labels"
-      :values="values"
-      :showPercent="true"
-      label="Отношение браков к разводам (линейный график)"
+        v-if="activeCharts.includes('Line')"
+        :labels="labels"
+        :values="values"
+        :showPercent="true"
+        :label="$t('chartTypes.line', { name: $t('indicators.ratio') })"
       />
 
       <PieChart
-      v-if="activeCharts.includes('Pie')"
-      :labels="labels"
-      :values="values"
-      :showPercent="true"
-      label="Отношение браков к разводам (круговой график)"
+        v-if="activeCharts.includes('Pie')"
+        :labels="labels"
+        :values="values"
+        :showPercent="true"
+        :label="$t('chartTypes.pie', { name: $t('indicators.ratio') })"
       />
 
       <BarChart
-      v-if="activeCharts.includes('Bar')"
-      :labels="labels"
-      :values="values"
-      :showPercent="true"
-      label="Отношение браков к разводам (столбчатый график)"
+        v-if="activeCharts.includes('Bar')"
+        :labels="labels"
+        :values="values"
+        :showPercent="true"
+        :label="$t('chartTypes.bar', { name: $t('indicators.ratio') })"
       />
-
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';

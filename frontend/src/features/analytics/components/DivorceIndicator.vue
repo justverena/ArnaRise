@@ -5,22 +5,21 @@
         v-if="activeCharts.includes('Line')"
         :labels="labels"
         :values="values"
-        label="Зарегистрированные разводы (линейный график)"
+        :label="$t('chartTypes.line', { name: $t('indicators.divorces') })"
       />
 
       <PieChart
-      v-if="activeCharts.includes('Pie')"
-      :labels="labels"
-      :values="values"
-      label="Распределение разводы (круговая диаграмма)"
+        v-if="activeCharts.includes('Pie')"
+        :labels="labels"
+        :values="values"
+        :label="$t('chartTypes.pie', { name: $t('indicators.divorcesPie') })"
       />
-
 
       <BarChart
         v-if="activeCharts.includes('Bar')"
         :labels="labels"
         :values="values"
-        label="Зарегистрированные разводы (столбчатый график)"
+        :label="$t('chartTypes.bar', { name: $t('indicators.divorces') })"
       />
     </div>
     <p v-else>Загрузка данных...</p>

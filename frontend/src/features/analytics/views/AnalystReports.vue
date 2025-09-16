@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <header class="header">
-      <h1 class="logo">Посмотреть Отчеты</h1>
-      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">Назад</BaseButton>
+      <h1 class="logo">{{ $t('analyst.readReports') }}</h1>
+      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">{{ $t('buttons.back') }}</BaseButton>
     </header>
 
     <div class="main-content">
@@ -12,13 +12,13 @@
             :class="{ active: selected === 'marriage' }" 
             @click="selected = 'marriage'"
           >
-            Браки и разводы
+            {{ $t('report.marriageDivorce') }}
           </li>
           <li 
             :class="{ active: selected === 'violence' }" 
             @click="selected = 'violence'"
           >
-            Гендерное насилие
+            {{ $t('report.genderViolence') }}
           </li>
         </ul>
       </nav>

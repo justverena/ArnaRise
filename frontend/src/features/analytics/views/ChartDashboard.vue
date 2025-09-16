@@ -4,21 +4,21 @@
       <!-- Сайдбар с чекбоксами -->
       <nav class="sidebar">
         <div class="sidebar-actions">
-          <BaseButton @click="updateChart" shape="square">Обновить</BaseButton>
+          <BaseButton @click="updateChart" shape="square">{{ $t('buttons.update') }}</BaseButton>
 
-          <BaseButton @click="toggleIndicators" shape="square">Индикаторы</BaseButton>
+          <BaseButton @click="toggleIndicators" shape="square">{{ $t('buttons.indicators') }}</BaseButton>
           <div class="dropdown" v-if="showIndicators">
             <Indicators @indicator-selected="onIndicatorSelected" />
           </div>
 
-          <BaseButton @click="toggleFilters" shape="square">Фильтры</BaseButton>
+          <BaseButton @click="toggleFilters" shape="square">{{ $t('buttons.filters') }}</BaseButton>
           <div class="dropdown" v-if="showFilters">
             <Filters @filter-updated="onFiltersChanged" />
           </div>
         </div>
 
 
-        <h3 class="sidebar-title">Типы графиков</h3>
+        <h3 class="sidebar-title">{{ $t('buttons.chartTypes') }}</h3>
         <ul>
           <li v-for="type in availableCharts" :key="type">
             <label class="chart-type-option">

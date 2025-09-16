@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1>Гендерное насилие</h1>
+    <h1>{{ $t('report.genderViolence') }}</h1>
 
     <BaseTable
       :columns="columns"
       :rows="reports"
     >
       <template #actions="{ row }">
-        <BaseButton @click="openReport(row.id)" variant="secondary" size="sm" shape="square">Просмотр</BaseButton>
+        <BaseButton @click="openReport(row.id)" variant="secondary" size="sm" shape="square">{{ $t('buttons.read') }}</BaseButton>
       </template>
     </BaseTable>
 
@@ -26,14 +26,17 @@ import { getAnalystGenderViolenceReports } from '@/services/reports/genderViolen
 import BaseTable from '@/components/common/BaseTable.vue'
 import ShowFormGenderViolenceReport from './ShowFormGenderViolenceReport.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
+import { useI18n } from 'vue-i18n'
 import { approveAnalystGenderViolenceReport } from '@/services/reports/genderViolence.service'
 
 const reports = ref([])
 const selectedReportId = ref(null)
 
+const {t} = useI18n()
+
 const columns = [
   { label: 'ID', key: 'id' },
-  { label: 'Отправил (ID пользователя)', key: 'submittedBy' }
+  {label: t('report.senderId'), key:'value'}
 ]
 
 async function fetchReports() {

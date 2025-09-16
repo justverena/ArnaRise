@@ -2,10 +2,10 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <BaseButton to="/analyst/reports" shape="square">Проверить новые отчеты</BaseButton>
-        <BaseButton to="/analyst/templates" shape="square">Управление индикаторами</BaseButton>
-        <BaseButton to="/analyst/chart" shape="square">Графики</BaseButton>
-        <BaseButton @click="logout" variant="danger" shape="square">Выйти</BaseButton>
+        <BaseButton to="/analyst/reports" shape="square">{{ $t('analyst.reportHistory') }}</BaseButton>
+        <BaseButton to="/analyst/templates" shape="square">{{ $t('analyst.indicators') }}</BaseButton>
+        <BaseButton to="/analyst/chart" shape="square">{{ $t('analyst.charts') }}</BaseButton>
+        <BaseButton @click="logout" variant="danger" shape="square">{{ $t('buttons.logout') }}</BaseButton>
       </div>
     </header>
 
