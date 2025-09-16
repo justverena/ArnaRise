@@ -2,18 +2,18 @@
 
     <BaseModal v-model="isOpen" @close="$emit('close')">
         <template #header>
-            <span v-if="mode === 'create'">Отчет: Браки и Разводы</span>
-            <span v-else-if="mode === 'edit'">Изменение отчета: Браки и Разводы</span>
-            <span v-else>Просмотр отчета: Браки и Разводы</span>
+            <span v-if="mode === 'create'">{{ $t('report.create', { type: $t('report.marriageDivorce') }) }}</span>
+            <span v-else-if="mode === 'edit'">{{ $t('report.edit', { type: $t('report.marriageDivorce') }) }}</span>
+            <span v-else>{{ $t('report.read', { type: $t('report.marriageDivorce') }) }}</span>
         </template>
 
-        <div v-if="loading">Загрузка...</div>
+        <div v-if="loading">{{ $t('report.loading') }}</div>
 
         <form v-else-if="mode!== 'show'" @submit.prevent="handleSubmit">
             <BaseSelect
                 v-model="form.reportYear"
                 :options="ReportYears"
-                label="ОТчетный год"
+                :label="$t('report.reportYear')"
                 placeholder="Выберите год"
                 value-key="key"
                 label-key="value"
@@ -22,7 +22,7 @@
             <BaseSelect
                 v-model="form.district"
                 :options="Districts"
-                label="Район"
+                :label="$t('report.district')"
                 placeholder="Выберите район"
                 value-key="key"
                 label-key="value"
@@ -30,7 +30,7 @@
 
             <BaseInput
                 v-model="form.marriageCount"
-                label="Количество зарегистрированных браков:"
+                :label="$t('report.marriageCount')"
                 type="number"
                 min="1"
                 size="small"
@@ -40,7 +40,7 @@
 
             <BaseInput
                 v-model="form.divorceCount"
-                label="Количество разводов:"
+                :label="$t('report.divorceCount')"
                 type="number"
                 min="1"
                 size="small"
@@ -50,7 +50,7 @@
 
             <BaseInput
                 :model-value="form.ratioDivorcesToMarriagePercent.toFixed(2)"
-                label="Отношение разводов к бракам(%)"
+                :label="$t('report.ratio')"
                 type="number"
                 size="small"
                 required
@@ -59,7 +59,7 @@
 
             <BaseInput
                 v-model="form.averageAge"
-                label="Средний возраст вступающих в брак:"
+                :label="$t('report.averageAge')"
                 type="number"
                 min="1"
                 size="small"
@@ -70,21 +70,21 @@
             <BaseSelect
                 v-model="form.source"
                 :options="Sources"
-                label="Источник"
+                :label="$t('report.source')"
                 placeholder="Выберите источник"
                 value-key="key"
                 label-key="value"
                 />
 
             <div class="form-actions">
-                <BaseButton type="submit" >Отправить</BaseButton>
-                <BaseButton @click="$emit('close')" type="button" variant="secondary">Закрыть</BaseButton>
+                <BaseButton type="submit" >{{ $t('buttons.submit') }}</BaseButton>
+                <BaseButton @click="$emit('close')" type="button" variant="secondary">{{ $t('buttons.close') }}</BaseButton>
             </div>  
         </form>
 
         <div v-else>
 
-            <div v-if="!report">Загрузка...</div>
+            <div v-if="!report">{{ $t('buttons.loading') }}</div>
             <div v-else>
                 <BaseTable
                 :columns="columns"
@@ -93,9 +93,9 @@
                 />
 
             <div class="form-actions">
-            <BaseButton v-if="showApproveReject" @click="$emit('approve')" size="sm">Одобрить</BaseButton>
-            <BaseButton v-if="showApproveReject" @click="$emit('reject')" variant="danger" size="sm">Отклонить</BaseButton>
-            <BaseButton type="button" @click="$emit('close')" variant="secondary">Закрыть</BaseButton>
+            <BaseButton v-if="showApproveReject" @click="$emit('approve')" size="sm">{{ $t('report.approve') }}</BaseButton>
+            <BaseButton v-if="showApproveReject" @click="$emit('reject')" variant="danger" size="sm">{{ $t('report.reject') }}</BaseButton>
+            <BaseButton type="button" @click="$emit('close')" variant="secondary">{{ $t('buttons.close') }}</BaseButton>
             </div>
             </div>
         </div>
@@ -108,12 +108,11 @@
 import { reactive, ref, onMounted, computed} from 'vue'
 import { getEnum } from '@/services/enumService'
 import { watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BaseSelect from '@/components/common/BaseSelect.vue'
-import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
 import BaseModal from '@/components/common/BaseModal.vue'
 import BaseInput from '@/components/common/BaseInput.vue'
-import BaseTextarea from '@/components/common/BaseTextarea.vue'
 import BaseTable from '@/components/common/BaseTable.vue'
 
 const props = defineProps({
@@ -125,9 +124,11 @@ const props = defineProps({
 
 const emit = defineEmits(['submit', 'close', 'approve', 'reject'])
 
+const {t} = useI18n()
+
 const columns = [
-    {label: 'Поле', key:'field'},
-    {label: 'Значение', key:'value'}
+    {label: t('report.field'), key:'field'},
+    {label: t('report.value'), key:'value'}
 ]
 
 const rows = computed(() => {
@@ -135,17 +136,17 @@ const rows = computed(() => {
 
     return [
         {field: 'ID', value:report.value.id},
-        {field: 'Отчетный год', value: getEnumValue(ReportYears.value, report.value.reportYear)},
-        {field: 'Район', value: getEnumValue(Districts.value, report.value.district)},
-        {field: 'Количество зарегистрированных браков', value:report.value.marriageCount},
-        {field: 'Количество разводов', value:report.value.divorceCount},
-        {field: 'Отношение разводов к бракам(%)', value:report.value.ratioDivorcesToMarriagePercent},
-        {field: 'Средний возраст вступающих в брак', value:report.value.averageAge},
-        {field: 'Источник', value: getEnumValue(Sources.value, report.value.source)},
-        {field: 'Отправил', value: report.value.submittedBy},
-        {field: 'Статус', value: getEnumValue(ReportStatuses.value, report.value.status)},
+        {field: t('report.reportYear'), value: getEnumValue(ReportYears.value, report.value.reportYear)},
+        {field: t('report.district'), value: getEnumValue(Districts.value, report.value.district)},
+        {field: t('report.marriageCount'), value:report.value.marriageCount},
+        {field: t('report.divorceCount'), value:report.value.divorceCount},
+        {field: t('report.ratio'), value:report.value.ratioDivorcesToMarriagePercent},
+        {field: t('report.averageAge'), value:report.value.averageAge},
+        {field: t('report.source'), value: getEnumValue(Sources.value, report.value.source)},
+        {field: t('report.senderId'), value: report.value.submittedBy},
+        {field: t('report.reportStatus'), value: getEnumValue(ReportStatuses.value, report.value.status)},
         report.value.rejectionReason
-            ? { field: 'Причина отклонения', value: report.value.rejectionReason }
+            ? { field: t('report.rejectionReason'), value: report.value.rejectionReason }
             : null
     ].filter(Boolean)
 })

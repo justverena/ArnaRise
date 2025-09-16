@@ -1,0 +1,47 @@
+{
+  "report": {
+    
+    "genderViolence": "Гендерлік зорлық-зомбылық",
+    "marriageDivorce": "Неке және ажырасу",
+    "create": "Есептеме: {type}",
+    "edit": "Есептеме өзгерту: {type}",
+    "read": "Есептеме қарау: {type}",
+    "approve": "Қабылдау",
+    "reject": "Бас тарту",
+    "loading": "Жүктелуде...",
+    "field": "Баған",
+    "value": "Мән",
+
+    "senderId": "Жіберген",
+    "reportStatus": "Есептеме ахуалы", 
+    "rejectionReason": "Бас тарту себебі",
+    "district": "Аудан", 
+
+    "date": "Оқиға күні",
+    "gender": "Жыныс",
+    "age": "Жас",
+    "violenceType": "Зорлық-зомбылық түрі",
+    "location": "Оқиға орны",
+    "timeOfDay": "Тәулік уақыты",
+    "socialStatus": "Әлеуметтік мәртебе",
+    "aggressorRelation": "Агрессормен қарым-қатынас",
+    "description": "Істің сипаттамасы",
+    "authority": "Шаралар қабылдаған орган",
+    "actions": "Қабылданған шаралар",
+
+    "reportYear": "Есептеме жылы",
+    "marriageCount": "Тіркелген неке саны",
+    "divorceCount": "Ажырасу саны",
+    "ratio": "Ажырасудың некеге қатынасы",
+    "averageAge": "Некеге тұрушылардың орташа жасы",
+    "source": "Дереккөз"
+    
+  },
+  "buttons":
+  {
+    "submit": "Жіберу",
+    "close": "Жабу",
+    "send": "Жіберу",
+    "cancel": "Отмена"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "report": 
+  {
+    "genderViolence": "Гендерное насилие",
+    "marriageDivorce": "Браки и разводы",
+    "create": "Отчёт: {type}",
+    "edit": "Изменение отчёта: {type}",
+    "read": "Просмотр отчёта: {type}",
+    "approve": "Принять",
+    "reject": "Отклонить",
+    "loading": "Загрузка...",
+    "field": "Поле",
+    "value": "Значение",
+
+    "senderId": "Отправил",
+    "reportStatus": "Статус отчёта",  
+    "rejectionReason": "Причина отклонения",
+    "district": "Район",
+
+    "date": "Дата инцидента",
+    "gender": "Пол",
+    "age": "Возраст",
+    "violenceType": "Вид насилия",
+    "location": "Место происшествия",
+    "timeOfDay": "Время суток",
+    "socialStatus": "Социальный статус",
+    "aggressorRelation": "Отношения с агрессором",
+    "description": "Описание случая",
+    "authority": "Орган, принявший меры",
+    "actions": "Принятые меры",
+
+    "reportYear": "Отчётный год",
+    "marriageCount": "Количество зарегистрированных браков",
+    "divorceCount": "Количество разводов",
+    "ratio": "Отношение разводов к бракам",
+    "averageAge": "Средний возраст вступающих в брак",
+    "source": "Источник"
+  },
+  "buttons":
+  {
+    "submit": "Отправить",
+    "close": "Закрыть",
+    "send": "Отправить",
+    "cancel": "Отмена"
+  }
+}

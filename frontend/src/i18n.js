@@ -1,11 +1,16 @@
 import { createI18n } from 'vue-i18n'
 import { getEnum } from '@/services/enumService'
+import ru from './locales/ru.json'
+import kz from './locales/kz.json'
 
 const i18n = createI18n({
   legacy: false,
   locale: localStorage.getItem('lang') || 'ru',
   fallbackLocale: 'ru',
-  messages: {}
+  messages: {
+    ru,
+    kz
+  }
 })
 
 async function loadEnumsForLang(lang) {
@@ -32,7 +37,10 @@ async function loadEnumsForLang(lang) {
     enums[enumName] = await getEnum(enumName, lang) 
   }
 
-  i18n.global.setLocaleMessage(lang, { enums })
+  const currentMessages = i18n.global.getLocaleMessage(lang)
+  i18n.global.setLocaleMessage(lang, { 
+    ...currentMessages,
+    enums })
   i18n.global.locale.value = lang
 }
 

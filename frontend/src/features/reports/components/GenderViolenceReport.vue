@@ -1,24 +1,25 @@
 <template>
   <BaseModal v-model="isOpen" @close="$emit('close')">
   <template #header>
-    <span v-if="mode === 'create'">Отчет: Гендерное насилие</span>
-    <span v-else-if="mode === 'edit'">Изменение отчета: Гендерное насилие</span>
-    <span v-else>Просмотр отчета: Гендерное насилие</span>
+    <span v-if="mode === 'create'">{{ $t('report.create', { type: $t('report.genderViolence') }) }}</span>
+    <span v-else-if="mode === 'edit'">{{ $t('report.edit', { type: $t('report.genderViolence') }) }}</span>
+    <span v-else>{{ $t('report.read', { type: $t('report.genderViolence') }) }}</span>
   </template>
 
-  <div v-if="loading">Загрузка...</div>
+  <div v-if="loading">{{ $t('report.loading') }}</div>
 
   <form v-else-if="mode!== 'show'" @submit.prevent="handleSubmit">
     <BaseSelect
         v-model="form.district"
         :options="Districts"
-        label="Район"
+        :label="$t('report.district')"
         placeholder="Выберите район"
         value-key="key"
         label-key="value"
         />
         
-        <label>Дата инцидента:
+        <label>
+          {{ $t('report.date') }}:
           <input v-model="form.date" type="date" required />
         </label>
 
@@ -26,7 +27,7 @@
         <BaseSelect
         v-model="form.gender"
         :options="Genders"
-        label="Пол"
+        :label="$t('report.gender')"
         placeholder="Выберите пол"
         value-key="key"
         label-key="value"
@@ -34,7 +35,7 @@
 
         <BaseInput
         v-model="form.age"
-        label="Возраст:"
+        :label="$t('report.age')"
         type="number"
         min="1"
         required
@@ -43,7 +44,7 @@
         <BaseSelect
         v-model="form.violenceType"
         :options="ViolenceTypes"
-        label="Вид насилия"
+        :label="$t('report.violenceType')"
         placeholder="Выберите вид насилия"
         value-key="key"
         label-key="value"
@@ -52,7 +53,7 @@
         <BaseSelect
         v-model="form.location"
         :options="Locations"
-        label="Место происшествия"
+        :label="$t('report.location')"
         placeholder="Выберите место происшествия"
         value-key="key"
         label-key="value"
@@ -61,7 +62,7 @@
         <BaseSelect
         v-model="form.timeOfDay"
         :options="TimesOfDay"
-        label="Время суток"
+        :label="$t('report.timeOfDay')"
         placeholder="Выберите время суток"
         value-key="key"
         label-key="value"
@@ -70,7 +71,7 @@
         <BaseSelect
         v-model="form.socialStatus"
         :options="SocialStatuses"
-        label="Социальный статус"
+        :label="$t('report.socialStatus')"
         placeholder="Выберите социальный статус"
         value-key="key"
         label-key="value"
@@ -79,7 +80,7 @@
         <BaseSelect
         v-model="form.aggressorRelation"
         :options="AggressorRelations"
-        label="Отношения с агрессором"
+        :label="$t('report.aggressorRelation')"
         placeholder="Выберите отношения с агрессором"
         value-key="key"
         label-key="value"
@@ -87,7 +88,7 @@
 
         <BaseTextarea
         v-model="form.caseDescription"
-        label="Описание случая:"
+        :label="$t('report.description')"
         multiline
         required
         size="large"
@@ -96,7 +97,7 @@
         <BaseSelect
         v-model="form.authority"
         :options="Authorities"
-        label="Орган принявший меры"
+        :label="$t('report.authority')"
         placeholder="Выберите орган принявший меры"
         value-key="key"
         label-key="value"
@@ -104,20 +105,20 @@
 
         <BaseMultiSelect
         v-model="form.actions"
-        :label="'Принятые меры'"
+        :label="$t('report.actions')"
         :options="Actions"
         />
 
 
         <div class="form-actions">
-          <BaseButton type="submit" >Отправить</BaseButton>
-          <BaseButton @click="$emit('close')" type="button" variant="secondary">Закрыть</BaseButton>
+          <BaseButton type="submit" >{{ $t('buttons.submit') }}</BaseButton>
+          <BaseButton @click="$emit('close')" type="button" variant="secondary">{{ $t('buttons.close') }}</BaseButton>
         </div>
       </form>
 
       <div v-else>
         
-        <div v-if="!report">Загрузка отчёта...</div>
+        <div v-if="!report">{{ $t('buttons.loading') }}</div>
         <div v-else>
             <BaseTable
                 :columns="columns"
@@ -126,9 +127,9 @@
                 />
 
         <div class="form-actions">
-        <BaseButton v-if="showApproveReject" @click="$emit('approve')" size="sm">Одобрить</BaseButton>
-        <BaseButton v-if="showApproveReject" @click="$emit('reject')" variant="danger" size="sm">Отклонить</BaseButton>
-        <BaseButton type="button" @click="$emit('close')" variant="secondary">Закрыть</BaseButton>
+        <BaseButton v-if="showApproveReject" @click="$emit('approve')" size="sm">{{ $t('report.approve') }}</BaseButton>
+        <BaseButton v-if="showApproveReject" @click="$emit('reject')" variant="danger" size="sm">{{ $t('report.reject') }}</BaseButton>
+        <BaseButton type="button" @click="$emit('close')" variant="secondary">{{ $t('buttons.close') }}</BaseButton>
       </div>
         </div>
         
@@ -140,6 +141,7 @@
 import { reactive, ref, onMounted, computed} from 'vue'
 import { getEnum } from '@/services/enumService'
 import { watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import BaseSelect from '@/components/common/BaseSelect.vue'
 import BaseMultiSelect from '@/components/common/BaseMultiSelect.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
@@ -157,9 +159,11 @@ const props = defineProps({
 
 const emit = defineEmits([ 'submit', 'close', 'approve', 'reject'])
 
+const {t} = useI18n()
+
 const columns = [
-    { label: 'Поле', key: 'field'},
-    { label: 'Значение', key: 'value'}, 
+    {label: t('report.field'), key:'field'},
+    {label: t('report.value'), key:'value'}
 ]
 
 const rows = computed(() => {
@@ -167,24 +171,25 @@ const rows = computed(() => {
 
     return [
     { field: 'ID', value: report.value.id },
-    { field: 'Дата инцидента', value: report.value.date },
-    { field: 'Пол', value: getEnumValue(Genders.value, report.value.gender) },
-    { field: 'Возраст', value: report.value.age },
-    { field: 'Вид насилия', value: getEnumValue(ViolenceTypes.value, report.value.violenceType) },
-    { field: 'Место происшествия', value: getEnumValue(Locations.value, report.value.location) },
-    { field: 'Время суток', value: getEnumValue(TimesOfDay.value, report.value.timeOfDay) },
-    { field: 'Социальный статус', value: getEnumValue(SocialStatuses.value, report.value.socialStatus) },
-    { field: 'Отношения с агрессором', value: getEnumValue(AggressorRelations.value, report.value.aggressorRelation) },
-    { field: 'Описание случая', value: report.value.caseDescription },
-    { field: 'Орган принявший меры', value: getEnumValue(Authorities.value, report.value.authority) },
+    { field: t('report.district'), value: getEnumValue(Districts.value, report.value.district) },
+    { field: t('report.date'), value: report.value.date },
+    { field: t('report.gender'), value: getEnumValue(Genders.value, report.value.gender) },
+    { field: t('report.age'), value: report.value.age },
+    { field: t('report.violenceType'), value: getEnumValue(ViolenceTypes.value, report.value.violenceType) },
+    { field: t('report.location'), value: getEnumValue(Locations.value, report.value.location) },
+    { field: t('report.timeOfDay'), value: getEnumValue(TimesOfDay.value, report.value.timeOfDay) },
+    { field: t('report.socialStatus'), value: getEnumValue(SocialStatuses.value, report.value.socialStatus) },
+    { field: t('report.aggressorRelation'), value: getEnumValue(AggressorRelations.value, report.value.aggressorRelation) },
+    { field: t('report.description'), value: report.value.caseDescription },
+    { field: t('report.authority'), value: getEnumValue(Authorities.value, report.value.authority) },
     {
-      field: 'Принятые меры',
+      field: t('report.actions'),
       value: getEnumValues(Actions.value, report.value.actions).join(', ')
     },
-    { field: 'Отправил', value: report.value.submittedBy },
-    { field: 'Статус', value: getEnumValue(ReportStatuses.value, report.value.status) },
+    { field: t('report.senderId'), value: report.value.submittedBy },
+    { field: t('report.reportStatus'), value: getEnumValue(ReportStatuses.value, report.value.status) },
     report.value.rejectionReason
-      ? { field: 'Причина отклонения', value: report.value.rejectionReason }
+      ? { field: t('report.rejectionReason'), value: report.value.rejectionReason }
       : null
   ].filter(Boolean)
 })
