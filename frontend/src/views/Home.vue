@@ -1,14 +1,10 @@
 <template>
-  <div class="home">
-    
-
-    <div class="main-content">
-      <h1>Платформа партии Аманат</h1>
-      <p>Добро пожаловать!</p>
-
-    </div>
+  <div class="main-content">
+    <h1>{{ $t('homePage.title') }}</h1>
+    <p>{{ $t('homePage.welcome') }}</p>
   </div>
 </template>
+
 
 <script setup>
 

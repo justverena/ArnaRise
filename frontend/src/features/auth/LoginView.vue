@@ -1,17 +1,28 @@
 <template>
   <div class="login-wrapper">
     <div class="login-page">
-      <h2>Выполните вход в систему</h2>
+      <h2>{{ $t('login.title') }}</h2>
       <form @submit.prevent="handleLogin">
-        <input v-model="email" placeholder="Email" type="email" required />
-        <input v-model="password" placeholder="Password" type="password" required />
-        <BaseButton type="submit" size="lg" shape="square">Войти</BaseButton>
+        <input
+          v-model="email"
+          :placeholder="$t('login.enterEmail')"
+          type="email"
+          required
+        />
+        <input
+          v-model="password"
+          :placeholder="$t('login.enterPassword')"
+          type="password"
+          required
+        />
+        <BaseButton type="submit" size="lg" shape="square">
+          {{ $t('buttons.login') }}
+        </BaseButton>
       </form>
       <p v-if="error" style="color: red;">{{ error }}</p>
     </div>
   </div>
 </template>
-
 
 <script setup>
 import { ref } from 'vue'
@@ -19,12 +30,14 @@ import { login } from '@/services/api.js'
 import { useRouter, useRoute } from 'vue-router'
 import { jwtDecode } from 'jwt-decode'
 import BaseButton from '@/components/common/BaseButton.vue'
+import { useI18n } from 'vue-i18n'
 
 const email = ref('')
 const password = ref('')
 const error = ref('')
 const router = useRouter()
 const route = useRoute()
+const { t } = useI18n()
 
 function decodeToken(token) {
   try {
@@ -45,29 +58,24 @@ const handleLogin = async () => {
     const token = res.data.token
 
     if (!token) {
-      error.value = 'no token in server response'
+      error.value = t('login.errors.noToken')
       return
     }
 
     localStorage.setItem('token', token)
 
     const decoded = decodeToken(token)
-    console.log(decoded)
     const role = decoded?.role || ''
-
     localStorage.setItem('role', role)
-
-    router.push('/')
 
     const redirectPath = route.query.redirect || '/'
     router.push(redirectPath)
-
-  } catch (err) {
-    console.log('error while logging in:', err)
-    error.value = 'wrong email or password'
+  } catch {
+    error.value = t('login.errors.wrongCredentials')
   }
 }
 </script>
+
 
 
 <style scoped>

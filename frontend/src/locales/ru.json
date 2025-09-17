@@ -49,23 +49,52 @@
     "send": "Отправить",
     "cancel": "Отмена",
     "logout": "Выйти",
+    "register": "Зарегистрировать",
+    "login": "Войти",
     "back": "Назад",
     "create": "Создать",
     "read": "Просмотр",
     "update": "Обновить",
+    "delete": "Удалить",
     "indicators": "Индикаторы",
     "filters": "Фильтры",
     "chartTypes": "Типы графиков"
+    
   },
 
   "navBar": {
     "home": "Главная",
     "profile": "Личный кабинет"
   },
+  "homePage": {
+    "title": "Платформа партии Аманат",
+    "welcome": "Добро пожаловать!",
+    "analystWelcome": "Добро пожаловать в личный кабинет аналитика. Здесь будут отображаться доступные вам функции."
+  },
 
   "admin": {
     "userRegister": "Регистрация пользователя",
-    "usersList": "Список пользователей"
+    "usersList": "Список пользователей",
+    "title": "Админ Панель",
+    "registerTitle": "Регистрация нового пользователя",
+    "name": "Имя",
+    "enterName": "Введите имя",
+    "email": "Электронная почта",
+    "enterEmail": "Введите email",
+    "password": "Пароль",
+    "enterPassword": "Введите пароль",
+    "role": "Роль",
+    "roles": {
+      "admin": "Админ",
+      "analyst": "Аналитик",
+      "partner": "Партнёр"
+    },
+    "actions": {
+      "delete": "Удалить",
+      "confirmDelete": "Вы уверены, что хотите удалить этого пользователя?",
+      "deleteSuccess": "Пользователь удалён",
+      "deleteError": "Не удалось удалить пользователя"
+    }
   },
 
   "analyst": {
@@ -79,6 +108,18 @@
     "newReport": "Создать отчёт",
     "organization": "Организация",
     "rejectedReports": "Отклоненные отчёты"
+  },
+
+  "login": {
+    "title": "Выполните вход в систему",
+    "email": "Email",
+    "enterEmail": "Введите email",
+    "password": "Пароль",
+    "enterPassword": "Введите пароль",
+    "errors": {
+      "noToken": "Токен отсутствует в ответе сервера",
+      "wrongCredentials": "Неверный email или пароль"
+    }
   },
 
   "chartTypes": {

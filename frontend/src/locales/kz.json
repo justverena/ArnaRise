@@ -50,10 +50,13 @@
     "send": "Жіберу",
     "cancel": "Отмена",
     "logout": "Шығу",
+    "register": "Тіркеу",
+    "login": "Кіру",
     "back": "Қайту",
     "create": "Құрастыру",
     "read": "Қарау",
     "update": "Жаңарту",
+    "delete": "Жою",
     "indicators": "Көрсеткіштер",
     "filters": "Сүзгілер",
     "chartTypes": "График түрлері"
@@ -64,9 +67,29 @@
   "profile": "Жеке кабинет"
 },
 
+  "homePage": {
+    "title": "Аманат партиясының платформасы",
+    "welcome": "Қош келдіңіз!",
+    "analystWelcome": "Талдаушының жеке кабинеті. Мұнда сізге қолжетімді функциялар көрсетіледі."
+  },
+
 "admin": {
   "userRegister": "Пайдаланушыны тіркеу",
-  "usersList": "Пайдаланушылар тізімі"
+  "usersList": "Пайдаланушылар тізімі",
+  "title": "Әкімші панелі",
+  "registerTitle": "Жаңа пайдаланушыны тіркеу",
+  "name": "Аты",
+  "enterName": "Атыңызды енгізіңіз",
+  "email": "Email",
+  "enterEmail": "Email енгізіңіз",
+  "password": "Құпия сөз",
+  "enterPassword": "Құпия сөзді енгізіңіз",
+  "role": "Рөлі",
+  "roles": {
+    "admin": "Әкімші",
+    "analyst": "Талдаушы",
+    "partner": "Серіктес"
+  }
 },
 
 "analyst": {
@@ -81,6 +104,18 @@
   "organization": "Ұйым",
   "rejectedReports": "Қабылданбаған есептемелер"
 },
+
+"login": {
+    "title": "Жүйеге кіріңіз",
+    "email": "Email",
+    "enterEmail": "Email енгізіңіз",
+    "password": "Құпия сөз",
+    "enterPassword": "Құпия сөзді енгізіңіз",
+    "errors": {
+      "noToken": "Сервер жауабында токен жоқ",
+      "wrongCredentials": "Қате email немесе құпия сөз"
+    }
+  },
 
 "chartTypes": {
   "line": "{name} (сызықтық график)",

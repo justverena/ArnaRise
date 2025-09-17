@@ -2,8 +2,8 @@
   <div class="app">
     <header class="header">
       <div class="header-buttons">
-        <BaseButton to="/admin/register" shape="square">Регистрация Пользователя</BaseButton>
-        <BaseButton @click="logout" variant="danger" shape="square">Выйти</BaseButton>
+        <BaseButton to="/admin/register" shape="square">{{ $t('admin.userRegister') }}</BaseButton>
+        <BaseButton @click="logout" variant="danger" shape="square">{{ $t('buttons.logout') }}</BaseButton>
       </div>
     </header>
 

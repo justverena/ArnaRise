@@ -1,39 +1,54 @@
 <template>
   <div class="container">
     <header class="header">
-      <h1 class="logo">Админ Панель</h1>
-      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">Назад</BaseButton>
+      <h1 class="logo">{{ $t('admin.title') }}</h1>
+      <BaseButton variant="primary" size="lg" shape="square" @click="goBack">{{ $t('buttons.back') }}</BaseButton>
     </header>
 
     <main class="form-wrapper">
       <form class="form-box" @submit.prevent="registerUser">
-        <h2>Регистрация нового пользователя</h2>
+        <h2>{{ $t('admin.registerTitle') }}</h2>
 
         <label>
-          Имя
-          <input type="text" v-model="name" placeholder="Введите имя" required />
+          {{ $t('admin.name') }}
+          <input
+            type="text"
+            v-model="name"
+            :placeholder="$t('admin.enterName')"
+            required
+          />
         </label>
 
         <label>
-          Email
-          <input type="email" v-model="email" placeholder="Введите email" required />
+          {{ $t('admin.email') }}
+          <input
+            type="email"
+            v-model="email"
+            :placeholder="$t('admin.enterEmail')"
+            required
+          />
         </label>
 
         <label>
-          Пароль
-          <input type="password" v-model="password" placeholder="Введите пароль" required />
+          {{ $t('admin.password') }}
+          <input
+            type="password"
+            v-model="password"
+            :placeholder="$t('admin.enterPassword')"
+            required
+          />
         </label>
 
         <label>
-          Роль
+          {{ $t('admin.role') }}
           <select v-model="role" required>
-            <option value="admin">Админ</option>
-            <option value="analyst">Аналитик</option>
-            <option value="partner">Партнёр</option>
+            <option value="admin">{{ $t('admin.roles.admin') }}</option>
+            <option value="analyst">{{ $t('admin.roles.analyst') }}</option>
+            <option value="partner">{{ $t('admin.roles.partner') }}</option>
           </select>
         </label>
 
-        <BaseButton type="submit">Зарегистрировать</BaseButton>
+        <BaseButton type="submit">{{ $t('buttons.register') }}</BaseButton>
 
         <p v-if="success" class="success">{{ success }}</p>
         <p v-if="error" class="error">{{ error }}</p>

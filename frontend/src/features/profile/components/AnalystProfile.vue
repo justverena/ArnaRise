@@ -9,11 +9,6 @@
       </div>
     </header>
 
-    <main class="main">
-      <section class="content">
-        <p>Добро пожаловать в личный кабинет аналитика. Здесь будут отображаться доступные вам функции.</p>
-      </section>
-    </main>
   </div>
 </template>
 

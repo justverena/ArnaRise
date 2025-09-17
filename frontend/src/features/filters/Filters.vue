@@ -3,23 +3,30 @@
     <h3>{{ $t('filters.title') }}</h3>
 
     <form @submit.prevent="applyFilters">
-      <select v-model="localFilters.district">
-        <option disabled value="">{{ $t('filters.selectDistrict') }}</option>
-        <option v-for="district in districts" :key="district" :value="district">
-          {{ district }}
-        </option>
-      </select>
+      <BaseSelect
+        v-model="localFilters.district"
+        :options="districts"
+        :label="$t('filters.selectDistrict')"
+        placeholder="Выберите район"
+        value-key="key"
+        label-key="value"
+        size="sm"
+      />
 
-      <button type="submit">{{ $t('filters.apply') }}</button>
+      <BaseButton type="submit">
+        {{ $t('filters.apply') }}
+      </BaseButton>
     </form>
   </div>
 </template>
 
-
 <script setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, watch } from 'vue'
 import { defineEmits } from 'vue'
 import { getEnum } from '@/services/enumService.js'
+import { useI18n } from 'vue-i18n'
+import BaseSelect from '@/components/common/BaseSelect.vue'
+import BaseButton from '@/components/common/BaseButton.vue'
 
 const emit = defineEmits(['filter-updated'])
 const districts = ref([])
@@ -28,10 +35,13 @@ const localFilters = reactive({
   district: ''
 })
 
+const { locale } = useI18n()
+
 async function loadDistricts() {
   try {
-    // enumName и lang подставь как у тебя на бэке
-    districts.value = await getEnum('District', 'ru')
+    districts.value = await getEnum('district', 'ru') 
+    // ⚠️ проверь: на бэке этот енам называется "district" (с маленькой), 
+    // а не "District" (как ты в первом примере написал)
   } catch (e) {
     console.error('Ошибка загрузки районов:', e)
   }
@@ -44,7 +54,12 @@ function applyFilters() {
 onMounted(() => {
   loadDistricts()
 })
+
+watch(locale, (newLang) => {
+  loadDistricts(newLang)
+})
 </script>
+
 
 <style scoped>
 .filters {

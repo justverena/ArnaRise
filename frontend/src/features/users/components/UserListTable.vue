@@ -1,18 +1,23 @@
 <template>
-  <h1>Список пользователей</h1>
-    <div class="users">
-        
-
-        <BaseTable
-          :columns="columns"
-          :rows="users"
-          idKey="id"
+  <h1>{{ $t('admin.usersList') }}</h1>
+  <div class="users">
+    <BaseTable
+      :columns="columns"
+      :rows="users"
+      idKey="id"
+    >
+      <template #actions="{ row }">
+        <BaseButton
+          variant="danger"
+          size="small"
+          shape="square"
+          @click="deleteUser(row.id)"
         >
-          <template #actions="{ row }">
-            <BaseButton variant="danger" size="small" shape="square" @click="deleteUser(row.id)">Удалить</BaseButton>
-          </template>
-        </BaseTable>
-    </div>
+          {{ $t('buttons.delete') }}
+        </BaseButton>
+      </template>
+    </BaseTable>
+  </div>
 </template>
 
 <script setup>
@@ -20,46 +25,40 @@ import { ref, onMounted } from 'vue'
 import { getAdminUsers, deleteAdminUsers } from '@/services/adminService'
 import BaseTable from '@/components/common/BaseTable.vue'
 import BaseButton from '@/components/common/BaseButton.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const users = ref([])
 
 const columns = [
-  { label: 'Имя', key: 'name' },
-  { label: 'Электронная почта', key: 'email' }
+  { label: t('admin.name'), key: 'name' },
+  { label: t('admin.email'), key: 'email' }
 ]
 
 const fetchUsers = async () => {
-    try {
-        const response = await getAdminUsers()
-        console.log('Ответ с сервера:', response.data)
-        users.value = response.data.map(user => ({
-          ...user
-        }))
-    }
-    catch(error) {
-        console.error('error getting users:', error)
-    }
-
+  try {
+    const response = await getAdminUsers()
+    users.value = response.data.map(user => ({
+      ...user
+    }))
+  } catch {
+  }
 }
 
 onMounted(fetchUsers)
 
 const deleteUser = async (userId) => {
-  const confirmed = confirm('Вы уверены, что хотите удалить этого пользователя?')
+  const confirmed = confirm(t('admin.actions.confirmDelete'))
   if (!confirmed) return
 
   try {
     await deleteAdminUsers(userId)
-    alert('Пользователь удалён')
-    await fetchUsers() 
-  } catch (error) {
-    console.error('Ошибка при удалении пользователя:', error)
-    alert('Не удалось удалить пользователя')
+    alert(t('admin.actions.deleteSuccess'))
+    await fetchUsers()
+  } catch {
+    alert(t('admin.actions.deleteError'))
   }
 }
-
-
-
 </script>
 
 <style scoped>
