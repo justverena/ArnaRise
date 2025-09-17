@@ -110,11 +110,12 @@ function updateChart() {
 
 function onFiltersChanged(filters) {
   selectedFilters.value = {
-    district: filters.district?.key || '' 
+    district: filters.district || '' 
   }
   showFilters.value = false
   updateChart()
 }
+
 
 
 function onIndicatorSelected(indicator) {
