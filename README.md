@@ -39,6 +39,7 @@ ArnaRise упрощает процесс сбора и анализа данны
 ## Архитектура проекта
 
 Монолитная архитектура с модульным разделением:
+```java
 Arnarise/
 ├── backend/
 │   ├── src/main/java/…/controller
@@ -54,6 +55,7 @@ Arnarise/
 │   ├── src/i18n/
 │   └── public/
 └── docker-compose.yml
+```
 ---
 
 ## Установка и запуск
