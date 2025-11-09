@@ -31,27 +31,35 @@
 import BarChart from '@/components/charts/BarChart.vue';
 import LineChart from '@/components/charts/LineChart.vue';
 import PieChart from '@/components/charts/PieChart.vue';
-import {ref, onMounted} from "vue";
+import {ref, onMounted, watch} from "vue";
 import { fetchDivorceCountByYear } from '@/services/indicators/indicators.service';
 
 const props = defineProps({
   activeCharts: {
     type: Array,
     default: () => ['Line', 'Bar', 'Pie']
+  },
+  filters: {
+    type: Object,
+    default: () => ({ district: ""})
   }
 })
 
 const labels = ref([])
 const values = ref([])
 
-onMounted(async () => {
+async function loadData() {
   try {
-    const data = await fetchDivorceCountByYear();
+    const data = await fetchDivorceCountByYear(props.filters.district || null)
     labels.value = data.map(item => String(item.reportYear));
     values.value = data.map(item => item.divorceCount);
   } catch (error) {
     console.error("Ошибка загрузки данных для графика:", error);
   }
-});
+  
+}
+
+onMounted(loadData)
+watch(() => props.filters, loadData, {deep:true})
 
 </script>
